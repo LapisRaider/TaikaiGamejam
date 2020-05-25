@@ -22,7 +22,18 @@ public class Volunteers : MonoBehaviour
     public float m_ChangeDirTime = 2.0f;
     public float m_RotationAngle = 10.0f;
     public float m_BorderRotationOffset = 4.0f;
+    [Tooltip("Radius, so if x is 1, it will show abv and below by 1")]
+    public Vector2Int m_PlantTreeSearchRadius = new Vector2Int(1, 1);
     float m_ChangeDirTimeTracker = 0.0f;
+
+    [Header("Move To Location State")]
+    public Vector2 m_Destination = Vector2.zero;
+
+    [Header("Plant Tree State")]
+    public Vector2Int m_PlantTreeGridPos = Vector2Int.zero;
+    public float m_StopDistance = 2.0f;
+
+    float m_PlantTiming = 0.0f; //TEMP
 
     public enum States
     {
@@ -59,6 +70,7 @@ public class Volunteers : MonoBehaviour
                 UpdateIdleState();
                 break;
             case States.MOVE_TO_FREE_SPACE:
+                UpdateMoveToFreeSpaceState();
                 break;
             case States.PLANT_TREE:
                 break;
@@ -118,15 +130,14 @@ public class Volunteers : MonoBehaviour
         ChangeDirection();
     }
 
+    float tempTimer = 0.0f;
+
     public void UpdateIdleState()
     {
         //make NPC wander around the map, every few seconds will change direction
         m_ChangeDirTimeTracker += Time.deltaTime;
         if (m_ChangeDirTimeTracker > m_ChangeDirTime)
             ChangeDirection();
-
-        m_MoveDir.Normalize();
-
 
         Vector3 checkPos = transform.position + (Vector3)(m_Speed * m_NextDir);
         if (CheckOutsideBoundary(checkPos))
@@ -158,12 +169,43 @@ public class Volunteers : MonoBehaviour
         }
 
         m_MoveDir = Vector2.Lerp(m_MoveDir, m_NextDir, m_RotationSpeed * Time.deltaTime);
-
+        m_MoveDir.Normalize();
         //Debug.DrawLine(transform.position, transform.position + ((Vector3)m_MoveDir * m_Speed), Color.red);
         //Debug.DrawLine(transform.position, transform.position + ((Vector3)m_NextDir * m_Speed), Color.green);
 
         Vector3 newPos = transform.position + (Vector3)(m_Speed * m_MoveDir * Time.deltaTime);
         transform.position = newPos;
+
+        //TODO:: temp TIMER, CHANGE TO SOMETHING ELSE
+        tempTimer += Time.deltaTime;
+        if (tempTimer > 3.0f)
+        {
+            if (CheckIfCanPlantTrees())
+                ChangeState(States.MOVE_TO_FREE_SPACE);
+
+            Debug.Log("lol");
+        }
+    }
+
+    public bool CheckIfCanPlantTrees()
+    {
+        //check if position nearby got empty space
+        Vector2Int gridCurrentPos = MapManager.Instance.GetWorldToGridPos(transform.position);
+        for (int y = -m_PlantTreeSearchRadius.y; y <= m_PlantTreeSearchRadius.y; ++y)
+        {
+            for (int x = -m_PlantTreeSearchRadius.x; x <= m_PlantTreeSearchRadius.x; ++x)
+            {
+                //able to plant tree at the location
+                m_PlantTreeGridPos = gridCurrentPos + new Vector2Int(x, y);
+                if (MapManager.Instance.CheckCanPlantTree(m_PlantTreeGridPos))
+                {
+                    m_Destination = MapManager.Instance.GetGridPosToWorld(m_PlantTreeGridPos);
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     public void ExitIdleState()
@@ -189,12 +231,20 @@ public class Volunteers : MonoBehaviour
     #region MoveToFreeSpaceState
     public void EnterMoveToFreeSpaceState()
     {
-
+        m_MoveDir = m_Destination - (Vector2)transform.position;
+        m_MoveDir.Normalize();
     }
 
     public void UpdateMoveToFreeSpaceState()
     {
+        transform.position += (Vector3)(m_Speed * Time.deltaTime * m_MoveDir);
 
+        if (Vector2.SqrMagnitude(m_Destination - (Vector2)transform.position) < m_StopDistance * m_StopDistance)
+        {
+            ChangeState(States.PLANT_TREE);
+        }
+
+        Debug.Log("Running This");
     }
 
     public void ExitMoveToFreeSpaceState()
@@ -206,7 +256,7 @@ public class Volunteers : MonoBehaviour
     #region PlantTreeState
     public void EnterPlantTreeState()
     {
-
+        MapManager.Instance.Plant(m_PlantTreeGridPos, Plant_Types.TREES);
     }
 
     public void UpdatePlantTreeState()

@@ -158,6 +158,10 @@ MonoBehaviour:
   m_ChangeDirTime: 4
   m_RotationAngle: 70
   m_BorderRotationOffset: 4
+  m_PlantTreeSearchRadius: {x: 1, y: 1}
+  m_Destination: {x: 0, y: 0}
+  m_PlantTreeGridPos: {x: 0, y: 0}
+  m_StopDistance: 1
 --- !u!212 &38693801
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -232,6 +236,7 @@ GameObject:
   m_Component:
   - component: {fileID: 936071448}
   - component: {fileID: 936071447}
+  - component: {fileID: 936071449}
   m_Layer: 0
   m_Name: DataBases
   m_TagString: Untagged
@@ -268,6 +273,55 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &936071449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 936071446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5455d15819d8484293eecac55d87965, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bDontDestroyOnLoad: 0
+  m_TreePrefab: {fileID: 5797079025205001220, guid: cb3555da9c5932a4c93abad6e0b03431,
+    type: 3}
+  m_PlantPrefab: {fileID: 5797079025205001220, guid: cb3555da9c5932a4c93abad6e0b03431,
+    type: 3}
+  m_PlantScriptableObjList:
+  - {fileID: 11400000, guid: 1aa25386b7f20774ea10583d8b365c84, type: 2}
+--- !u!1 &1184213934
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1184213935}
+  m_Layer: 0
+  m_Name: TreeParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1184213935
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1184213934}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2072592639}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1258795583
 GameObject:
@@ -3467,6 +3521,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1585338731}
+  - {fileID: 1184213935}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3490,3 +3545,4 @@ MonoBehaviour:
     m_Extent: {x: 0, y: 0, z: 0}
   m_MapGrid: {fileID: 1585338732}
   m_GridSize: {x: 0, y: 0}
+  m_TreeParent: {fileID: 1184213935}

@@ -151,7 +151,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7a550ccbd7a30f419d87d3e8d9d00b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MinMaxSpeed: {x: 0.1, y: 1}
+  m_MinMaxSpeed: {x: 2, y: 2}
+  m_MinMaxWalkOffset: {x: -0.5, y: 0.5}
+  m_BoundaryRadius: 0.52
+  m_RotationSpeed: 2.5
+  m_ChangeDirTime: 4
+  m_RotationAngle: 70
+  m_BorderRotationOffset: 4
 --- !u!212 &38693801
 SpriteRenderer:
   m_ObjectHideFlags: 0

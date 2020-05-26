@@ -13,9 +13,14 @@ public class EvilPeople : MonoBehaviour
     [Header("Move to tree State")]
     [Tooltip("The min number of grid before it accepts the tree")]
     public int m_MinNoOfGrid = 6;
+    public float m_CutTreeDist = 1.5f;
     PlantTree m_NearestTree = null;
     Vector2 m_Destination = Vector2.zero;
 
+    [Header("Destroy Tree")]
+    public int m_HealthDeduction = 2;
+    public float m_DestructionRate = 0.5f;
+    float m_DestructionTimer = 0.0f;
 
     public enum States
     {
@@ -58,6 +63,7 @@ public class EvilPeople : MonoBehaviour
                 UpdateFindTreeState();
                 break;
             case States.CUTTING_TREE:
+                UpdateCutTreeState();
                 break;
             case States.RUN:
                 break;
@@ -83,8 +89,10 @@ public class EvilPeople : MonoBehaviour
         switch (newState)
         {
             case States.MOVE_TO_TREE:
+                EnterFindTreeState();
                 break;
             case States.CUTTING_TREE:
+                EnterCutTreeState();
                 break;
             case States.RUN:
                 break;
@@ -98,6 +106,7 @@ public class EvilPeople : MonoBehaviour
     {
         Vector2Int m_CurrentGridPos = MapManager.Instance.GetWorldToGridPos(transform.position);
 
+        //the nearest tree
         float closestDist = Mathf.Infinity;
         Vector2Int treeDestination = Vector2Int.zero;
         foreach (KeyValuePair<Vector2Int, PlantTree> tree in MapManager.Instance.m_TreeOnMap)
@@ -109,9 +118,9 @@ public class EvilPeople : MonoBehaviour
                 m_NearestTree = tree.Value;
                 treeDestination = tree.Key;
 
+                //if the dist is already in a certain radius, just stop
                 if (dist < m_MinNoOfGrid * m_MinNoOfGrid)
                 {
-                    //the nearest tree
                     break;
                 }
             }
@@ -124,10 +133,20 @@ public class EvilPeople : MonoBehaviour
 
     public void UpdateFindTreeState()
     {
-        //if (Vector2.Distance(m_Destination, (Vector2)transform.position) <= 2.0f)
-        //    return;
+        transform.position += (Vector3)(m_Dir * 5.0f * Time.deltaTime);
 
-        //transform.position += (Vector3)(m_Dir * 5.0f * Time.deltaTime);
+        Vector2 direction = m_Destination - (Vector2)transform.position;
+        if (Vector2.SqrMagnitude(direction) <= m_CutTreeDist * m_CutTreeDist)
+        {
+            ChangeState(States.CUTTING_TREE);
+            return;
+        }
+
+        if (Vector2.Dot(direction.normalized, m_Dir) < 0)
+        {
+            ChangeState(States.CUTTING_TREE);
+            return;
+        }
     }
 
     public void ExitFindTreeState()
@@ -135,4 +154,51 @@ public class EvilPeople : MonoBehaviour
 
     }
     #endregion
+
+
+    #region Cut Tree State
+    public void EnterCutTreeState()
+    {
+        m_DestructionTimer = 0.0f;
+    }
+
+    public void UpdateCutTreeState()
+    {
+        m_DestructionTimer += Time.deltaTime;
+        if (m_DestructionTimer > m_DestructionRate)
+        {
+            if (m_NearestTree != null)
+            {
+                m_NearestTree.RemoveHealth(m_HealthDeduction);
+            }
+        }
+
+        //if tree doesnt exist or tree is dead, go find another tree to cut
+        if (m_NearestTree == null)
+        {
+            ChangeState(States.MOVE_TO_TREE);
+        }
+        else
+        {
+            if (!m_NearestTree.gameObject.activeSelf)
+            {
+                ChangeState(States.MOVE_TO_TREE);
+            }
+        }
+
+        //TODO:: if they are being chased by someone and they are close
+    }
+
+    public void ExitCutTreeState()
+    {
+        //if tree is still alive, reset the tree health
+    }
+    #endregion
+
+#if UNITY_EDITOR
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawWireSphere(transform.position, m_CutTreeDist);
+    }
+#endif
 }

@@ -13,6 +13,7 @@ public class PlantScriptableObj : ScriptableObject
     public float m_GrowthTime = 1.0f;
     public float m_PlantTime = 1.0f;
     public float m_TemperatureToGrow = 20.0f;
+    public int m_PlantHealth = 5;
 
     [Header("Plant Info")]
     public int m_Price = 50;

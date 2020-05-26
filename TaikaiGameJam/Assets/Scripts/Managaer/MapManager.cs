@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -72,7 +71,7 @@ public class MapManager : SingletonBase<MapManager>
             PlantTree plantTree = treeObj.GetComponent<PlantTree>();
             if (plantTree)
             {
-                plantTree.Init(PlantDataBase.Instance.m_PlantDictionary[type]);
+                plantTree.Init(PlantDataBase.Instance.m_PlantDictionary[type], tilePos);
                 m_TreeOnMap.Add(tilePos, plantTree);
             }
         }
@@ -82,6 +81,14 @@ public class MapManager : SingletonBase<MapManager>
         }
 
         return true;
+    }
+
+    public void RemoveTree(Vector2Int tilePos)
+    {
+        if (!m_TreeOnMap.ContainsKey(tilePos))
+            return;
+
+        m_TreeOnMap.Remove(tilePos);
     }
     #endregion
 }

@@ -1,22 +1,23 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class NPCObjectPooler : MonoBehaviour
+[System.Serializable]
+public class NPCObjectPooler
 {
     [Header("Volunteers spawn info")]
     public GameObject m_VolunteerPrefab;
     public int m_InitialVolunteerSpawnObjPooler = 10;
     public Transform m_VolunteerParent;
-    List<Volunteers> m_VolunteerList = new List<Volunteers>();
+    [HideInInspector] public List<Volunteers> m_VolunteerList = new List<Volunteers>();
 
     [Header("Bad guys spawn info")]
     public GameObject m_BadGuysPrefab;
     public int m_InitialBadGuysSpawnObjPooler = 10;
     public Transform m_BadGuyParent;
-    List<EvilPeople> m_EvilPeopleList = new List<EvilPeople>();
+    [HideInInspector] List<EvilPeople> m_EvilPeopleList = new List<EvilPeople>();
 
     // Start is called before the first frame update
-    void Awake()
+    public void Init()
     {
         SpawnVolunteers(m_InitialVolunteerSpawnObjPooler);
         SpawnBadGuys(m_InitialBadGuysSpawnObjPooler);
@@ -42,7 +43,7 @@ public class NPCObjectPooler : MonoBehaviour
     {
         for (int i = 0; i < number; ++i)
         {
-            GameObject volunteer = Instantiate(m_VolunteerPrefab);
+            GameObject volunteer = GameObject.Instantiate(m_VolunteerPrefab);
             volunteer.transform.parent = m_VolunteerParent;
             volunteer.SetActive(false);
 
@@ -73,7 +74,7 @@ public class NPCObjectPooler : MonoBehaviour
     {
         for (int i = 0; i < number; ++i)
         {
-            GameObject badGuy = Instantiate(m_BadGuysPrefab);
+            GameObject badGuy = GameObject.Instantiate(m_BadGuysPrefab);
             badGuy.transform.parent = m_BadGuyParent;
             badGuy.SetActive(false);
 

@@ -163,17 +163,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 521666707}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00ecc510ba16ef84d94f31edc707a593, type: 3}
+  m_Script: {fileID: 11500000, guid: b262f04cca2aace46b7843dcd9c725e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_VolunteerPrefab: {fileID: 9223023825027133142, guid: 4f0406eefa830804e89f08733d26d6b7,
-    type: 3}
-  m_InitialVolunteerSpawnObjPooler: 10
-  m_VolunteerParent: {fileID: 1784023103}
-  m_BadGuysPrefab: {fileID: 9146289597383527102, guid: fd24fd7c4dbe08348a77e15918d96290,
-    type: 3}
-  m_InitialBadGuysSpawnObjPooler: 5
-  m_BadGuyParent: {fileID: 1400321344}
+  bDontDestroyOnLoad: 0
+  m_NPCObjectPooler:
+    m_VolunteerPrefab: {fileID: 9223023825027133142, guid: 4f0406eefa830804e89f08733d26d6b7,
+      type: 3}
+    m_InitialVolunteerSpawnObjPooler: 5
+    m_VolunteerParent: {fileID: 1784023103}
+    m_BadGuysPrefab: {fileID: 9146289597383527102, guid: fd24fd7c4dbe08348a77e15918d96290,
+      type: 3}
+    m_InitialBadGuysSpawnObjPooler: 5
+    m_BadGuyParent: {fileID: 1400321344}
 --- !u!1 &936071446
 GameObject:
   m_ObjectHideFlags: 0

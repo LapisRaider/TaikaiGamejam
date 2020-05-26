@@ -213,6 +213,11 @@ public class EvilPeople : MonoBehaviour
         }
 
         //TODO:: if they are being chased by someone and they are close
+
+
+
+
+
     }
 
     public void ExitCutTreeState()

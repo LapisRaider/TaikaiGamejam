@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class PlantDataBase : SingletonBase<PlantDataBase>
+[System.Serializable]
+public class PlantDataBase
 {
     [Header("Prefabs")]
     public GameObject m_TreePrefab;
@@ -11,7 +12,7 @@ public class PlantDataBase : SingletonBase<PlantDataBase>
     public List<PlantScriptableObj> m_PlantScriptableObjList = new List<PlantScriptableObj>();
     public Dictionary<Plant_Types, PlantScriptableObj> m_PlantDictionary = new Dictionary<Plant_Types, PlantScriptableObj>();
 
-    void Awake()
+    public void Init()
     {
         //sort it out nicely
         foreach (PlantScriptableObj plantData in m_PlantScriptableObjList)

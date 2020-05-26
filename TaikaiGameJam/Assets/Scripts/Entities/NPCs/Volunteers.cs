@@ -12,6 +12,10 @@ public class Volunteers : MonoBehaviour
     //different states, IDLE mode, where theyll just wander about and search for areas for trees
     //plant trees mode, go to the destination and plant a tree
     //back to idle mode
+    [Header("Info")]
+    SpriteRenderer m_SpriteRenderer;
+
+
     [Header("Movement")]
     public Vector2 m_MinMaxSpeed = new Vector2(0.1f, 1.0f);
     public Vector2 m_MinMaxWalkOffset = new Vector2(-0.5f, 0.5f);
@@ -55,6 +59,7 @@ public class Volunteers : MonoBehaviour
     {
         m_CharacterController = GetComponent<CharacterController>();
         m_Animator = GetComponent<Animator>();
+        m_SpriteRenderer = GetComponent<SpriteRenderer>();
 
         m_Speed = Random.Range(m_MinMaxSpeed.x, m_MinMaxSpeed.y);
         m_BorderRotationOffset = m_BorderRotationOffset * Mathf.Deg2Rad;
@@ -123,7 +128,6 @@ public class Volunteers : MonoBehaviour
     {
         //change animation accordingly
 
-
         m_MoveDir = new Vector2(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f));
         m_NextDir = m_MoveDir;
         //update new direction
@@ -182,8 +186,6 @@ public class Volunteers : MonoBehaviour
         {
             if (CheckIfCanPlantTrees())
                 ChangeState(States.MOVE_TO_FREE_SPACE);
-
-            Debug.Log("lol");
         }
     }
 
@@ -223,8 +225,6 @@ public class Volunteers : MonoBehaviour
         m_NextDir.Normalize();
 
         m_ChangeDirTimeTracker = 0.0f;
-
-        //Debug.Log(m_NextDir);
     }
     #endregion
 
@@ -243,8 +243,6 @@ public class Volunteers : MonoBehaviour
         {
             ChangeState(States.PLANT_TREE);
         }
-
-        Debug.Log("Running This");
     }
 
     public void ExitMoveToFreeSpaceState()

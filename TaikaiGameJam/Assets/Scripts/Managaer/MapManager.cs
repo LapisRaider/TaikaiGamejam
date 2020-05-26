@@ -41,7 +41,7 @@ public class MapManager : SingletonBase<MapManager>
     public Vector2 GetGridPosToWorld(Vector2Int pos)
     {
         if (m_MapGrid != null)
-            return m_MapGrid.CellToWorld((Vector3Int)pos);
+            return m_MapGrid.GetCellCenterWorld((Vector3Int)pos);
 
         return Vector2.zero;
     }
@@ -67,7 +67,7 @@ public class MapManager : SingletonBase<MapManager>
                 return false;
 
             treeObj.transform.parent = m_TreeParent;
-            treeObj.transform.position = m_MapGrid.CellToWorld((Vector3Int)tilePos);
+            treeObj.transform.position = m_MapGrid.GetCellCenterWorld((Vector3Int)tilePos);
 
             PlantTree plantTree = treeObj.GetComponent<PlantTree>();
             if (plantTree)

@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class EvilPeople : MonoBehaviour
@@ -52,6 +51,33 @@ public class EvilPeople : MonoBehaviour
 
     public void Init()
     {
+        //spawn at a random location outside the grid
+        BoundsInt mapBoundary = MapManager.Instance.m_MapBoundaryGridNo;
+
+        int sideToSpawn = Random.Range(0,4);
+        Vector2Int spawnGridPos = Vector2Int.zero;
+        switch(sideToSpawn)
+        {
+            case 0: //up
+                spawnGridPos.y = mapBoundary.yMax + 1;
+                spawnGridPos.x = Random.Range(mapBoundary.xMin, mapBoundary.xMax);
+                break;
+            case 1: //down
+                spawnGridPos.y = mapBoundary.yMin - 1;
+                spawnGridPos.x = Random.Range(mapBoundary.xMin, mapBoundary.xMax);
+                break;
+            case 2: //left
+                spawnGridPos.x = mapBoundary.xMin - 1;
+                spawnGridPos.y = Random.Range(mapBoundary.yMin, mapBoundary.yMax);
+                break;
+            case 3: //right
+                spawnGridPos.x = mapBoundary.xMax + 1;
+                spawnGridPos.y = Random.Range(mapBoundary.yMin, mapBoundary.yMax);
+                break;
+        }
+
+        transform.position = MapManager.Instance.GetGridPosToWorld(spawnGridPos);
+
         EnterFindTreeState();
     }
 

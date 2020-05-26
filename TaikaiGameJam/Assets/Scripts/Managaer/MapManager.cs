@@ -14,7 +14,7 @@ public class MapManager : SingletonBase<MapManager>
     [HideInInspector] public Vector2 m_GridSize;
 
     [Header("Plants Info")]
-    Dictionary<Vector2Int, PlantTree> m_TreeOnMap = new Dictionary<Vector2Int, PlantTree>();
+    [HideInInspector] public Dictionary<Vector2Int, PlantTree> m_TreeOnMap = new Dictionary<Vector2Int, PlantTree>();
     public Transform m_TreeParent;
 
     public void Awake()

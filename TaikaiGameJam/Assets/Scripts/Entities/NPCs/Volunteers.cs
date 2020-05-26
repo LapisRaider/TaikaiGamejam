@@ -1,24 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Volunteers : MonoBehaviour
 {
-    //will walk around the map
-    //will check from mapmanager whether the space is free to plant
-    //plant tree
-    //move on
-
-    //different states, IDLE mode, where theyll just wander about and search for areas for trees
-    //plant trees mode, go to the destination and plant a tree
-    //back to idle mode
     [Header("Info")]
     SpriteRenderer m_SpriteRenderer;
 
-
     [Header("Movement")]
     public Vector2 m_MinMaxSpeed = new Vector2(0.1f, 1.0f);
-    public Vector2 m_MinMaxWalkOffset = new Vector2(-0.5f, 0.5f);
     public float m_BoundaryRadius = 2.0f; //for when the NPCs are about to hit the boundary
     public float m_RotationSpeed = 0.9f;
 
@@ -47,7 +35,6 @@ public class Volunteers : MonoBehaviour
         CHASE //for chasing away evil business people
     }
 
-    CharacterController m_CharacterController;
     Animator m_Animator;
 
     States m_CurrentState = States.IDLE;
@@ -57,7 +44,6 @@ public class Volunteers : MonoBehaviour
 
     public void Awake()
     {
-        m_CharacterController = GetComponent<CharacterController>();
         m_Animator = GetComponent<Animator>();
         m_SpriteRenderer = GetComponent<SpriteRenderer>();
 
@@ -82,6 +68,8 @@ public class Volunteers : MonoBehaviour
             case States.CHASE:
                 break;
         }
+
+        m_SpriteRenderer.sortingOrder = (int)(transform.position.y * -100);
     }
 
     public void ChangeState(States newState)
@@ -124,6 +112,10 @@ public class Volunteers : MonoBehaviour
     }
 
     #region IdleState
+    float tempTimer = 0.0f;
+
+
+
     public void EnterIdleState()
     {
         //change animation accordingly
@@ -132,9 +124,9 @@ public class Volunteers : MonoBehaviour
         m_NextDir = m_MoveDir;
         //update new direction
         ChangeDirection();
-    }
 
-    float tempTimer = 0.0f;
+        tempTimer = 0.0f;
+    }
 
     public void UpdateIdleState()
     {
@@ -252,14 +244,23 @@ public class Volunteers : MonoBehaviour
     #endregion
 
     #region PlantTreeState
+    float otherTempTimer = 0.0f; //TODO:: remove this
+
+
     public void EnterPlantTreeState()
     {
         MapManager.Instance.Plant(m_PlantTreeGridPos, Plant_Types.TREES);
+
+        otherTempTimer = 0.0f;
     }
 
     public void UpdatePlantTreeState()
     {
-
+        otherTempTimer += Time.deltaTime;
+        if (otherTempTimer > 4)
+        {
+            ChangeState(States.IDLE);
+        }
     }
 
     public void ExitPlantTreeState()

@@ -7,13 +7,13 @@ public class NPCObjectPooler : MonoBehaviour
     public GameObject m_VolunteerPrefab;
     public int m_InitialVolunteerSpawnObjPooler = 10;
     public Transform m_VolunteerParent;
-    List<Volunteers> m_VolunteerList;
+    List<Volunteers> m_VolunteerList = new List<Volunteers>();
 
     [Header("Bad guys spawn info")]
     public GameObject m_BadGuysPrefab;
     public int m_InitialBadGuysSpawnObjPooler = 10;
     public Transform m_BadGuyParent;
-    List<EvilPeople> m_EvilPeopleList;
+    List<EvilPeople> m_EvilPeopleList = new List<EvilPeople>();
 
     // Start is called before the first frame update
     void Awake()

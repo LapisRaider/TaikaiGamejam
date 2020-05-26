@@ -19,7 +19,11 @@ public class Volunteers : MonoBehaviour
     float m_ChangeDirTimeTracker = 0.0f;
 
     [Header("Move To Location State")]
-    public Vector2 m_Destination = Vector2.zero;
+    Vector2 m_Destination = Vector2.zero;
+
+    [Header("Chase state")]
+    public float m_ChaseSpeed = 3.0f;
+    EvilPeople m_EvilPersonChasing; 
 
     [Header("Plant Tree State")]
     public Vector2Int m_PlantTreeGridPos = Vector2Int.zero;
@@ -64,8 +68,10 @@ public class Volunteers : MonoBehaviour
                 UpdateMoveToFreeSpaceState();
                 break;
             case States.PLANT_TREE:
+                UpdatePlantTreeState();
                 break;
             case States.CHASE:
+                UpdateChaseState();
                 break;
         }
 
@@ -111,14 +117,23 @@ public class Volunteers : MonoBehaviour
         m_CurrentState = newState;
     }
 
+    public bool CheckCanChase()
+    {
+        return m_CurrentState == States.IDLE || m_CurrentState == States.MOVE_TO_FREE_SPACE;
+    }
+
+    public void ChaseEvilPerson(EvilPeople evilperson)
+    {
+        m_EvilPersonChasing = evilperson;
+        ChangeState(States.CHASE);
+    }
+
     #region IdleState
-    float tempTimer = 0.0f;
-
-
+    float tempTimer = 0.0f; //TODO:: REMOVE
 
     public void EnterIdleState()
     {
-        //change animation accordingly
+        //TODO:: change animation accordingly
 
         m_MoveDir = new Vector2(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f));
         m_NextDir = m_MoveDir;
@@ -277,7 +292,16 @@ public class Volunteers : MonoBehaviour
 
     public void UpdateChaseState()
     {
+        m_MoveDir = m_EvilPersonChasing.transform.position - transform.position;
+        m_MoveDir.Normalize();
 
+        transform.position += (Vector3)m_MoveDir * m_ChaseSpeed * Time.deltaTime;
+
+        //if evil person is inactive, meaning out of the map
+        if (!m_EvilPersonChasing.gameObject.activeSelf)
+        {
+            ChangeState(States.IDLE);
+        }
     }
 
     public void ExitChaseState()

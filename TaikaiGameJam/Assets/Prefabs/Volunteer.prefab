@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 9223023825027133147}
   - component: {fileID: 9223023825027133144}
   - component: {fileID: 9223023825027133145}
+  - component: {fileID: 7428760114805852272}
   m_Layer: 0
   m_Name: Volunteer
-  m_TagString: Untagged
+  m_TagString: Volunteer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -101,6 +102,22 @@ MonoBehaviour:
   m_RotationAngle: 70
   m_BorderRotationOffset: 4
   m_PlantTreeSearchRadius: {x: 1, y: 1}
-  m_Destination: {x: 0, y: 0}
+  m_ChaseSpeed: 3
   m_PlantTreeGridPos: {x: 0, y: 0}
   m_StopDistance: 1
+--- !u!58 &7428760114805852272
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9223023825027133142}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.1

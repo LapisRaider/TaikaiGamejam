@@ -22,10 +22,12 @@ public class NPCManager : SingletonBase<NPCManager>
 
         foreach (Volunteers volunteer in m_NPCObjectPooler.m_VolunteerList)
         {
-            if (!volunteer.enabled)
+            if (!volunteer.gameObject.activeSelf)
                 continue;
 
-            //TODO:: Make sure volunteer is not already chasing someone else
+            //make sure volunteer is available to start chasing
+            if (!volunteer.CheckCanChase())
+                continue;
 
             float newDist = Vector2.SqrMagnitude(evilPerson.transform.position - volunteer.transform.position);
             if (newDist < closestDist)
@@ -37,8 +39,8 @@ public class NPCManager : SingletonBase<NPCManager>
 
         if (nearestVolunteer != null)
         {
-            //TODO:: pass the evil person to the nearest volunteer
-            //volunteer change state to chase
+            //pass the evil person to the nearest volunteer
+            nearestVolunteer.ChaseEvilPerson(evilPerson);
         }
 
         return nearestVolunteer;

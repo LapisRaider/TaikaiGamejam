@@ -21,6 +21,11 @@ public class EvilPeople : MonoBehaviour
     public float m_DestructionRate = 0.5f;
     float m_DestructionTimer = 0.0f;
 
+    [Header("Chase state")]
+    public float m_RunSpeed = 3.0f;
+    public float m_MinSafeDist = 4.0f;
+    Transform m_NearestVolunteerChasing = null;
+
     public enum States
     {
         MOVE_TO_TREE,
@@ -92,6 +97,7 @@ public class EvilPeople : MonoBehaviour
                 UpdateCutTreeState();
                 break;
             case States.RUN:
+                UpdateRunAwayState();
                 break;
         }
 
@@ -130,6 +136,8 @@ public class EvilPeople : MonoBehaviour
     #region Find Tree State
     public void EnterFindTreeState()
     {
+        //TODO:: check if prev tree is still avilable
+
         Vector2Int m_CurrentGridPos = MapManager.Instance.GetWorldToGridPos(transform.position);
 
         //the nearest tree
@@ -155,10 +163,13 @@ public class EvilPeople : MonoBehaviour
         m_Destination = MapManager.Instance.GetGridPosToWorld(treeDestination);
         m_Dir = (m_Destination - (Vector2)transform.position);
         m_Dir.Normalize();
+
+        //TODO:: Check if there are any trees, if no trees, exit out of the map
     }
 
     public void UpdateFindTreeState()
     {
+        //TODO:: change speed
         transform.position += (Vector3)(m_Dir * 5.0f * Time.deltaTime);
 
         Vector2 direction = m_Destination - (Vector2)transform.position;
@@ -186,6 +197,8 @@ public class EvilPeople : MonoBehaviour
     public void EnterCutTreeState()
     {
         m_DestructionTimer = 0.0f;
+
+        NPCManager.Instance.WarnNearestVolunteer(this);
     }
 
     public void UpdateCutTreeState()
@@ -213,11 +226,7 @@ public class EvilPeople : MonoBehaviour
         }
 
         //TODO:: if they are being chased by someone and they are close
-
-
-
-
-
+        //ChangeState(States.MOVE_TO_TREE);
     }
 
     public void ExitCutTreeState()
@@ -226,10 +235,44 @@ public class EvilPeople : MonoBehaviour
     }
     #endregion
 
+    #region RunAway
+    public void UpdateRunAwayState()
+    {
+        m_Dir = transform.position - m_NearestVolunteerChasing.position;
+        transform.position += (Vector3)m_Dir.normalized * m_RunSpeed * Time.deltaTime;
+
+        //TODO:: if out of boundary, set inactive
+
+
+
+        //if volunteer is too far, just ignore and go back to other mode
+        if (Vector2.SqrMagnitude(m_Dir) > m_MinSafeDist * m_MinSafeDist)
+        {
+            ChangeState(States.MOVE_TO_TREE);
+        }
+    }
+
+    public float test = 0.0f;
+
+    #endregion
+
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Volunteer")
+        {
+            m_NearestVolunteerChasing = collision.transform;
+            ChangeState(States.RUN);
+        }
+    }
+
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected()
     {
-        Gizmos.DrawWireSphere(transform.position, m_CutTreeDist);
+        //Gizmos.DrawWireSphere(transform.position, m_CutTreeDist);
+        Gizmos.DrawWireSphere(transform.position, m_MinSafeDist);
+
+        Gizmos.DrawWireSphere(transform.position, test);
+
     }
 #endif
 }

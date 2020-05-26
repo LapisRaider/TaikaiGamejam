@@ -8,6 +8,7 @@ public class EvilPeople : MonoBehaviour
 
     [Header("Movement")]
     public Vector2 m_MinMaxSpeed = new Vector2(0.1f, 1.0f);
+    public float m_OutOfBoundsOffset = 0.5f;
 
     [Header("Move to tree State")]
     [Tooltip("The min number of grid before it accepts the tree")]
@@ -59,6 +60,7 @@ public class EvilPeople : MonoBehaviour
         //spawn at a random location outside the grid
         BoundsInt mapBoundary = MapManager.Instance.m_MapBoundaryGridNo;
 
+        //TODO:: change the 1 to something better
         int sideToSpawn = Random.Range(0,4);
         Vector2Int spawnGridPos = Vector2Int.zero;
         switch(sideToSpawn)
@@ -224,14 +226,10 @@ public class EvilPeople : MonoBehaviour
                 ChangeState(States.MOVE_TO_TREE);
             }
         }
-
-        //TODO:: if they are being chased by someone and they are close
-        //ChangeState(States.MOVE_TO_TREE);
     }
 
     public void ExitCutTreeState()
     {
-        //if tree is still alive, reset the tree health
     }
     #endregion
 
@@ -241,9 +239,12 @@ public class EvilPeople : MonoBehaviour
         m_Dir = transform.position - m_NearestVolunteerChasing.position;
         transform.position += (Vector3)m_Dir.normalized * m_RunSpeed * Time.deltaTime;
 
-        //TODO:: if out of boundary, set inactive
-
-
+        //if out of boundary, set inactive
+        if (OutOfBoundary())
+        {
+            gameObject.SetActive(false);
+            return;
+        }
 
         //if volunteer is too far, just ignore and go back to other mode
         if (Vector2.SqrMagnitude(m_Dir) > m_MinSafeDist * m_MinSafeDist)
@@ -251,10 +252,19 @@ public class EvilPeople : MonoBehaviour
             ChangeState(States.MOVE_TO_TREE);
         }
     }
-
-    public float test = 0.0f;
-
     #endregion
+
+    public bool OutOfBoundary()
+    {
+        //check if out of bounds
+        Vector2 pos = transform.position;
+
+        Bounds bound = MapManager.Instance.m_MapBoundary;
+        return (pos.x - m_OutOfBoundsOffset >= bound.max.x
+            || pos.y - m_OutOfBoundsOffset >= bound.max.y
+            || pos.x + m_OutOfBoundsOffset <= bound.min.x
+            || pos.y + m_OutOfBoundsOffset <= bound.min.y);
+    }
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
@@ -268,11 +278,8 @@ public class EvilPeople : MonoBehaviour
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected()
     {
-        //Gizmos.DrawWireSphere(transform.position, m_CutTreeDist);
         Gizmos.DrawWireSphere(transform.position, m_MinSafeDist);
-
-        Gizmos.DrawWireSphere(transform.position, test);
-
+        Gizmos.DrawWireSphere(transform.position, m_OutOfBoundsOffset);
     }
 #endif
 }

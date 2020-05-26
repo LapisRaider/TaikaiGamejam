@@ -50,7 +50,8 @@ public class MapManager : SingletonBase<MapManager>
     #region PlantTrees
     public bool CheckCanPlantTree(Vector2Int tilePos)
     {
-
+        //TODO:: MAKRE SURE TREE IS IN BOUNDS
+        //TODO:: TAKE NOTE OF TREE SURROUNDING SPACE
 
         return true;
     }

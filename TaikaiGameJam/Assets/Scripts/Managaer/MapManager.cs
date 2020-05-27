@@ -76,6 +76,8 @@ public class MapManager : SingletonBase<MapManager>
             {
                 m_PlantManager.InitType(type, tilePos, plantTree);
                 m_TreeOnMap.Add(tilePos, plantTree);
+
+                //TODO:: check if inventory allow planting, remove one from inventory
             }
         }
         else

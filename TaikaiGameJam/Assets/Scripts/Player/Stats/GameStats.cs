@@ -1,15 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class GameStats : SingletonBase<GameStats>
+﻿public class GameStats : SingletonBase<GameStats>
 {
     public Money m_Money = new Money();
-
     public VolunteerStats m_VolunteerInfo = new VolunteerStats();
+    public RecordingEquipment m_RecordingEquipmentStats = new RecordingEquipment();
 
-    [Header("RecordingEquipmentLvl")]
-    int m_CurrLevel = 0;
+    public void DeductTotalMonthFees()
+    {
+        m_Money.ReduceMoney(GetTotalMonthFees());
+    }
 
-
+    public int GetTotalMonthFees()
+    {
+        return m_VolunteerInfo.GetTotalMonthlyPayment() + m_RecordingEquipmentStats.GetMonthlyMaintenceFees();
+    }
 }

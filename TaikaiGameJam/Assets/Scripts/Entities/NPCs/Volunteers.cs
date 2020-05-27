@@ -55,6 +55,7 @@ public class Volunteers : MonoBehaviour
         m_BorderRotationOffset = m_BorderRotationOffset * Mathf.Deg2Rad;
 
         EnterIdleState();
+        //TODO:: SET THE IDLE STATE PROPERLY AND SPAWN LOCATION
     }
 
     public void Update()
@@ -276,6 +277,8 @@ public class Volunteers : MonoBehaviour
         {
             ChangeState(States.IDLE);
         }
+
+        //TODO:: MAKE PROPER PLANT, LIKE REDUCE FROM INVENTORY AND STUFF
     }
 
     public void ExitPlantTreeState()

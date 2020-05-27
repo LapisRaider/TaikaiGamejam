@@ -12,7 +12,6 @@ public class NPCManager : SingletonBase<NPCManager>
         m_NPCObjectPooler.Init();
     }
 
-
     #region sendingMessages
     //warn the nearest volunteer there is someone cutting down the trees
     public Volunteers WarnNearestVolunteer(EvilPeople evilPerson)
@@ -45,6 +44,29 @@ public class NPCManager : SingletonBase<NPCManager>
 
         return nearestVolunteer;
     }
+    #endregion
 
+    #region volunteer related
+    public void SpawnVolunteer()
+    {
+        if (m_NPCObjectPooler != null)
+            m_NPCObjectPooler.GetAndSpawnVolunteers();
+    }
+
+    public void FireVolunteer()
+    {
+        //get one volunteer and set inactive
+        if (m_NPCObjectPooler != null)
+        {
+            foreach(Volunteers volunteer in m_NPCObjectPooler.m_VolunteerList)
+            {
+                if (volunteer.gameObject.activeSelf)
+                {
+                    volunteer.gameObject.SetActive(false);
+                    break;
+                }
+            }
+        }
+    }
     #endregion
 }

@@ -188,6 +188,8 @@ public class EvilPeople : MonoBehaviour
             ChangeState(States.CUTTING_TREE);
             return;
         }
+
+        //TODO:: if tree no more, find another one again
     }
 
     public void ExitFindTreeState()
@@ -278,8 +280,6 @@ public class EvilPeople : MonoBehaviour
     public void UpdateGetOutOfMap()
     {
         transform.position += (Vector3)m_Dir * m_Speed * Time.deltaTime;
-
-        Debug.Log("Hello");
 
         if (OutOfBoundary())
         {

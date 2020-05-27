@@ -3,6 +3,7 @@
     public Money m_Money = new Money();
     public VolunteerStats m_VolunteerInfo = new VolunteerStats();
     public RecordingEquipment m_RecordingEquipmentStats = new RecordingEquipment();
+    public LawyerServices m_LawyerServices = new LawyerServices();
 
     public void Awake()
     {
@@ -16,6 +17,6 @@
 
     public int GetTotalMonthFees()
     {
-        return m_VolunteerInfo.GetTotalMonthlyPayment() + m_RecordingEquipmentStats.GetMonthlyMaintenceFees();
+        return m_VolunteerInfo.GetTotalMonthlyPayment() + m_RecordingEquipmentStats.GetMonthlyMaintenceFees() + m_LawyerServices.GetCurrentServiceFee();
     }
 }

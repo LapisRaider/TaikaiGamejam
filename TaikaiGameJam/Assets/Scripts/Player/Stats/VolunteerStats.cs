@@ -29,18 +29,12 @@ public class VolunteerStats
 
     public bool CanFire()
     {
-        if (m_CurrVolunteerAmt <= 0)
-            return false;
-
-        return true;
+        return m_CurrVolunteerAmt > 0;
     }
 
     public bool CanHire()
     {
-        if (m_CurrVolunteerAmt + 1 > m_MaxVolunteerNo)
-            return false;
-
-        return true;
+        return (m_CurrVolunteerAmt + 1 <= m_MaxVolunteerNo);
     }
 
     public int GetTotalMonthlyPayment()

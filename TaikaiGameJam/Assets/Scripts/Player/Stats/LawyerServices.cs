@@ -25,7 +25,7 @@ public class LawyerServices
 
     public void UpgradeLawyerService()
     {
-        if (m_CurrLawyerStage + 1 >= LawyerStages.TOTAL_STAGES)
+        if (!AbleToUpgrade())
             return;
 
         m_CurrLawyerStage += 1;
@@ -33,10 +33,20 @@ public class LawyerServices
 
     public void DownGradeLawyerService()
     {
-        if (m_CurrLawyerStage <= LawyerStages.NONE)
+        if (!AbleToDownGrade())
             return;
 
         m_CurrLawyerStage -= 1;
+    }
+
+    public bool AbleToUpgrade()
+    {
+        return (m_CurrLawyerStage + 1 < LawyerStages.TOTAL_STAGES);
+    }
+
+    public bool AbleToDownGrade()
+    {
+        return m_CurrLawyerStage > LawyerStages.NONE;
     }
 
     public int GetCurrentServiceFee()

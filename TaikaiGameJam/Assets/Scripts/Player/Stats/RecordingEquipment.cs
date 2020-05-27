@@ -22,7 +22,7 @@ public class RecordingEquipment
 
     public void Upgrade()
     {
-        if (m_CurrLevel + 1 >= UpgradeStages.TOTAL_MAXLV)
+        if (!AbleToUpgrade())
             return;
 
         m_CurrLevel += 1;
@@ -31,10 +31,21 @@ public class RecordingEquipment
 
     public void DownGrade()
     {
-        if (m_CurrLevel <= 0)
+        if (!AbleToDowngrade())
             return;
 
         m_CurrLevel -= 1;
+        //TODO:: INCREASE MONEY
+    }
+
+    public bool AbleToUpgrade()
+    {
+        return m_CurrLevel + 1 < UpgradeStages.TOTAL_MAXLV;
+    }
+
+    public bool AbleToDowngrade()
+    {
+        return m_CurrLevel > 0;
     }
 
     public int GetMonthlyMaintenceFees()

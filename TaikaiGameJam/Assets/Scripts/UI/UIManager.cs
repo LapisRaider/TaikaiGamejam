@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-
 public class UIManager : SingletonBase<UIManager>
 {
     [Header("Money Related")]

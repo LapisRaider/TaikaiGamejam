@@ -6,12 +6,12 @@ public class VolunteerStats
     [Header("Volunteer")]
     public int m_MaxVolunteerNo = 30;
     public int m_MonthlyPayment = 100; 
-    int m_CurrVolunteerAmt = 0;
+    [HideInInspector] public int m_CurrVolunteerAmt = 0;
 
     public void GetMoreVolunteer()
     {
         //reach the volunteer limit
-        if (m_CurrVolunteerAmt > m_MaxVolunteerNo)
+        if (!CanHire())
             return;
 
         m_CurrVolunteerAmt += 1;
@@ -20,11 +20,27 @@ public class VolunteerStats
 
     public void FireVolunteer()
     {
-        if (m_CurrVolunteerAmt <= 0)
+        if (!CanFire())
             return;
 
         m_CurrVolunteerAmt -= 1;
         NPCManager.Instance.FireVolunteer();
+    }
+
+    public bool CanFire()
+    {
+        if (m_CurrVolunteerAmt <= 0)
+            return false;
+
+        return true;
+    }
+
+    public bool CanHire()
+    {
+        if (m_CurrVolunteerAmt + 1 > m_MaxVolunteerNo)
+            return false;
+
+        return true;
     }
 
     public int GetTotalMonthlyPayment()

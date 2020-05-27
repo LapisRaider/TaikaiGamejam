@@ -49,8 +49,15 @@ public class NPCManager : SingletonBase<NPCManager>
     #region volunteer related
     public void SpawnVolunteer()
     {
+        GameObject volunteer = null;
+
         if (m_NPCObjectPooler != null)
-            m_NPCObjectPooler.GetAndSpawnVolunteers();
+            volunteer = m_NPCObjectPooler.GetAndSpawnVolunteers();
+
+        //TODO:: SET THE NPCS AT THE CORRECT POSITION
+        //INITIALISE THE VOLUNTEERS PROPERLY
+        if (volunteer != null)
+            volunteer.SetActive(true);
     }
 
     public void FireVolunteer()

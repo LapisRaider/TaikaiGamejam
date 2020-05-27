@@ -31,7 +31,8 @@ public class EvilPeople : MonoBehaviour
     {
         MOVE_TO_TREE,
         CUTTING_TREE,
-        RUN
+        RUN,
+        GET_OUT_OF_MAP,
     }
 
     CharacterController m_CharacterController;
@@ -48,6 +49,7 @@ public class EvilPeople : MonoBehaviour
         m_SpriteRenderer = GetComponent<SpriteRenderer>();
 
         m_Speed = Random.Range(m_MinMaxSpeed.x, m_MinMaxSpeed.y);
+        m_CurrentState = States.MOVE_TO_TREE;
     }
 
     private void OnEnable()
@@ -58,33 +60,10 @@ public class EvilPeople : MonoBehaviour
     public void Init()
     {
         //spawn at a random location outside the grid
-        BoundsInt mapBoundary = MapManager.Instance.m_MapBoundaryGridNo;
-
-        //TODO:: change the 1 to something better
-        int sideToSpawn = Random.Range(0,4);
-        Vector2Int spawnGridPos = Vector2Int.zero;
-        switch(sideToSpawn)
-        {
-            case 0: //up
-                spawnGridPos.y = mapBoundary.yMax + 1;
-                spawnGridPos.x = Random.Range(mapBoundary.xMin, mapBoundary.xMax);
-                break;
-            case 1: //down
-                spawnGridPos.y = mapBoundary.yMin - 1;
-                spawnGridPos.x = Random.Range(mapBoundary.xMin, mapBoundary.xMax);
-                break;
-            case 2: //left
-                spawnGridPos.x = mapBoundary.xMin - 1;
-                spawnGridPos.y = Random.Range(mapBoundary.yMin, mapBoundary.yMax);
-                break;
-            case 3: //right
-                spawnGridPos.x = mapBoundary.xMax + 1;
-                spawnGridPos.y = Random.Range(mapBoundary.yMin, mapBoundary.yMax);
-                break;
-        }
-
+        Vector2Int spawnGridPos = GetALocationOutSideMap();
         transform.position = MapManager.Instance.GetGridPosToWorld(spawnGridPos);
 
+        m_CurrentState = States.MOVE_TO_TREE;
         EnterFindTreeState();
     }
 
@@ -101,6 +80,9 @@ public class EvilPeople : MonoBehaviour
             case States.RUN:
                 UpdateRunAwayState();
                 break;
+            case States.GET_OUT_OF_MAP:
+                UpdateGetOutOfMap();
+                break;
         }
 
         m_SpriteRenderer.sortingOrder = (int)(transform.position.y * -100);
@@ -108,14 +90,19 @@ public class EvilPeople : MonoBehaviour
 
     public void ChangeState(States newState)
     {
+        States prevState = m_CurrentState;
+        m_CurrentState = newState;
+
         //check current state and exit
-        switch (m_CurrentState)
+        switch (prevState)
         {
             case States.MOVE_TO_TREE:
                 break;
             case States.CUTTING_TREE:
                 break;
             case States.RUN:
+                break;
+            case States.GET_OUT_OF_MAP:
                 break;
         }
 
@@ -130,15 +117,33 @@ public class EvilPeople : MonoBehaviour
                 break;
             case States.RUN:
                 break;
+            case States.GET_OUT_OF_MAP:
+                EnterGetOutOfMap();
+                break;
         }
-
-        m_CurrentState = newState;
     }
 
     #region Find Tree State
     public void EnterFindTreeState()
     {
-        //TODO:: check if prev tree is still avilable
+        //Check if no trees, exit out of the map
+        if (MapManager.Instance.m_TreeOnMap.Count <= 0)
+        {
+            ChangeState(States.GET_OUT_OF_MAP);
+            return;
+        }
+
+        //check if prev tree is still avilable
+        if (m_NearestTree != null)
+        {
+            if (m_NearestTree.gameObject.activeSelf)
+            {
+                m_Destination = MapManager.Instance.GetGridPosToWorld(m_NearestTree.m_PlantGridPos);
+                m_Dir = (m_Destination - (Vector2)transform.position);
+                m_Dir.Normalize();
+                return;
+            }
+        }
 
         Vector2Int m_CurrentGridPos = MapManager.Instance.GetWorldToGridPos(transform.position);
 
@@ -165,14 +170,11 @@ public class EvilPeople : MonoBehaviour
         m_Destination = MapManager.Instance.GetGridPosToWorld(treeDestination);
         m_Dir = (m_Destination - (Vector2)transform.position);
         m_Dir.Normalize();
-
-        //TODO:: Check if there are any trees, if no trees, exit out of the map
     }
 
     public void UpdateFindTreeState()
     {
-        //TODO:: change speed
-        transform.position += (Vector3)(m_Dir * 5.0f * Time.deltaTime);
+        transform.position += (Vector3)(m_Dir * m_Speed * Time.deltaTime);
 
         Vector2 direction = m_Destination - (Vector2)transform.position;
         if (Vector2.SqrMagnitude(direction) <= m_CutTreeDist * m_CutTreeDist)
@@ -218,12 +220,14 @@ public class EvilPeople : MonoBehaviour
         if (m_NearestTree == null)
         {
             ChangeState(States.MOVE_TO_TREE);
+            return;
         }
         else
         {
             if (!m_NearestTree.gameObject.activeSelf)
             {
                 ChangeState(States.MOVE_TO_TREE);
+                return;
             }
         }
     }
@@ -254,6 +258,37 @@ public class EvilPeople : MonoBehaviour
     }
     #endregion
 
+    #region GetOutOfMap State
+    public void EnterGetOutOfMap()
+    {
+        //check if its already out of boundary
+        if (OutOfBoundary())
+        {
+            gameObject.SetActive(false);
+            return;
+        }
+
+        //randomize a location outside of the map
+        Vector2Int gridLocationOutside = GetALocationOutSideMap();
+        m_Destination = MapManager.Instance.GetGridPosToWorld(gridLocationOutside);
+        m_Dir = m_Destination - (Vector2)transform.position;
+        m_Dir.Normalize();
+    }
+
+    public void UpdateGetOutOfMap()
+    {
+        transform.position += (Vector3)m_Dir * m_Speed * Time.deltaTime;
+
+        Debug.Log("Hello");
+
+        if (OutOfBoundary())
+        {
+            gameObject.SetActive(false);
+            return;
+        }
+    }
+    #endregion
+
     public bool OutOfBoundary()
     {
         //check if out of bounds
@@ -264,6 +299,36 @@ public class EvilPeople : MonoBehaviour
             || pos.y - m_OutOfBoundsOffset >= bound.max.y
             || pos.x + m_OutOfBoundsOffset <= bound.min.x
             || pos.y + m_OutOfBoundsOffset <= bound.min.y);
+    }
+
+    public Vector2Int GetALocationOutSideMap()
+    {
+        BoundsInt mapBoundary = MapManager.Instance.m_MapBoundaryGridNo;
+
+        //TODO:: change the 1 to something better
+        int sideToSpawn = Random.Range(0, 4);
+        Vector2Int spawnGridPos = Vector2Int.zero;
+        switch (sideToSpawn)
+        {
+            case 0: //up
+                spawnGridPos.y = mapBoundary.yMax + 1;
+                spawnGridPos.x = Random.Range(mapBoundary.xMin, mapBoundary.xMax);
+                break;
+            case 1: //down
+                spawnGridPos.y = mapBoundary.yMin - 1;
+                spawnGridPos.x = Random.Range(mapBoundary.xMin, mapBoundary.xMax);
+                break;
+            case 2: //left
+                spawnGridPos.x = mapBoundary.xMin - 1;
+                spawnGridPos.y = Random.Range(mapBoundary.yMin, mapBoundary.yMax);
+                break;
+            case 3: //right
+                spawnGridPos.x = mapBoundary.xMax + 1;
+                spawnGridPos.y = Random.Range(mapBoundary.yMin, mapBoundary.yMax);
+                break;
+        }
+
+        return spawnGridPos;
     }
 
     public void OnTriggerEnter2D(Collider2D collision)

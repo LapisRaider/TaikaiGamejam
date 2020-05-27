@@ -4,6 +4,11 @@
     public VolunteerStats m_VolunteerInfo = new VolunteerStats();
     public RecordingEquipment m_RecordingEquipmentStats = new RecordingEquipment();
 
+    public void Awake()
+    {
+        m_Money.Init();
+    }
+
     public void DeductTotalMonthFees()
     {
         m_Money.ReduceMoney(GetTotalMonthFees());

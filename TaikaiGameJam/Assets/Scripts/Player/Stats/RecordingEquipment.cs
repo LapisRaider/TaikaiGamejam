@@ -13,6 +13,7 @@ public class RecordingEquipment
 
     [Tooltip("the monthly maintenence for each level")]
     public int[] m_MonthlyMaintenceFees = new int[(int)UpgradeStages.TOTAL_MAXLV];
+    public int[] m_UpgradePrice = new int[(int)UpgradeStages.TOTAL_MAXLV];
 
     [HideInInspector] public UpgradeStages m_CurrLevel = UpgradeStages.NOOB_LV;
 
@@ -25,6 +26,7 @@ public class RecordingEquipment
             return;
 
         m_CurrLevel += 1;
+        //TODO:: reduce the money
     }
 
     public void DownGrade()

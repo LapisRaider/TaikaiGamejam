@@ -5,6 +5,8 @@
     public RecordingEquipment m_RecordingEquipmentStats = new RecordingEquipment();
     public LawyerServices m_LawyerServices = new LawyerServices();
 
+    public Inventory m_Inventory = new Inventory();
+
     public void Awake()
     {
         m_Money.Init();

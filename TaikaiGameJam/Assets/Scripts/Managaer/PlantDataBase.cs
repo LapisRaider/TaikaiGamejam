@@ -20,6 +20,16 @@ public class PlantDataBase
             m_PlantDictionary.Add(plantData.m_PlantType, plantData);
         }
     }
+
+    public PlantScriptableObj GetPlantData(Plant_Types plantType)
+    {
+        if (m_PlantDictionary.ContainsKey(plantType))
+        {
+            return m_PlantDictionary[plantType];
+        }
+
+        return null;
+    }
 }
 
 public enum Plant_Types

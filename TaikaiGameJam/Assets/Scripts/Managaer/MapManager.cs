@@ -96,4 +96,9 @@ public class MapManager : SingletonBase<MapManager>
         m_TreeOnMap.Remove(tilePos);
     }
     #endregion
+
+    public PlantDataBase GetPlantDataBase()
+    {
+        return m_PlantManager.m_PlantDataBase;
+    }
 }

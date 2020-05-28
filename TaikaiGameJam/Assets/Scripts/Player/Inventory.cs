@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class Inventory : MonoBehaviour
+[System.Serializable]
+public class Inventory
 {
-    public Dictionary<Plant_Types, int> m_PlantInventory = new Dictionary<Plant_Types, int>();
+    [HideInInspector] public Dictionary<Plant_Types, int> m_PlantInventory = new Dictionary<Plant_Types, int>();
 
     public void BuyOneIntoInventory(Plant_Types plantType)
     {

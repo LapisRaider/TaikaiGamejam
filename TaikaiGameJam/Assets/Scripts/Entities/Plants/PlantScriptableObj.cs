@@ -17,4 +17,7 @@ public class PlantScriptableObj : ScriptableObject
 
     [Header("Plant Info")]
     public int m_Price = 50;
+
+    [Header("Number to plant")]
+    public int m_MaxNumberToPlant = 10;
 }

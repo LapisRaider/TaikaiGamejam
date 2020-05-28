@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [System.Serializable]
@@ -35,5 +36,12 @@ public class Inventory
             m_PlantInventory.Remove(plantType);
 
         return true;
+    }
+
+    public Plant_Types GetAnyAvailablePlantType()
+    {
+        int randomRange = Random.Range(0, m_PlantInventory.Count);
+
+        return m_PlantInventory.ElementAt(randomRange).Key;
     }
 }

@@ -52,23 +52,34 @@ public class MapManager : SingletonBase<MapManager>
     #region PlantTrees
     public bool CheckCanPlantTree(Vector2Int tilePos)
     {
+        if (m_TreeOnMap.ContainsKey(tilePos))
+            return false;
+
+        if (m_PlantOnMap.ContainsKey(tilePos))
+            return false;
+
         //TODO:: MAKRE SURE TREE IS IN BOUNDS
         //TODO:: TAKE NOTE OF TREE SURROUNDING SPACE
 
         return true;
     }
 
-    public bool Plant(Vector2Int tilePos, Plant_Types type, bool isTree = true)
+    public float Plant(Vector2Int tilePos)
     {
+        //gets a random available plant type
+        Inventory inventory = GameStats.Instance.m_Inventory;
+        Plant_Types type = GameStats.Instance.GetAvilablePlantType();
+        bool isTree = type < Plant_Types.FLOWERS;
+
         if (isTree)
         {
             if (m_TreeOnMap.ContainsKey(tilePos))
-                return false;
+                return 0.0f;
 
             //plant tree
             GameObject treeObj = m_PlantManager.GetAndSpawnTree();
             if (treeObj == null)
-                return false;
+                return 0.0f;
 
             treeObj.transform.position = m_MapGrid.GetCellCenterWorld((Vector3Int)tilePos);
             treeObj.SetActive(true);
@@ -79,8 +90,9 @@ public class MapManager : SingletonBase<MapManager>
                 m_PlantManager.InitType(type, tilePos, plantTree);
                 m_TreeOnMap.Add(tilePos, plantTree);
 
-                //TODO:: check if inventory allow planting, remove one from inventory
+                inventory.RemoveOneFromInventory(type); //remove one from inventory
 
+                return plantTree.m_PlantTime;
             }
         }
         else
@@ -88,7 +100,7 @@ public class MapManager : SingletonBase<MapManager>
             //TODO:: plant other stuff
         }
 
-        return true;
+        return 1.0f;
     }
 
     public void RemoveTree(Vector2Int tilePos)

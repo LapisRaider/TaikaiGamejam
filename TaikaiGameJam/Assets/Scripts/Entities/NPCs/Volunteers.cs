@@ -14,12 +14,17 @@ public class Volunteers : MonoBehaviour
     public float m_ChangeDirTime = 2.0f;
     public float m_RotationAngle = 10.0f;
     public float m_BorderRotationOffset = 4.0f;
+    public float m_CheckCanPlantTime = 0.5f; //reduce the amount of function calls to check whether theres space available to plant
+    float m_LastPlantingTime = 3.0f; //how long it takes before the volunteer can plant again
     [Tooltip("Radius, so if x is 1, it will show abv and below by 1")]
     public Vector2Int m_PlantTreeSearchRadius = new Vector2Int(1, 1);
     float m_ChangeDirTimeTracker = 0.0f;
+    float m_CheckCanPlantTimeTracker = 0.0f;
+    float m_LastPlantTimeTracker = 0.0f;
 
     [Header("Move To Location State")]
     Vector2 m_Destination = Vector2.zero;
+    public float m_StopDistance = 2.0f;
 
     [Header("Chase state")]
     public float m_ChaseSpeed = 3.0f;
@@ -27,7 +32,8 @@ public class Volunteers : MonoBehaviour
 
     [Header("Plant Tree State")]
     public Vector2Int m_PlantTreeGridPos = Vector2Int.zero;
-    public float m_StopDistance = 2.0f;
+    float m_PlantingTime = 0.0f;
+    float m_PlantingTimeTracker = 0.0f;
 
     public enum States
     {
@@ -51,8 +57,6 @@ public class Volunteers : MonoBehaviour
 
         m_Speed = Random.Range(m_MinMaxSpeed.x, m_MinMaxSpeed.y);
         m_BorderRotationOffset = m_BorderRotationOffset * Mathf.Deg2Rad;
-
-        //TODO:: SET SPAWN LOCATION
     }
 
     public void OnEnable()
@@ -84,8 +88,11 @@ public class Volunteers : MonoBehaviour
 
     public void ChangeState(States newState)
     {
+        States oldState = m_CurrentState;
+        m_CurrentState = newState;
+
         //check current state and exit
-        switch (m_CurrentState)
+        switch (oldState)
         {
             case States.IDLE:
                 ExitIdleState();
@@ -117,8 +124,6 @@ public class Volunteers : MonoBehaviour
                 EnterChaseState();
                 break;
         }
-
-        m_CurrentState = newState;
     }
 
     public bool CheckCanChase()
@@ -133,18 +138,17 @@ public class Volunteers : MonoBehaviour
     }
 
     #region IdleState
-    float tempTimer = 0.0f; //TODO:: REMOVE
-
     public void EnterIdleState()
     {
         //TODO:: change animation accordingly
 
         m_MoveDir = new Vector2(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f));
         m_NextDir = m_MoveDir;
+
+        m_CheckCanPlantTimeTracker = 0.0f;
+        m_ChangeDirTimeTracker = 0.0f;
         //update new direction
         ChangeDirection();
-
-        tempTimer = 0.0f;
     }
 
     public void UpdateIdleState()
@@ -153,6 +157,9 @@ public class Volunteers : MonoBehaviour
         m_ChangeDirTimeTracker += Time.deltaTime;
         if (m_ChangeDirTimeTracker > m_ChangeDirTime)
             ChangeDirection();
+
+        m_CheckCanPlantTimeTracker += Time.deltaTime;
+        m_CheckCanPlantTimeTracker = Mathf.Min(m_CheckCanPlantTimeTracker, m_CheckCanPlantTime + 1.0f);
 
         Vector3 checkPos = transform.position + (Vector3)(m_Speed * m_NextDir);
         if (CheckOutsideBoundary(checkPos))
@@ -191,12 +198,22 @@ public class Volunteers : MonoBehaviour
         Vector3 newPos = transform.position + (Vector3)(m_Speed * m_MoveDir * Time.deltaTime);
         transform.position = newPos;
 
-        //TODO:: temp TIMER, CHANGE TO SOMETHING ELSE
-        tempTimer += Time.deltaTime;
-        if (tempTimer > 3.0f)
+        //check last planted a tree timing to prevent NPC from planting at similar positions
+        m_LastPlantTimeTracker += Time.deltaTime;
+        m_LastPlantTimeTracker = Mathf.Min(m_LastPlantTimeTracker, m_LastPlantingTime + 1.0f);
+        if (m_LastPlantTimeTracker > m_LastPlantingTime)
         {
-            if (CheckIfCanPlantTrees())
-                ChangeState(States.MOVE_TO_FREE_SPACE);
+            //check if theres anything in the inventory
+            if (!GameStats.Instance.CheckIsInventoryEmpty())
+            {
+                if (m_CheckCanPlantTimeTracker >= m_CheckCanPlantTime)
+                {
+                    if (CheckIfCanPlantTrees())
+                        ChangeState(States.MOVE_TO_FREE_SPACE);
+
+                    m_CheckCanPlantTimeTracker = 0.0f;
+                }
+            }
         }
     }
 
@@ -223,7 +240,6 @@ public class Volunteers : MonoBehaviour
 
     public void ExitIdleState()
     {
-
     }
 
     public void ChangeDirection()
@@ -263,25 +279,31 @@ public class Volunteers : MonoBehaviour
     #endregion
 
     #region PlantTreeState
-    float otherTempTimer = 0.0f; //TODO:: remove this
-
-
     public void EnterPlantTreeState()
     {
-        MapManager.Instance.Plant(m_PlantTreeGridPos, Plant_Types.TREES);
-
-        otherTempTimer = 0.0f;
-    }
-
-    public void UpdatePlantTreeState()
-    {
-        otherTempTimer += Time.deltaTime;
-        if (otherTempTimer > 4)
+        //call the plant functiom, this functiom will handle choosing of the plant
+        //check if inventory is available first
+        if (!GameStats.Instance.CheckIsInventoryEmpty())
+        {
+            //get the time needed to plant this plant
+            m_PlantingTime = MapManager.Instance.Plant(m_PlantTreeGridPos);
+        }
+        else
         {
             ChangeState(States.IDLE);
         }
 
-        //TODO:: MAKE PROPER PLANT, LIKE REDUCE FROM INVENTORY AND STUFF
+        m_PlantingTimeTracker = 0.0f;
+        m_LastPlantTimeTracker = 0.0f;
+    }
+
+    public void UpdatePlantTreeState()
+    {
+        m_PlantingTimeTracker += Time.deltaTime;
+        if (m_PlantingTimeTracker > m_PlantingTime)
+        {
+            ChangeState(States.IDLE);
+        }
     }
 
     public void ExitPlantTreeState()

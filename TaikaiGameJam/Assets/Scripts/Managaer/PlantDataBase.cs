@@ -35,6 +35,8 @@ public class PlantDataBase
 public enum Plant_Types
 {
     TREES,
+    //put any type of tree between here
+
     FLOWERS,
 }
 

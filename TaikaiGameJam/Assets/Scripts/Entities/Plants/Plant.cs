@@ -3,6 +3,7 @@
 public class Plant : MonoBehaviour
 {
     [HideInInspector] public float m_GrowthTime = 1.0f;
+    [HideInInspector] public float m_PlantTime = 1.0f;
     [HideInInspector] public float m_TemperatureToGrow;
     [HideInInspector] public bool m_Grown = false;
     [HideInInspector] public int m_CurrentHealth = 0;
@@ -13,6 +14,7 @@ public class Plant : MonoBehaviour
     public void Init(PlantScriptableObj plantScript, Vector2Int plantGridPos)
     {
         m_GrowthTime = plantScript.m_GrowthTime;
+        m_PlantTime = plantScript.m_PlantTime;
         m_TemperatureToGrow = plantScript.m_TemperatureToGrow;
         m_CurrentHealth = plantScript.m_PlantHealth;
 

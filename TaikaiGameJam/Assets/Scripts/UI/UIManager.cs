@@ -11,6 +11,9 @@ public class UIManager : SingletonBase<UIManager>
     public Color m_MoneyLessThanZeroTextColor = Color.red;
     public Color m_MoneyDefaultColor = Color.black;
 
+    [Header("Popularity Related")]
+    public TextMeshProUGUI m_PopularityCountText;
+
     //[Header("Temperature related")]
     //public TextMeshProUGUI m_
 
@@ -26,5 +29,10 @@ public class UIManager : SingletonBase<UIManager>
         {
             m_CurrentMoneyText.color = m_MoneyDefaultColor;
         }
+    }
+
+    public void SetPopularityUI(int currentPopularity)
+    {
+        m_PopularityCountText.text = currentPopularity.ToString();
     }
 }

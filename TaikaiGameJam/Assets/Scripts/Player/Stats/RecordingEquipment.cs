@@ -11,17 +11,20 @@ public class RecordingEquipment
         TOTAL_MAXLV,
     }
 
-    [Tooltip("the monthly maintenence for each level")]
+    [Tooltip("Monthly maintenence")]
     public int[] m_MonthlyMaintenceFees = new int[(int)UpgradeStages.TOTAL_MAXLV];
-    public int[] m_UpgradePrice = new int[(int)UpgradeStages.TOTAL_MAXLV];
 
+    [Header("Popularity rate")]
+    public float[] m_PopularityRate = new float[(int)UpgradeStages.TOTAL_MAXLV];
+
+    [Header("Downgrade/Upgrade")]
     //the amount of money to give back to the player when they downgrade
     public float m_DowngradePercentage = 0.2f;
+    public int[] m_UpgradePrice = new int[(int)UpgradeStages.TOTAL_MAXLV];
 
     [HideInInspector] public UpgradeStages m_CurrLevel = UpgradeStages.NOOB_LV;
 
     //TODO:: the sprites for EACH equuipment level
-    //TODO:: how it affects the popularity ranking
 
     public void Upgrade()
     {
@@ -33,6 +36,9 @@ public class RecordingEquipment
         Money money = GameStats.Instance.m_Money;
         if (money != null)
             money.ReduceMoney(m_MonthlyMaintenceFees[(int)m_CurrLevel]);
+
+        //UPDATE POPULARITY
+        GameStats.Instance.UpdatePopularityInfo();
     }
 
     public void DownGrade()
@@ -47,6 +53,9 @@ public class RecordingEquipment
             money.ReduceMoney(moneyBack);
 
         m_CurrLevel -= 1;
+
+        //UPDATE POPULARITY
+        GameStats.Instance.UpdatePopularityInfo();
     }
 
     public bool AbleToUpgrade()
@@ -62,5 +71,10 @@ public class RecordingEquipment
     public int GetMonthlyMaintenceFees()
     {
         return m_MonthlyMaintenceFees[(int)m_CurrLevel];
+    }
+
+    public float GetPopularityRate()
+    {
+        return m_PopularityRate[(int)m_CurrLevel];
     }
 }

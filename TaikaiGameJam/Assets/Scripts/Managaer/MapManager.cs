@@ -90,6 +90,8 @@ public class MapManager : SingletonBase<MapManager>
                 m_PlantManager.InitType(type, tilePos, plantTree);
                 m_TreeOnMap.Add(tilePos, plantTree);
 
+                GameStats.Instance.UpdateCurrentPlantNumber(isTree, m_TreeOnMap.Count);
+
                 inventory.RemoveOneFromInventory(type); //remove one from inventory
 
                 return plantTree.m_PlantTime;
@@ -98,7 +100,9 @@ public class MapManager : SingletonBase<MapManager>
         else
         {
             //TODO:: plant other stuff
+            GameStats.Instance.UpdateCurrentPlantNumber(isTree, m_PlantOnMap.Count);
         }
+
 
         return 1.0f;
     }
@@ -109,6 +113,7 @@ public class MapManager : SingletonBase<MapManager>
             return;
 
         m_TreeOnMap.Remove(tilePos);
+        GameStats.Instance.UpdateCurrentPlantNumber(true, m_TreeOnMap.Count);
     }
     #endregion
 

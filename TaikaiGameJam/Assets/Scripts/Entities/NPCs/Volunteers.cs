@@ -29,8 +29,6 @@ public class Volunteers : MonoBehaviour
     public Vector2Int m_PlantTreeGridPos = Vector2Int.zero;
     public float m_StopDistance = 2.0f;
 
-    float m_PlantTiming = 0.0f; //TEMP
-
     public enum States
     {
         IDLE, //move ard freely
@@ -54,8 +52,13 @@ public class Volunteers : MonoBehaviour
         m_Speed = Random.Range(m_MinMaxSpeed.x, m_MinMaxSpeed.y);
         m_BorderRotationOffset = m_BorderRotationOffset * Mathf.Deg2Rad;
 
+        //TODO:: SET SPAWN LOCATION
+    }
+
+    public void OnEnable()
+    {
+        m_CurrentState = States.IDLE;
         EnterIdleState();
-        //TODO:: SET THE IDLE STATE PROPERLY AND SPAWN LOCATION
     }
 
     public void Update()

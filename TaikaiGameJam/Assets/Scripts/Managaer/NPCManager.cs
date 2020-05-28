@@ -54,10 +54,12 @@ public class NPCManager : SingletonBase<NPCManager>
         if (m_NPCObjectPooler != null)
             volunteer = m_NPCObjectPooler.GetAndSpawnVolunteers();
 
-        //TODO:: SET THE NPCS AT THE CORRECT POSITION
-        //INITIALISE THE VOLUNTEERS PROPERLY
+        //SET THE NPCS AT THE CORRECT POSITION
         if (volunteer != null)
+        {
+            volunteer.transform.localPosition = Vector2.zero;
             volunteer.SetActive(true);
+        }
     }
 
     public void FireVolunteer()

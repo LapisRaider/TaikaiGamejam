@@ -8,7 +8,7 @@ public class Popularity
 
     [Header("Increase Rate")]
     public float m_IncreaseTimeRate = 0.1f;
-    public int m_IncreaseNumber = 2;
+    public Vector2Int m_MaxMinIncreaseNumber = new Vector2Int(2,20);
     float m_IncreaseTimeTracker = 0.0f;
 
     [HideInInspector] public int m_CurrentPopularity = 0;
@@ -32,7 +32,7 @@ public class Popularity
 
             if (m_IncreaseTimeTracker > m_IncreaseTimeRate)
             {
-                m_CurrentPopularity += m_IncreaseNumber;
+                m_CurrentPopularity += Random.Range(m_MaxMinIncreaseNumber.x, m_MaxMinIncreaseNumber.y);
                 m_CurrentPopularity = Mathf.Min(m_CurrentPopularity, m_NextPopularity);
                 m_IncreaseTimeTracker = 0.0f;
 

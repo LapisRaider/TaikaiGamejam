@@ -15,6 +15,8 @@ public class MapManager : SingletonBase<MapManager>
 
     [Header("Plants Info")]
     [HideInInspector] public Dictionary<Vector2Int, PlantTree> m_TreeOnMap = new Dictionary<Vector2Int, PlantTree>();
+    [HideInInspector] public Dictionary<Vector2Int, Plant> m_PlantOnMap = new Dictionary<Vector2Int, Plant>();
+
     public PlantObjectPooler m_PlantManager = new PlantObjectPooler();
 
     public void Awake()
@@ -78,6 +80,7 @@ public class MapManager : SingletonBase<MapManager>
                 m_TreeOnMap.Add(tilePos, plantTree);
 
                 //TODO:: check if inventory allow planting, remove one from inventory
+
             }
         }
         else

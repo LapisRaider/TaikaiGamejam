@@ -15,6 +15,9 @@ public class RecordingEquipment
     public int[] m_MonthlyMaintenceFees = new int[(int)UpgradeStages.TOTAL_MAXLV];
     public int[] m_UpgradePrice = new int[(int)UpgradeStages.TOTAL_MAXLV];
 
+    //the amount of money to give back to the player when they downgrade
+    public float m_DowngradePercentage = 0.2f;
+
     [HideInInspector] public UpgradeStages m_CurrLevel = UpgradeStages.NOOB_LV;
 
     //TODO:: the sprites for EACH equuipment level
@@ -26,7 +29,10 @@ public class RecordingEquipment
             return;
 
         m_CurrLevel += 1;
-        //TODO:: reduce the money
+
+        Money money = GameStats.Instance.m_Money;
+        if (money != null)
+            money.ReduceMoney(m_MonthlyMaintenceFees[(int)m_CurrLevel]);
     }
 
     public void DownGrade()
@@ -34,8 +40,13 @@ public class RecordingEquipment
         if (!AbleToDowngrade())
             return;
 
+        //give back some money when they downgrade
+        int moneyBack = (int)(m_MonthlyMaintenceFees[(int)m_CurrLevel] * m_DowngradePercentage);
+        Money money = GameStats.Instance.m_Money;
+        if (money != null)
+            money.ReduceMoney(moneyBack);
+
         m_CurrLevel -= 1;
-        //TODO:: INCREASE MONEY
     }
 
     public bool AbleToUpgrade()

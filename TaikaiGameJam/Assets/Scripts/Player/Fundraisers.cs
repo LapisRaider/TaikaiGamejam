@@ -46,8 +46,7 @@ public class Fundraisers : MonoBehaviour
     }
     #endregion
 
-    //TODO:: WILL DEDUCT FROM ORIGINAL AMT
-    //IF PLAYER AMT IS NEGATIVE, WARN PLAYER BEFORE THEY CAN SPEND
+    //TODO:: IF PLAYER AMT IS NEGATIVE, WARN PLAYER BEFORE THEY CAN SPEND
     public void SetCurrentAmtSpent()
     {
         m_CurrentAmtSpent = 0;
@@ -59,6 +58,9 @@ public class Fundraisers : MonoBehaviour
 
     public void CheckSuccess()
     {
+        //deduct first
+        GameStats.Instance.m_Money.ReduceMoney(m_CurrentAmtSpent);
+
         //get the current popularity number
         int currentPopularity = GameStats.Instance.m_Popularity.m_CurrentPopularity;
         //divide by the number per percentage increase
@@ -79,7 +81,7 @@ public class Fundraisers : MonoBehaviour
         {
             //lose a certain amount of money spent
             int moneyReturn = (int)(m_CurrentAmtSpent - m_CurrentAmtSpent * Random.Range(m_MinMaxFailureDecreasePercentageAmt.x, m_MinMaxFailureDecreasePercentageAmt.y));
-            GameStats.Instance.m_Money.ReduceMoney(moneyReturn);
+            GameStats.Instance.m_Money.IncreaseMoney(moneyReturn);
         }
 
         //TODO:: show UI on success or failure

@@ -2038,6 +2038,7 @@ GameObject:
   - component: {fileID: 936071448}
   - component: {fileID: 936071447}
   - component: {fileID: 936071449}
+  - component: {fileID: 936071450}
   m_Layer: 0
   m_Name: DataBases
   m_TagString: Untagged
@@ -2108,6 +2109,21 @@ MonoBehaviour:
     m_CurrLawyerStage: 0
   m_CurrentTreeNumber: 0
   m_CurrentPlantNumber: 0
+--- !u!114 &936071450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 936071446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f6bc879ced5fb74db95a5f768f8460d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TimePerMonth: 60
+  m_CurrMonth: 1
+  m_CurrYear: 2020
 --- !u!1 &959883311
 GameObject:
   m_ObjectHideFlags: 0

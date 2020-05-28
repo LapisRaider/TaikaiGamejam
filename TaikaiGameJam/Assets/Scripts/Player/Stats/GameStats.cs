@@ -89,4 +89,15 @@ public class GameStats : SingletonBase<GameStats>
     {
         return m_VolunteerInfo.GetTotalMonthlyPayment() + m_RecordingEquipmentStats.GetMonthlyMaintenceFees() + m_LawyerServices.GetCurrentServiceFee();
     }
+
+    public void MonthlyDonationsIncreaseMoney()
+    {
+        m_Money.IncreaseMoney(GetTotalMonthDonations());
+    }
+
+    //TODO:: get monthly donations fees
+    public int GetTotalMonthDonations()
+    {
+        return 0;
+    }
 }

@@ -10,6 +10,8 @@ public class GameStats : SingletonBase<GameStats>
     public Inventory m_Inventory = new Inventory();
 
     public Popularity m_Popularity = new Popularity();
+    public Donations m_Donations = new Donations();
+
 
     [Header("Plant")]
     public int m_CurrentTreeNumber = 0;
@@ -95,9 +97,15 @@ public class GameStats : SingletonBase<GameStats>
         m_Money.IncreaseMoney(GetTotalMonthDonations());
     }
 
-    //TODO:: get monthly donations fees
+    //get monthly donations fees
     public int GetTotalMonthDonations()
     {
-        return 0;
+        if (m_Donations == null)
+            return 0;
+
+        if (m_Popularity == null)
+            return 0;
+
+        return m_Donations.GetMonthlyDonation(m_CurrentTreeNumber, m_CurrentPlantNumber, m_Popularity.m_CurrentPopularity);
     }
 }

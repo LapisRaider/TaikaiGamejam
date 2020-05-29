@@ -27,6 +27,9 @@ public class GameStats : SingletonBase<GameStats>
 
         if (m_Popularity != null)
             m_Popularity.Init();
+
+        if (m_Temperature != null)
+            m_Temperature.Init();
     }
 
     private void Update()

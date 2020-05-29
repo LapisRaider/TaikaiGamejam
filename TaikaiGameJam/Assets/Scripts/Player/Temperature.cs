@@ -5,6 +5,11 @@ public class Temperature
     public int[] m_TreeToTemperature = new int[(int)TemperatureType.ALL_TYPES];
     public TemperatureType m_CurrTempType = TemperatureType.EXTREMELY_HOT;
 
+    public void Init()
+    {
+        UIManager.Instance.SetTemperatureUI(m_CurrTempType);
+    }
+
     public void UpdateTemperature(int treeNumber)
     {
         //based on plant and flower count
@@ -14,8 +19,9 @@ public class Temperature
         if (treeNumber > m_TreeToTemperature[(int)m_CurrTempType + 1])
         {
             m_CurrTempType += 1; //go to next temperature type
-            //TODO:: update temperature UI
-            //TODO:: UPDATE ALL TREES
+                                 //TODO:: UPDATE ALL TREES
+
+            UIManager.Instance.SetTemperatureUI(m_CurrTempType);
         }
     }
 }

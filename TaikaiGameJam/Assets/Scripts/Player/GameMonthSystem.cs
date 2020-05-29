@@ -8,6 +8,11 @@ public class GameMonthSystem : MonoBehaviour
     [HideInInspector] public Months m_CurrMonth = Months.JAN;
     [HideInInspector] public int m_CurrYear = 2020;
 
+    public void Start()
+    {
+        UIManager.Instance.SetMonthUI(m_CurrMonth, m_CurrYear);
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -23,6 +28,9 @@ public class GameMonthSystem : MonoBehaviour
             //increase money for donations
             GameStats.Instance.MonthlyDonationsIncreaseMoney();
 
+            //update UI
+            UIManager.Instance.SetMonthUI(m_CurrMonth, m_CurrYear);
+
             if (m_CurrMonth > Months.DEC)
             {
                 m_CurrMonth = Months.JAN;
@@ -37,13 +45,13 @@ public enum Months
 {
     JAN = 1,
     FEB,
-    MARCH,
+    MAR,
     APR,
     MAY,
-    JUNE,
+    JUN,
     JUL,
     AUG,
-    SEPT,
+    SEP,
     OCT,
     NOV,
     DEC

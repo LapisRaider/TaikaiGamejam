@@ -129,24 +129,16 @@ public class RandomEventManager : SingletonBase<RandomEventManager>
 
         //randomize 
         if (eventObj.m_EventPicture.Length > 0)
-        {
             m_Image.sprite = eventObj.m_EventPicture[Random.Range(0, eventObj.m_EventPicture.Length)];
-        }
 
         if (eventObj.m_Description.Length > 0)
-        {
             m_DescriptionText.text = eventObj.m_Description[Random.Range(0, eventObj.m_Description.Length)];
-        }
 
         if (eventObj.m_Title.Length > 0)
-        {
             m_TitleText.text = eventObj.m_Title[Random.Range(0, eventObj.m_Title.Length)];
-        }
 
         if (eventObj.m_NameOfPersonInvolve.Length > 0)
-        {
             m_NameOfPersonInvolveText.text = eventObj.m_NameOfPersonInvolve[Random.Range(0, eventObj.m_NameOfPersonInvolve.Length)];
-        }
 
 
         //TODO:: do the affected text
@@ -165,12 +157,32 @@ public class RandomEventManager : SingletonBase<RandomEventManager>
                 break;
             case PositiveEventTypes.GET_MONEY:
                 {
+                    Money money = GameStats.Instance.m_Money;
+                    if (money == null)
+                        return;
 
+                    int increaseAmt = 0;
+                    if (eventObj.m_AffectedByPercentage)
+                        increaseAmt = (int)((float)money.m_CurrMoney * Random.Range(eventObj.m_MinMaxAffectedPercentages.x, eventObj.m_MinMaxAffectedPercentages.y));
+                    else
+                        increaseAmt = (int)Random.Range(eventObj.m_MinMaxAffectedAmount.x, eventObj.m_MinMaxAffectedAmount.y);
+
+                    money.IncreaseMoney(increaseAmt);
                 }
                 break;
             case PositiveEventTypes.INCREASE_POPULARITY:
                 {
+                    Popularity popularity = GameStats.Instance.m_Popularity;
+                    if (popularity == null)
+                        return;
 
+                    int increaseAmt = 0;
+                    if (eventObj.m_AffectedByPercentage)
+                        increaseAmt = (int)((float)popularity.m_CurrentPopularity * Random.Range(eventObj.m_MinMaxAffectedPercentages.x, eventObj.m_MinMaxAffectedPercentages.y));
+                    else
+                        increaseAmt = (int)Random.Range(eventObj.m_MinMaxAffectedAmount.x, eventObj.m_MinMaxAffectedAmount.y);
+
+                    popularity.UpdatePopularityOffset(increaseAmt);
                 }
                 break;
         }
@@ -181,13 +193,40 @@ public class RandomEventManager : SingletonBase<RandomEventManager>
         switch (eventObj.m_NegativeEventType)
         {
             case NegativeEventTypes.INCREASE_TEMPERATURE:
-                //TODO:: increase temperature
+                {
+                    //TODO:: increase temperature
+
+                }
                 break;
             case NegativeEventTypes.DECREASE_POPULARITY:
+                {
+                    Popularity popularity = GameStats.Instance.m_Popularity;
+                    if (popularity == null)
+                        return;
 
+                    int decreaseAmt = 0;
+                    if (eventObj.m_AffectedByPercentage)
+                        decreaseAmt = (int)((float)popularity.m_CurrentPopularity * Random.Range(eventObj.m_MinMaxAffectedPercentages.x, eventObj.m_MinMaxAffectedPercentages.y));
+                    else
+                        decreaseAmt = (int)Random.Range(eventObj.m_MinMaxAffectedAmount.x, eventObj.m_MinMaxAffectedAmount.y);
+
+                    popularity.UpdatePopularityOffset(-decreaseAmt);
+                }
                 break;
             case NegativeEventTypes.LOSE_MONEY:
+                {
+                    Money money = GameStats.Instance.m_Money;
+                    if (money == null)
+                        return;
 
+                    int decreaseAmt = 0;
+                    if (eventObj.m_AffectedByPercentage)
+                        decreaseAmt = (int)((float)money.m_CurrMoney * Random.Range(eventObj.m_MinMaxAffectedPercentages.x, eventObj.m_MinMaxAffectedPercentages.y));
+                    else
+                        decreaseAmt = (int)Random.Range(eventObj.m_MinMaxAffectedAmount.x, eventObj.m_MinMaxAffectedAmount.y);
+
+                    money.ReduceMoney(decreaseAmt);
+                }
                 break;
         }
     }
@@ -216,7 +255,8 @@ public enum NegativeEventTypes
     N_NONE,
     INCREASE_TEMPERATURE,
     DECREASE_POPULARITY,
-    LOSE_MONEY
+    LOSE_MONEY,
+    EVIL_COOPERATE,
 }
 
 

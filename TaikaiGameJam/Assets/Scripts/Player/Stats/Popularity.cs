@@ -13,6 +13,7 @@ public class Popularity
 
     [HideInInspector] public int m_CurrentPopularity = 0;
     [HideInInspector] public int m_NextPopularity = 0;
+    [HideInInspector] public int m_PopularityOffset = 0;
 
     public void Init()
     {
@@ -48,6 +49,12 @@ public class Popularity
         float powerFromTrees = m_TreePopularityRate * GameStats.Instance.m_CurrentTreeNumber
             + m_PlantPopularityRate * GameStats.Instance.m_CurrentPlantNumber;
 
-        m_NextPopularity = (int)(Mathf.Exp(powerFromTrees) * GameStats.Instance.m_RecordingEquipmentStats.GetPopularityRate());
+        m_NextPopularity = (int)(Mathf.Exp(powerFromTrees) * GameStats.Instance.m_RecordingEquipmentStats.GetPopularityRate() + m_PopularityOffset);
+    }
+
+    public void UpdatePopularityOffset(int offsetAmt)
+    {
+        m_PopularityOffset += offsetAmt;
+        UpdatePopularity();
     }
 }

@@ -76,4 +76,20 @@ public class NPCManager : SingletonBase<NPCManager>
         }
     }
     #endregion
+
+    #region evil people related
+    public void SpawnEvilPeople()
+    {
+        if (m_NPCObjectPooler != null)
+        {
+            GameObject evilPeople = m_NPCObjectPooler.GetAndSpawnBadGuy();
+            evilPeople.SetActive(true);
+        }
+    }
+
+    public int CheckActiveEvilPeople()
+    {
+        return m_NPCObjectPooler.GetNumberOfActiveBadGuys();
+    }
+    #endregion
 }

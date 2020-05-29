@@ -80,6 +80,12 @@ public class RandomEventManager : SingletonBase<RandomEventManager>
         m_TotalNegativeWeightage = currentWeightage;
     }
 
+    public void Update()
+    {
+        if (Input.GetKey("up"))
+            StartEvent();
+    }
+
     public void StartEvent()
     {
         //randomize the weightage, loop through the array to see if theres any within the correct values
@@ -142,6 +148,7 @@ public class RandomEventManager : SingletonBase<RandomEventManager>
 
 
         //TODO:: do the affected text
+        //TODO:: temp pause game
 
         m_UIGameObject.SetActive(true);
     }
@@ -226,6 +233,23 @@ public class RandomEventManager : SingletonBase<RandomEventManager>
                         decreaseAmt = (int)Random.Range(eventObj.m_MinMaxAffectedAmount.x, eventObj.m_MinMaxAffectedAmount.y);
 
                     money.ReduceMoney(decreaseAmt);
+                }
+                break;
+            case NegativeEventTypes.EVIL_COOPERATE:
+                {
+                    int numberToSpawn = (int)Random.Range(eventObj.m_MinMaxAffectedAmount.x, eventObj.m_MinMaxAffectedAmount.y);
+
+                    for(int i = 0; i < numberToSpawn; ++i)
+                    {
+                        NPCManager.Instance.SpawnEvilPeople();
+                    }
+
+                    //get number of trees before this event
+                    //get number of trees after this event
+                    //THIS EVENT CAN ONLY HAPPEN WHEN THERE ARE TREES
+                    //TODO:: check evil people count, if 0 event cleared
+                    //put a notification on whether player manage to earn back some money from it
+                    //based on lawyer
                 }
                 break;
         }

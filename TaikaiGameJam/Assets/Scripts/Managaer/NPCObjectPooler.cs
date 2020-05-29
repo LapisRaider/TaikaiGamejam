@@ -83,5 +83,17 @@ public class NPCObjectPooler
                 m_EvilPeopleList.Add(badPeopleComp);
         }
     }
+
+    public int GetNumberOfActiveBadGuys()
+    {
+        int numberOfActiveBadGuys = 0;
+        foreach (EvilPeople badGuy in m_EvilPeopleList)
+        {
+            if (badGuy.gameObject.activeSelf)
+                ++numberOfActiveBadGuys;
+        }
+
+        return numberOfActiveBadGuys;
+    }
     #endregion
 }

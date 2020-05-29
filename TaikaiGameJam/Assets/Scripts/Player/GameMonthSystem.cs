@@ -18,6 +18,7 @@ public class GameMonthSystem : MonoBehaviour
 
             //deduct money
             GameStats.Instance.DeductTotalMonthFees();
+            m_CurrTimeTracker = 0.0f;
 
             //increase money for donations
             GameStats.Instance.MonthlyDonationsIncreaseMoney();

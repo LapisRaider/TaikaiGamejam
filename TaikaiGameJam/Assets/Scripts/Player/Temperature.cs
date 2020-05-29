@@ -1,24 +1,21 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class Temperature : MonoBehaviour
+﻿[System.Serializable]
+public class Temperature
 {
     //temperature is affected based on the number of trees and plants u have
-    //TODO::
+    public int[] m_TreeToTemperature = new int[(int)TemperatureType.ALL_TYPES];
+    public TemperatureType m_CurrTempType = TemperatureType.EXTREMELY_HOT;
 
-    
-
-    void Start()
+    public void UpdateTemperature(int treeNumber)
     {
+        //based on plant and flower count
+        if (m_CurrTempType == TemperatureType.NICE)
+            return;
 
-    }
-
-    public void UpdateTemperature()
-    {
-        //TODO:: based on plant and flower count
-
-
+        if (treeNumber > m_TreeToTemperature[(int)m_CurrTempType + 1])
+        {
+            m_CurrTempType += 1; //go to next temperature type
+            //TODO:: update temperature UI
+        }
     }
 }
 
@@ -27,5 +24,6 @@ public enum TemperatureType
     EXTREMELY_HOT,
     VERY_HOT,
     HOT,
-    NICE
+    NICE,
+    ALL_TYPES
 }

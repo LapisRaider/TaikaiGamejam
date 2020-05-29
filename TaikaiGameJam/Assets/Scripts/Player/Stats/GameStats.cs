@@ -12,6 +12,7 @@ public class GameStats : SingletonBase<GameStats>
     public Popularity m_Popularity = new Popularity();
     public Donations m_Donations = new Donations();
 
+    public Temperature m_Temperature = new Temperature();
 
     [Header("Plant")]
     public int m_CurrentTreeNumber = 0;
@@ -69,6 +70,7 @@ public class GameStats : SingletonBase<GameStats>
             m_CurrentPlantNumber = newCount;
 
         UpdatePopularityInfo();
+        UpdateTemperatureInfo();
     }
     #endregion
 
@@ -79,6 +81,16 @@ public class GameStats : SingletonBase<GameStats>
             return;
 
         m_Popularity.UpdatePopularity();
+    }
+    #endregion
+
+    #region temperature
+    public void UpdateTemperatureInfo()
+    {
+        if (m_Temperature == null)
+            return;
+
+        m_Temperature.UpdateTemperature(m_CurrentTreeNumber);
     }
     #endregion
 

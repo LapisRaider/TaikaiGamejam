@@ -13,6 +13,7 @@ public class LawyerServices
         TOTAL_STAGES //DONT BOTHER THIS
     }
 
+    [System.Serializable]
     public class LawyerStagesData
     {
         public LawyerStages m_LawyerStage = LawyerStages.NONE;

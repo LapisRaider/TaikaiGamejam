@@ -2040,6 +2040,7 @@ GameObject:
   - component: {fileID: 936071449}
   - component: {fileID: 936071450}
   - component: {fileID: 936071451}
+  - component: {fileID: 936071452}
   m_Layer: 0
   m_Name: DataBases
   m_TagString: Untagged
@@ -2139,11 +2140,48 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_MinMaxSuccessPercentage: {x: 0.05, y: 0.7}
   m_MinMaxSuccessIncreasePercentageAmt: {x: 0.3, y: 0.5}
-  m_MinMaxFailureDecreasePercentageAmt: {x: 0.3, y: 0.5}
+  m_MinMaxFailurePercentageGetBackAmt: {x: 0.3, y: 0.5}
   m_PopularityIncreaseRate: 50
   m_NumbersTextUI: []
   m_SignificantNumberPlace: 
   m_CurrentAmtSpent: 0
+--- !u!114 &936071452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 936071446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87e2bd4d8fa989f4285aeaf20d77e678, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bDontDestroyOnLoad: 0
+  m_PositiveEvents:
+  - m_EventScritableObj: {fileID: 11400000, guid: 78ce33975fc8c424aa58f0361d043a76,
+      type: 2}
+    m_Chance: 15
+    m_Weightage: {x: 0, y: 0}
+    m_EventCompleted: 0
+  - m_EventScritableObj: {fileID: 11400000, guid: 9ffd1f504145f444b8eb34e546c64dbb,
+      type: 2}
+    m_Chance: 10
+    m_Weightage: {x: 0, y: 0}
+    m_EventCompleted: 0
+  - m_EventScritableObj: {fileID: 11400000, guid: 54d56f73031c34045932a6299dc66d4c,
+      type: 2}
+    m_Chance: 50
+    m_Weightage: {x: 0, y: 0}
+    m_EventCompleted: 0
+  m_NegativeEvents: []
+  m_NegativeEventChance: 0.5
+  m_UIGameObject: {fileID: 0}
+  m_DescriptionText: {fileID: 0}
+  m_NameOfPersonInvolveText: {fileID: 0}
+  m_TitleText: {fileID: 0}
+  m_AffectedText: {fileID: 0}
+  m_Image: {fileID: 0}
 --- !u!1 &959883311
 GameObject:
   m_ObjectHideFlags: 0

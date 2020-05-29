@@ -1,16 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class RandomEventManager : MonoBehaviour
+public class RandomEventManager : SingletonBase<RandomEventManager>
 {
     public RandomEvent[] m_PositiveEvents;
     public RandomEvent[] m_NegativeEvents;
 
     public float m_NegativeEventChance = 0.5f;
-    int m_TotalWeightage = 0;
+    int m_TotalPositiveWeightage = 0;
+    int m_TotalNegativeWeightage = 0;
 
     [Header("UI")]
     public GameObject m_UIGameObject;
@@ -42,31 +41,92 @@ public class RandomEventManager : MonoBehaviour
                 break;
         }
 
-        int m_CurrentWeightage = 0;
+        int currentWeightage = 0;
         foreach(RandomEvent eventObj in m_PositiveEvents)
         {
-            eventObj.m_Weightage = m_CurrentWeightage + eventObj.m_Chance;
-            m_CurrentWeightage += eventObj.m_Chance;
+            eventObj.m_Weightage.x = currentWeightage;
+            eventObj.m_Weightage.y = currentWeightage + eventObj.m_Chance;
+            currentWeightage += eventObj.m_Chance;
         }
+        m_TotalPositiveWeightage = currentWeightage;
+
+        //---------------------For the negative events------------------------------
+        for (int i = 0; i < m_NegativeEvents.Length; ++i)
+        {
+            bool sorted = true;
+            for (int r = i; r < m_NegativeEvents.Length - i; ++r)
+            {
+                if (m_NegativeEvents[i].m_Chance > m_NegativeEvents[r].m_Chance)
+                {
+                    //swap
+                    RandomEvent temp = m_NegativeEvents[i];
+                    m_NegativeEvents[i] = m_NegativeEvents[r];
+                    m_NegativeEvents[r] = temp;
+                    sorted = false;
+                }
+            }
+
+            if (sorted)
+                break;
+        }
+
+        currentWeightage = 0;
+        foreach (RandomEvent eventObj in m_NegativeEvents)
+        {
+            eventObj.m_Weightage.x = currentWeightage;
+            eventObj.m_Weightage.y = currentWeightage + eventObj.m_Chance;
+            currentWeightage += eventObj.m_Chance;
+        }
+        m_TotalNegativeWeightage = currentWeightage;
     }
 
-    public void StartEvent(EventScriptableObj eventObj)
+    public void StartEvent()
     {
-        //TODO:: randomized
+        //randomize the weightage, loop through the array to see if theres any within the correct values
+
         //TODO:: check one time only events
         float negativeChance = Random.Range(0.0f, 1.0f);
         if (negativeChance <= m_NegativeEventChance) //negative event
         {
-            HandleNegativeEvent(eventObj);
+            int weight = Random.Range(0, m_TotalNegativeWeightage);
+            foreach (RandomEvent randomEvent in m_NegativeEvents)
+            {
+                if (weight > randomEvent.m_Weightage.x &&
+                    weight <= randomEvent.m_Weightage.y)
+                {
+                    HandleNegativeEvent(randomEvent.m_EventScritableObj);
+                    break;
+                }
+            }
         }
         else
         {
-            HandlePositiveEvents(eventObj);
+            int weight = Random.Range(0, m_TotalPositiveWeightage);
+            foreach (RandomEvent randomEvent in m_PositiveEvents)
+            {
+                if (weight > randomEvent.m_Weightage.x &&
+                    weight <= randomEvent.m_Weightage.y)
+                {
+                    HandlePositiveEvents(randomEvent.m_EventScritableObj);
+                    break;
+                }
+            }
         }
+    }
+
+    public void StartEvent(EventScriptableObj eventObj, bool positive = true)
+    {
+        if (!positive)
+            HandleNegativeEvent(eventObj);
+        else
+            HandlePositiveEvents(eventObj);
     }
 
     public void UpdateUI(EventScriptableObj eventObj)
     {
+        if (m_UIGameObject == null)
+            return;
+
         //randomize 
         if (eventObj.m_EventPicture.Length > 0)
         {
@@ -139,7 +199,7 @@ public class RandomEvent
     public EventScriptableObj m_EventScritableObj;
     public int m_Chance = 0;
 
-    [HideInInspector] public int m_Weightage = 0;
+    [HideInInspector] public Vector2Int m_Weightage = Vector2Int.zero;
     [HideInInspector] public bool m_EventCompleted = false;
 }
 

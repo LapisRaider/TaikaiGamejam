@@ -17,6 +17,8 @@ public class UIManager : SingletonBase<UIManager>
     //[Header("Temperature related")]
     //public TextMeshProUGUI m_
 
+    //TODO:: Temperature UI
+
     public void SetCurrentMoneyUI(int currAmt)
     {
         m_CurrentMoneyText.text = currAmt.ToString();

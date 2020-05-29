@@ -4,7 +4,7 @@ public class Plant : MonoBehaviour
 {
     [HideInInspector] public float m_GrowthTime = 1.0f;
     [HideInInspector] public float m_PlantTime = 1.0f;
-    [HideInInspector] public float m_TemperatureToGrow;
+    [HideInInspector] public TemperatureType m_TemperatureToGrow;
     [HideInInspector] public bool m_Grown = false;
     [HideInInspector] public int m_CurrentHealth = 0;
     [HideInInspector] public Vector2Int m_PlantGridPos = Vector2Int.zero;

@@ -117,6 +117,12 @@ public class MapManager : SingletonBase<MapManager>
     }
     #endregion
 
+    //TODO:: call this when temperature is updated
+    public void PlantsUpdateTemperature()
+    {
+
+    }
+
     public PlantDataBase GetPlantDataBase()
     {
         return m_PlantManager.m_PlantDataBase;

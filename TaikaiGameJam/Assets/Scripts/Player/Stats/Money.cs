@@ -12,14 +12,17 @@ public class Money
         UIManager.Instance.SetCurrentMoneyUI(m_CurrMoney);
     }
 
-    public void ReduceMoney(int reduce)
+    public void ReduceMoney(int reduce, bool checkBankrupt = true)
     {
         m_CurrMoney -= reduce;
         UIManager.Instance.SetCurrentMoneyUI(m_CurrMoney);
 
-        if (m_CurrMoney <= m_BankruptcyAmt)
+        if (checkBankrupt)
         {
-            //TODO:: Lose the game
+            if (m_CurrMoney <= m_BankruptcyAmt)
+            {
+                //TODO:: Lose the game
+            }
         }
     }
 

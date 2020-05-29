@@ -6,7 +6,7 @@ public class Fundraisers : MonoBehaviour
     [Header("Gacha percentages")]
     public Vector2 m_MinMaxSuccessPercentage = new Vector2(0.05f,0.7f);
     public Vector2 m_MinMaxSuccessIncreasePercentageAmt = new Vector2(0.3f, 0.5f);
-    public Vector2 m_MinMaxFailureDecreasePercentageAmt = new Vector2(0.3f, 0.5f);
+    public Vector2 m_MinMaxFailurePercentageGetBackAmt = new Vector2(0.3f, 0.5f);
 
     //number of people per increase success?
     [Header("Factors affecting")]
@@ -59,7 +59,7 @@ public class Fundraisers : MonoBehaviour
     public void CheckSuccess()
     {
         //deduct first
-        GameStats.Instance.m_Money.ReduceMoney(m_CurrentAmtSpent);
+        GameStats.Instance.m_Money.ReduceMoney(m_CurrentAmtSpent, false);
 
         //get the current popularity number
         int currentPopularity = GameStats.Instance.m_Popularity.m_CurrentPopularity;
@@ -80,10 +80,11 @@ public class Fundraisers : MonoBehaviour
         else //failed
         {
             //lose a certain amount of money spent
-            int moneyReturn = (int)(m_CurrentAmtSpent - m_CurrentAmtSpent * Random.Range(m_MinMaxFailureDecreasePercentageAmt.x, m_MinMaxFailureDecreasePercentageAmt.y));
+            int moneyReturn = (int)(m_CurrentAmtSpent * Random.Range(m_MinMaxFailurePercentageGetBackAmt.x, m_MinMaxFailurePercentageGetBackAmt.y));
             GameStats.Instance.m_Money.IncreaseMoney(moneyReturn);
         }
 
         //TODO:: show UI on success or failure
+        //TODO:: check bankrupt?
     }
 }

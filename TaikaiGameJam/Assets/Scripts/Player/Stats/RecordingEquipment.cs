@@ -5,6 +5,7 @@ public class RecordingEquipment
 {
     public enum UpgradeStages
     {
+        NONE,
         NOOB_LV,
         BETTER_LV,
         BEST_LV,
@@ -22,9 +23,11 @@ public class RecordingEquipment
     public float m_DowngradePercentage = 0.2f;
     public int[] m_UpgradePrice = new int[(int)UpgradeStages.TOTAL_MAXLV];
 
-    [HideInInspector] public UpgradeStages m_CurrLevel = UpgradeStages.NOOB_LV;
+    [HideInInspector] public UpgradeStages m_CurrLevel = UpgradeStages.NONE;
 
-    //TODO:: the sprites for EACH equuipment level
+    //the sprites for EACH equuipment level
+    [Header("UI stuff")]
+    public Sprite[] m_EquipmentSprite = new Sprite[(int)UpgradeStages.TOTAL_MAXLV];
 
     public void Upgrade()
     {
@@ -35,7 +38,7 @@ public class RecordingEquipment
 
         Money money = GameStats.Instance.m_Money;
         if (money != null)
-            money.ReduceMoney(m_MonthlyMaintenceFees[(int)m_CurrLevel]);
+            money.ReduceMoney(m_UpgradePrice[(int)m_CurrLevel]);
 
         //UPDATE POPULARITY
         GameStats.Instance.UpdatePopularityInfo();
@@ -47,10 +50,10 @@ public class RecordingEquipment
             return;
 
         //give back some money when they downgrade
-        int moneyBack = (int)(m_MonthlyMaintenceFees[(int)m_CurrLevel] * m_DowngradePercentage);
+        int moneyBack = (int)(m_UpgradePrice[(int)m_CurrLevel] * m_DowngradePercentage);
         Money money = GameStats.Instance.m_Money;
         if (money != null)
-            money.ReduceMoney(moneyBack);
+            money.IncreaseMoney(moneyBack);
 
         m_CurrLevel -= 1;
 
@@ -76,5 +79,21 @@ public class RecordingEquipment
     public float GetPopularityRate()
     {
         return m_PopularityRate[(int)m_CurrLevel];
+    }
+
+    public int GetNextUpgradePrice()
+    {
+        if (AbleToUpgrade())
+            return m_UpgradePrice[(int)m_CurrLevel + 1];
+        else
+            return 0;
+    }
+
+    public Sprite GetSpriteMode(UpgradeStages upgradeStages)
+    {
+        if (upgradeStages >= UpgradeStages.TOTAL_MAXLV || upgradeStages < 0)
+            return null;
+
+        return m_EquipmentSprite[(int)upgradeStages];
     }
 }

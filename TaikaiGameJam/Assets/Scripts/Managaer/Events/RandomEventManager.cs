@@ -128,6 +128,7 @@ public class RandomEventManager : SingletonBase<RandomEventManager>
             HandlePositiveEvents(eventObj);
     }
 
+    #region UI
     public void UpdateUI(EventScriptableObj eventObj)
     {
         if (m_UIGameObject == null)
@@ -153,6 +154,13 @@ public class RandomEventManager : SingletonBase<RandomEventManager>
 
         m_UIGameObject.SetActive(true);
     }
+
+    public void CloseEventPage()
+    {
+        m_UIGameObject.SetActive(false);
+    }
+
+    #endregion
 
     public void HandlePositiveEvents(EventScriptableObj eventObj)
     {

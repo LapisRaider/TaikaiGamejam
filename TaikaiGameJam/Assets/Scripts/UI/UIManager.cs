@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 using TMPro;
 
 public class UIManager : SingletonBase<UIManager>
@@ -25,11 +22,17 @@ public class UIManager : SingletonBase<UIManager>
 
     //TODO:: do transitions
     [Header("Pages Related")]
-    public GameObject m_Parent;
-    public GameObject m_ShopPage;
-    public GameObject m_FundRaiserPage;
-    public GameObject m_CalenderPage;
-    public GameObject m_ServicesPage;
+    public GameObject m_ParentPages;
+    public GameObject[] m_Pages;
+
+    public enum Pages
+    {
+        SHOP_PAGE,
+        FUND_RAISER,
+        SERVICES,
+        CALENDER,
+        TOTAL_PAGE
+    }
 
     public void SetMonthUI(Months month, int year)
     {
@@ -103,4 +106,26 @@ public class UIManager : SingletonBase<UIManager>
 
         return sentence;
     }
+
+    #region SetUI
+    public void SetPagesActive(int currentPage)
+    {
+        for (int i = 0; i < m_Pages.Length; ++i)
+        {
+            m_Pages[i].SetActive(currentPage == i);
+        }
+
+        m_ParentPages.SetActive(true);
+    }
+
+    public void ClosePage()
+    {
+        for (int i = 0; i < m_Pages.Length; ++i)
+        {
+            m_Pages[i].SetActive(false);
+        }
+
+        m_ParentPages.SetActive(false);
+    }
+    #endregion
 }

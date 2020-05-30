@@ -124,8 +124,6 @@ public class ShopManager : MonoBehaviour
 
     public void UpgradeEquipment()
     {
-        //TODO:: CHECK IF GOT ENOUGH MONEY FIRST
-
         RecordingEquipment recordingEquipment = GameStats.Instance.m_RecordingEquipmentStats;
         recordingEquipment.Upgrade();
 

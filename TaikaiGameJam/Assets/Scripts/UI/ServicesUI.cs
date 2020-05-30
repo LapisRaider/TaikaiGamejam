@@ -58,7 +58,6 @@ public class ServicesUI : MonoBehaviour
     #endregion
 
     #region Lawyer
-    //TODO:: Lawyer related UI
     public void UpdateLawyerDetailsUI()
     {
         LawyerServices lawyer = GameStats.Instance.m_LawyerServices;

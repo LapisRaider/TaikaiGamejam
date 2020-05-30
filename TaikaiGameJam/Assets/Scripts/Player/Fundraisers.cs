@@ -21,13 +21,28 @@ public class Fundraisers : MonoBehaviour
     [Header("Warning UI")]
     public GameObject m_Warning;
 
+    [Header("Win Lose UI")]
+    public GameObject m_SuccessUI;
+    public TextMeshProUGUI m_SuccessEarnings;
+    public GameObject m_NoSuccessUI;
+    public TextMeshProUGUI m_NoSuccessEarnings;
+
+
     [HideInInspector] public int m_CurrentAmtSpent = 0;
     [HideInInspector] public float m_ChanceOfSuccess = 0.0f;
+
+    //TODO:: make it once a month only
 
     public void OnEnable()
     {
         if (m_Warning != null)
             m_Warning.SetActive(false);
+
+        if (m_SuccessUI != null)
+            m_SuccessUI.SetActive(false);
+
+        if (m_NoSuccessUI != null)
+            m_NoSuccessUI.SetActive(false);
 
         foreach (TextMeshProUGUI text in m_NumbersTextUI)
         {
@@ -86,9 +101,13 @@ public class Fundraisers : MonoBehaviour
         if (money == null)
             return;
 
+        //make sure amt is more than 0
+        if (m_CurrentAmtSpent == 0)
+            return;
+
+        //warn player is amt is going to be in the red
         if (money.m_CurrMoney - m_CurrentAmtSpent <= 0)
         {
-            //TODO:: IF PLAYER AMT IS NEGATIVE, WARN PLAYER BEFORE THEY CAN SPEND
             m_Warning.SetActive(true);
         }
         else
@@ -132,23 +151,52 @@ public class Fundraisers : MonoBehaviour
             //get back the amount of money spent and more
             int moneyReturn = (int)(m_CurrentAmtSpent + m_CurrentAmtSpent * Random.Range(m_MinMaxSuccessIncreasePercentageAmt.x, m_MinMaxSuccessIncreasePercentageAmt.y));
             GameStats.Instance.m_Money.IncreaseMoney(moneyReturn);
+
+            if (m_SuccessEarnings != null)
+                m_SuccessEarnings.text = "$" + moneyReturn.ToString() + " was donated";
+
+            ShowSuccesspopup(true);
         }
         else //failed
         {
             //lose a certain amount of money spent
             int moneyReturn = (int)(m_CurrentAmtSpent * Random.Range(m_MinMaxFailurePercentageGetBackAmt.x, m_MinMaxFailurePercentageGetBackAmt.y));
             GameStats.Instance.m_Money.IncreaseMoney(moneyReturn);
+
+            if (m_SuccessEarnings != null)
+                m_NoSuccessEarnings.text = "You lost $" + (m_CurrentAmtSpent - moneyReturn).ToString();
+
+            ShowSuccesspopup(false);
         }
 
-        //TODO:: show UI on success or failure
         //TODO:: check bankrupt?
     }
 
-    #region warningUI
+    #region UI popups
     public void SetWarningUIActive(bool active)
     {
         if (m_Warning != null)
             m_Warning.SetActive(active);
+    }
+
+    public void SetSuccessUIActive(bool active)
+    {
+        if (m_SuccessUI != null)
+            m_SuccessUI.SetActive(active);
+    }
+
+    public void SetUnsuccessfulUIActive(bool active)
+    {
+        if (m_NoSuccessUI != null)
+            m_NoSuccessUI.SetActive(active);
+    }
+
+    public void ShowSuccesspopup(bool success)
+    {
+        if (success)
+            SetSuccessUIActive(true);
+        else
+            SetUnsuccessfulUIActive(true);
     }
     #endregion
 }

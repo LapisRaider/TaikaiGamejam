@@ -18,12 +18,18 @@ public class Fundraisers : MonoBehaviour
     [HideInInspector] public int[] m_SignificantNumberPlace;
     public TextMeshProUGUI m_PercentageText;
 
+    [Header("Warning UI")]
+    public GameObject m_Warning;
+
     [HideInInspector] public int m_CurrentAmtSpent = 0;
     [HideInInspector] public float m_ChanceOfSuccess = 0.0f;
 
     public void OnEnable()
     {
-        foreach(TextMeshProUGUI text in m_NumbersTextUI)
+        if (m_Warning != null)
+            m_Warning.SetActive(false);
+
+        foreach (TextMeshProUGUI text in m_NumbersTextUI)
         {
             text.text = (0).ToString();
         }
@@ -83,7 +89,7 @@ public class Fundraisers : MonoBehaviour
         if (money.m_CurrMoney - m_CurrentAmtSpent <= 0)
         {
             //TODO:: IF PLAYER AMT IS NEGATIVE, WARN PLAYER BEFORE THEY CAN SPEND
-
+            m_Warning.SetActive(true);
         }
         else
         {
@@ -137,4 +143,12 @@ public class Fundraisers : MonoBehaviour
         //TODO:: show UI on success or failure
         //TODO:: check bankrupt?
     }
+
+    #region warningUI
+    public void SetWarningUIActive(bool active)
+    {
+        if (m_Warning != null)
+            m_Warning.SetActive(active);
+    }
+    #endregion
 }

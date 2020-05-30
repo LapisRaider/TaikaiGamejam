@@ -22,9 +22,6 @@ public class ShopManager : MonoBehaviour
     public TextMeshProUGUI m_UpgradeDescriptionText;
     public TextMeshProUGUI m_DowngradeDescriptionText;
 
-
-    //todo:: when hover over will show the maintenece cost of your prev, curr, and next
-
     public enum VideoEquipmentUIStates
     {
         OLD,
@@ -83,8 +80,6 @@ public class ShopManager : MonoBehaviour
 
         RecordingEquipment.UpgradeStages currStage = recordingEquipment.m_CurrLevel;
 
-        //m_VideoMaintenceCostText.SetText(volunteerStats.m_CurrVolunteerAmt.ToString() + " / " + volunteerStats.m_MaxVolunteerNo.ToString());
-
         if (recordingEquipment.AbleToUpgrade())
             m_VideoUpgradePriceText.text = "$" + recordingEquipment.GetNextUpgradePrice();
         else
@@ -94,7 +89,6 @@ public class ShopManager : MonoBehaviour
         for(int i = 0; i< m_VideoStatesSprites.Length; ++i)
         {
             m_VideoStatesSprites[i].sprite = recordingEquipment.GetSpriteMode(currStage + (i-1));
-            //m_VideoStatesSprites
 
             //reach the max limit
             if (m_VideoStatesSprites[i].sprite == null)

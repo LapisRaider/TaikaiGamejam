@@ -16,6 +16,8 @@ public class ShopCard : MonoBehaviour
 
     public Image m_SpriteImage;
 
+    public GameObject m_SoldOutSymbol;
+
     [Header("Store info")]
     public Plant_Types m_PlantType;
     int m_Price = 0;
@@ -23,6 +25,14 @@ public class ShopCard : MonoBehaviour
     public void Start()
     {
         Init();
+        if (m_SoldOutSymbol != null)
+            m_SoldOutSymbol.SetActive(false);
+    }
+
+    public void OnEnable()
+    {
+        //check whether sold out TODO
+        //CALL UPDATE UI
     }
 
     public void Init()

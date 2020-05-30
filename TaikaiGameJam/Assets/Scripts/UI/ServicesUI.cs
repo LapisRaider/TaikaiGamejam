@@ -15,12 +15,15 @@ public class ServicesUI : MonoBehaviour
     [Header("Lawyer services")]
     public Button m_UpgradeLawyer;
     public Button m_DowngradeLawyer;
-    public TextMeshProUGUI m_LawyerMaintenceCost;
+    public TextMeshProUGUI m_LawyerMonthlySalaryText;
+    public TextMeshProUGUI m_LawyerEmployeeAmtText;
+
 
     public void OnEnable()
     {
         //setup initial details
         UpdateVolunteerDetailsUI();
+        UpdateLawyerDetailsUI();
     }
 
     #region SetVolunteerHiring UI
@@ -28,8 +31,8 @@ public class ServicesUI : MonoBehaviour
     {
         VolunteerStats volunteerStats = GameStats.Instance.m_VolunteerInfo;
 
-        m_EmployeeAmtText.SetText(volunteerStats.m_CurrVolunteerAmt.ToString() + " / " + volunteerStats.m_MaxVolunteerNo.ToString());
-        m_MonthlySalaryText.SetText("$" + volunteerStats.m_MonthlyPayment.ToString());
+        m_EmployeeAmtText.SetText( "Employees: " + volunteerStats.m_CurrVolunteerAmt.ToString() + " / " + volunteerStats.m_MaxVolunteerNo.ToString());
+        m_MonthlySalaryText.SetText("Salary: $" + volunteerStats.m_MonthlyPayment.ToString() + "/month");
 
         //if cannot fire make it not interactable
         m_FireVolunteerButton.interactable = volunteerStats.CanFire();
@@ -56,6 +59,33 @@ public class ServicesUI : MonoBehaviour
 
     #region Lawyer
     //TODO:: Lawyer related UI
-    #endregion
+    public void UpdateLawyerDetailsUI()
+    {
+        LawyerServices lawyer = GameStats.Instance.m_LawyerServices;
 
+        m_LawyerEmployeeAmtText.SetText("Employees: " + lawyer.m_CurrentLawyerNumber.ToString() + " / " + lawyer.m_MaxLawyerNumber.ToString());
+        m_LawyerMonthlySalaryText.SetText("Salary: $" + lawyer.m_MonthlyServiceFees.ToString() + "/month");
+
+        //if cannot fire make it not interactable
+        m_DowngradeLawyer.interactable = lawyer.AbleToDownGrade();
+        //if cannot hire make it not interactable
+        m_UpgradeLawyer.interactable = lawyer.AbleToUpgrade();
+    }
+
+    public void FireLawyer()
+    {
+        LawyerServices lawyer = GameStats.Instance.m_LawyerServices;
+        lawyer.DownGradeLawyerService();
+
+        UpdateLawyerDetailsUI();
+    }
+
+    public void HireLawyer()
+    {
+        LawyerServices lawyer = GameStats.Instance.m_LawyerServices;
+        lawyer.UpgradeLawyerService();
+
+        UpdateLawyerDetailsUI();
+    }
+    #endregion
 }

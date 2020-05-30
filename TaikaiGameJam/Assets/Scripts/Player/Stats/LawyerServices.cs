@@ -3,33 +3,18 @@
 [System.Serializable]
 public class LawyerServices
 {
-    public enum LawyerStages
-    {
-        NONE,
-        FIRST,
-        SECOND,
-        THIRD,
-        FORTH,
-        TOTAL_STAGES //DONT BOTHER THIS
-    }
+    public int m_MonthlyServiceFees = 0;
+    public float m_ChanceIncreasePerLawyer = 0.1f;
+    public int m_MaxLawyerNumber = 0;
 
-    [System.Serializable]
-    public class LawyerStagesData
-    {
-        public LawyerStages m_LawyerStage = LawyerStages.NONE;
-        public int m_MontlyServiceFees = 0; //Montly service price
-        public int m_ChanceIncrease = 0; //rate increase to get back money
-    }
-
-    public LawyerStagesData[] m_LawyerStagesData = new LawyerStagesData[(int)LawyerStages.TOTAL_STAGES];
-    [HideInInspector] public LawyerStages m_CurrLawyerStage = LawyerStages.NONE;
+    [HideInInspector] public int m_CurrentLawyerNumber = 0;
 
     public void UpgradeLawyerService()
     {
         if (!AbleToUpgrade())
             return;
 
-        m_CurrLawyerStage += 1;
+        ++m_CurrentLawyerNumber;
     }
 
     public void DownGradeLawyerService()
@@ -37,21 +22,21 @@ public class LawyerServices
         if (!AbleToDownGrade())
             return;
 
-        m_CurrLawyerStage -= 1;
+        --m_CurrentLawyerNumber;
     }
 
     public bool AbleToUpgrade()
     {
-        return (m_CurrLawyerStage + 1 < LawyerStages.TOTAL_STAGES);
+        return (m_CurrentLawyerNumber < m_MaxLawyerNumber);
     }
 
     public bool AbleToDownGrade()
     {
-        return m_CurrLawyerStage > LawyerStages.NONE;
+        return m_CurrentLawyerNumber > 0;
     }
 
     public int GetCurrentServiceFee()
     {
-        return m_LawyerStagesData[(int)m_CurrLawyerStage].m_MontlyServiceFees;
+        return m_CurrentLawyerNumber * m_MonthlyServiceFees;
     }
 }

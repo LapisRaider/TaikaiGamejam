@@ -44,4 +44,13 @@ public class Inventory
 
         return m_PlantInventory.ElementAt(randomRange).Key;
     }
+
+    public int GetAmtInInventory(Plant_Types plantType)
+    {
+        //dont have in inventory
+        if (!m_PlantInventory.ContainsKey(plantType))
+            return 0;
+
+        return m_PlantInventory[plantType];
+    }
 }

@@ -24,9 +24,6 @@ public class ShopCard : MonoBehaviour
     {
         Init();
         UpdateUI();
-
-        if (m_SoldOutSymbol != null)
-            m_SoldOutSymbol.SetActive(false);
     }
 
     public void OnEnable()
@@ -69,18 +66,33 @@ public class ShopCard : MonoBehaviour
 
     public void UpdateUI()
     {
-        //TODO:: update the number iin inventory and max u can grow
-        //TODO:: add a sold out
+        int totalPlayerHas = 0;
 
         //check in inventory + number planted
+        Inventory inventory = GameStats.Instance.m_Inventory;
+        if (inventory == null)
+            return;
+
+        totalPlayerHas = inventory.GetAmtInInventory(m_PlantType);
+        totalPlayerHas += MapManager.Instance.GetAmtOfPlantOnMap(m_PlantType);
+
         //if more than the max plant amount, sold out, disable button
+        if (totalPlayerHas >= m_MaxPlant)
+        {
+            if (m_BuyButton != null)
+                m_BuyButton.interactable = false;
 
+            if (m_SoldOutSymbol != null)
+                m_SoldOutSymbol.SetActive(true);
+        }
+        else
+        {
+            if (m_BuyButton != null)
+                m_BuyButton.interactable = true;
 
-
-
-        //if (m_BuyButton != null)
-        //    m_BuyButton.se
-
+            if (m_SoldOutSymbol != null)
+                m_SoldOutSymbol.SetActive(false);
+        }
     }
 
     public void ClickBuyPlant()

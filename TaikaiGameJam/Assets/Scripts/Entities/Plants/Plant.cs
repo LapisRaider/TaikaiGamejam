@@ -8,6 +8,7 @@ public class Plant : MonoBehaviour
     [HideInInspector] public bool m_Grown = false;
     [HideInInspector] public int m_CurrentHealth = 0;
     [HideInInspector] public Vector2Int m_PlantGridPos = Vector2Int.zero;
+    [HideInInspector] public Plant_Types m_PlantType = Plant_Types.FLOWERS;
 
     public SpriteRenderer m_SpriteRenderer;
 
@@ -19,6 +20,8 @@ public class Plant : MonoBehaviour
         m_CurrentHealth = plantScript.m_PlantHealth;
 
         m_PlantGridPos = plantGridPos;
+
+        m_PlantType = plantScript.m_PlantType;
 
         //set sprite stuff
         m_SpriteRenderer.sprite = plantScript.m_PlantSprite;

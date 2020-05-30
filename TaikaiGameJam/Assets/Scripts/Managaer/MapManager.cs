@@ -117,6 +117,45 @@ public class MapManager : SingletonBase<MapManager>
     }
     #endregion
 
+    public int GetAmtOfPlantOnMap(Plant_Types plantType)
+    {
+        if (plantType < Plant_Types.FLOWERS)
+            return GetAmtOfPlantTypeOnMap(plantType);
+
+        return GetAmtOfTreeTypeOnMap(plantType);
+    }
+
+    public int GetAmtOfTreeTypeOnMap(Plant_Types plantType)
+    {
+        int amt = 0;
+        foreach(KeyValuePair<Vector2Int, PlantTree> tree in m_TreeOnMap)
+        {
+            if (tree.Value == null)
+                continue;
+
+            if (tree.Value.m_PlantType == plantType)
+                ++amt;
+        }
+
+        return amt;
+    }
+
+    public int GetAmtOfPlantTypeOnMap(Plant_Types plantType)
+    {
+        int amt = 0;
+        foreach (KeyValuePair<Vector2Int, Plant> tree in m_PlantOnMap)
+        {
+            if (tree.Value == null)
+                continue;
+
+            if (tree.Value.m_PlantType == plantType)
+                ++amt;
+        }
+
+        return amt;
+    }
+
+
     //TODO:: call this when temperature is updated
     public void PlantsUpdateTemperature()
     {

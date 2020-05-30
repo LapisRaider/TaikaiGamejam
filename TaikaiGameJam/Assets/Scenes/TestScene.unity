@@ -3978,6 +3978,11 @@ MonoBehaviour:
   - {r: 0.6637657, g: 1, b: 0.1462264, a: 1}
   m_MonthText: {fileID: 1974618301}
   m_YearText: {fileID: 604399539}
+  m_Parent: {fileID: 0}
+  m_ShopPage: {fileID: 0}
+  m_FundRaiserPage: {fileID: 0}
+  m_CalenderPage: {fileID: 0}
+  m_ServicesPage: {fileID: 0}
 --- !u!1 &753602599
 GameObject:
   m_ObjectHideFlags: 0
@@ -6866,7 +6871,7 @@ MonoBehaviour:
   m_PlantDesriptionText: {fileID: 34890846}
   m_TemperatureToGrowText: {fileID: 1000131466}
   m_PlantPrice: {fileID: 1780939193}
-  m_MaxPlantNumberText: {fileID: 594392575}
+  m_BuyButton: {fileID: 0}
   m_SpriteImage: {fileID: 1156100569}
   m_SoldOutSymbol: {fileID: 0}
   m_PlantType: 0
@@ -7347,7 +7352,7 @@ MonoBehaviour:
   m_PlantDesriptionText: {fileID: 1784591676}
   m_TemperatureToGrowText: {fileID: 1196744188}
   m_PlantPrice: {fileID: 2112243294}
-  m_MaxPlantNumberText: {fileID: 0}
+  m_BuyButton: {fileID: 1261390088}
   m_SpriteImage: {fileID: 636597015}
   m_SoldOutSymbol: {fileID: 820261729}
   m_PlantType: 0
@@ -12581,7 +12586,7 @@ MonoBehaviour:
   m_PlantDesriptionText: {fileID: 1483678514}
   m_TemperatureToGrowText: {fileID: 830256342}
   m_PlantPrice: {fileID: 1035224239}
-  m_MaxPlantNumberText: {fileID: 426044451}
+  m_BuyButton: {fileID: 0}
   m_SpriteImage: {fileID: 255365869}
   m_SoldOutSymbol: {fileID: 0}
   m_PlantType: 0

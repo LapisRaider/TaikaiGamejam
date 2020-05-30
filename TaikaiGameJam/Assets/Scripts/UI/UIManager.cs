@@ -25,7 +25,11 @@ public class UIManager : SingletonBase<UIManager>
 
     //TODO:: do transitions
     [Header("Pages Related")]
+    public GameObject m_Parent;
     public GameObject m_ShopPage;
+    public GameObject m_FundRaiserPage;
+    public GameObject m_CalenderPage;
+    public GameObject m_ServicesPage;
 
     public void SetMonthUI(Months month, int year)
     {

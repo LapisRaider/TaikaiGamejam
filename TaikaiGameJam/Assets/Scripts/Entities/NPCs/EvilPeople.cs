@@ -189,7 +189,19 @@ public class EvilPeople : MonoBehaviour
             return;
         }
 
-        //TODO:: if tree no more, find another one again
+        if (m_NearestTree == null)
+        {
+            EnterFindTreeState();
+            return;
+        }
+        else
+        {
+            if (!m_NearestTree.gameObject.activeSelf)
+            {
+                EnterFindTreeState();
+                return;
+            }
+        }
     }
 
     public void ExitFindTreeState()

@@ -102,7 +102,6 @@ public class RandomEventManager : SingletonBase<RandomEventManager>
                     weight <= randomEvent.m_Weightage.y)
                 {
                     HandleNegativeEvent(randomEvent.m_EventScritableObj);
-                    UpdateUI(randomEvent.m_EventScritableObj);
                     break;
                 }
             }
@@ -116,7 +115,6 @@ public class RandomEventManager : SingletonBase<RandomEventManager>
                     weight <= randomEvent.m_Weightage.y)
                 {
                     HandlePositiveEvents(randomEvent.m_EventScritableObj);
-                    UpdateUI(randomEvent.m_EventScritableObj);
                     break;
                 }
             }
@@ -132,12 +130,10 @@ public class RandomEventManager : SingletonBase<RandomEventManager>
 
         //TODO:: INVOLVE LAWYERS
         //TODO:: temp pause game
-
-        UpdateUI(eventObj);
     }
 
     #region UI
-    public void UpdateUI(EventScriptableObj eventObj)
+    public void UpdateUI(EventScriptableObj eventObj, string number)
     {
         if (m_UIGameObject == null)
             return;
@@ -155,8 +151,34 @@ public class RandomEventManager : SingletonBase<RandomEventManager>
         if (eventObj.m_NameOfPersonInvolve.Length > 0)
             m_NameOfPersonInvolveText.text = eventObj.m_NameOfPersonInvolve[Random.Range(0, eventObj.m_NameOfPersonInvolve.Length)];
 
+        switch(eventObj.m_PositiveEventType)
+        {
+            case PositiveEventTypes.DECREASE_TEMPERATURE:
+                m_AffectedText.text = "Temperature decrease by " + number;
+                break;
+            case PositiveEventTypes.INCREASE_POPULARITY:
+                m_AffectedText.text = "Popularity increase by " + number;
+                break;
+            case PositiveEventTypes.GET_MONEY:
+                m_AffectedText.text = "You earn " + number;
+                break;
+        }
 
-        //TODO:: do the affected text
+        switch (eventObj.m_NegativeEventType)
+        {
+            case NegativeEventTypes.INCREASE_TEMPERATURE:
+                m_AffectedText.text = "Temperature increase by " + number;
+                break;
+            case NegativeEventTypes.DECREASE_POPULARITY:
+                m_AffectedText.text = "Popularity decrease by " + number;
+                break;
+            case NegativeEventTypes.LOSE_MONEY:
+                m_AffectedText.text = "You lost " + number;
+                break;
+            case NegativeEventTypes.EVIL_COOPERATE:
+                m_AffectedText.text = "They sent people to cut down your trees";
+                break;
+        }
 
         m_UIGameObject.SetActive(true);
     }
@@ -170,7 +192,8 @@ public class RandomEventManager : SingletonBase<RandomEventManager>
 
     public void HandlePositiveEvents(EventScriptableObj eventObj)
     {
-        switch(eventObj.m_PositiveEventType)
+        string numberText = "";
+        switch (eventObj.m_PositiveEventType)
         {
             case PositiveEventTypes.DECREASE_TEMPERATURE:
                 {
@@ -189,6 +212,7 @@ public class RandomEventManager : SingletonBase<RandomEventManager>
                     else
                         increaseAmt = (int)Random.Range(eventObj.m_MinMaxAffectedAmount.x, eventObj.m_MinMaxAffectedAmount.y);
 
+                    numberText = "$" + increaseAmt.ToString();
                     money.IncreaseMoney(increaseAmt);
                 }
                 break;
@@ -204,14 +228,18 @@ public class RandomEventManager : SingletonBase<RandomEventManager>
                     else
                         increaseAmt = (int)Random.Range(eventObj.m_MinMaxAffectedAmount.x, eventObj.m_MinMaxAffectedAmount.y);
 
+                    numberText = increaseAmt.ToString();
                     popularity.UpdatePopularityOffset(increaseAmt);
                 }
                 break;
         }
+
+        UpdateUI(eventObj, numberText);
     }
 
     public void HandleNegativeEvent(EventScriptableObj eventObj)
     {
+        string numberText = "";
         switch (eventObj.m_NegativeEventType)
         {
             case NegativeEventTypes.INCREASE_TEMPERATURE:
@@ -232,6 +260,7 @@ public class RandomEventManager : SingletonBase<RandomEventManager>
                     else
                         decreaseAmt = (int)Random.Range(eventObj.m_MinMaxAffectedAmount.x, eventObj.m_MinMaxAffectedAmount.y);
 
+                    numberText = "$" + decreaseAmt.ToString();
                     popularity.UpdatePopularityOffset(-decreaseAmt);
                 }
                 break;
@@ -247,6 +276,7 @@ public class RandomEventManager : SingletonBase<RandomEventManager>
                     else
                         decreaseAmt = (int)Random.Range(eventObj.m_MinMaxAffectedAmount.x, eventObj.m_MinMaxAffectedAmount.y);
 
+                    numberText = "$" + decreaseAmt.ToString();
                     money.ReduceMoney(decreaseAmt);
                 }
                 break;
@@ -269,6 +299,8 @@ public class RandomEventManager : SingletonBase<RandomEventManager>
                 }
                 break;
         }
+
+        UpdateUI(eventObj, numberText);
     }
 }
 

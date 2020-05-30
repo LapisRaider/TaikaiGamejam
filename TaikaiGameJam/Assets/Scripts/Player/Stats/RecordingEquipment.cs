@@ -76,6 +76,14 @@ public class RecordingEquipment
         return m_MonthlyMaintenceFees[(int)m_CurrLevel];
     }
 
+    public int GetMaintenanceFees(UpgradeStages upgradeStages)
+    {
+        if (upgradeStages >= UpgradeStages.TOTAL_MAXLV || upgradeStages < 0)
+            return 0;
+
+        return m_MonthlyMaintenceFees[(int)upgradeStages];
+    }
+
     public float GetPopularityRate()
     {
         return m_PopularityRate[(int)m_CurrLevel];

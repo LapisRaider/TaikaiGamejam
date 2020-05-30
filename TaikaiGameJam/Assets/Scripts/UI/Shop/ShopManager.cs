@@ -15,10 +15,13 @@ public class ShopManager : MonoBehaviour
     [Header("Video Equipment")]
     public Button m_UpgradeVideoButton;
     public Button m_DowngradeVideoButton;
-    public TextMeshProUGUI[] m_VideoMaintenceCostText = new TextMeshProUGUI[(int)VideoEquipmentUIStates.ALL];
-    public TextMeshProUGUI m_VideoUpgradePriceText;
-    public Image[] m_VideoStatesSprites = new Image[(int)VideoEquipmentUIStates.ALL];
     public Sprite m_NoHaveVideoEquipmentSprite;
+    public TextMeshProUGUI m_VideoUpgradePriceText;
+    public TextMeshProUGUI[] m_VideoMaintenceCostText = new TextMeshProUGUI[(int)VideoEquipmentUIStates.ALL];
+    public Image[] m_VideoStatesSprites = new Image[(int)VideoEquipmentUIStates.ALL];
+    public TextMeshProUGUI m_UpgradeDescriptionText;
+    public TextMeshProUGUI m_DowngradeDescriptionText;
+
 
     //todo:: when hover over will show the maintenece cost of your prev, curr, and next
 
@@ -91,10 +94,33 @@ public class ShopManager : MonoBehaviour
         for(int i = 0; i< m_VideoStatesSprites.Length; ++i)
         {
             m_VideoStatesSprites[i].sprite = recordingEquipment.GetSpriteMode(currStage + (i-1));
+            //m_VideoStatesSprites
+
+            //reach the max limit
             if (m_VideoStatesSprites[i].sprite == null)
             {
                 if (m_NoHaveVideoEquipmentSprite != null)
+                {
                     m_VideoStatesSprites[i].sprite = m_NoHaveVideoEquipmentSprite;
+                }
+
+                //set the maintence text properly
+                if (i == (int)VideoEquipmentUIStates.OLD)
+                    m_DowngradeDescriptionText.text = "Yours is the oldest";
+                else if (i == (int)VideoEquipmentUIStates.NEW)
+                    m_UpgradeDescriptionText.text = "Yours is the latest";
+
+                m_VideoMaintenceCostText[i].text = "X";
+            }
+            else
+            {
+                if (i == (int)VideoEquipmentUIStates.OLD)
+                    m_DowngradeDescriptionText.text = "Trade in, 20% money back, lose followers";
+                else if (i == (int)VideoEquipmentUIStates.NEW)
+                    m_UpgradeDescriptionText.text = "Increase followers";
+
+                //set the maintence text to be the same
+                m_VideoMaintenceCostText[i].text = "$" + recordingEquipment.GetMaintenanceFees(currStage + (i - 1)).ToString();
             }
         }
 

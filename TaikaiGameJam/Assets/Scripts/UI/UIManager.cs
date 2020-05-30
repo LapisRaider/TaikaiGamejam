@@ -23,6 +23,10 @@ public class UIManager : SingletonBase<UIManager>
     public TextMeshProUGUI m_MonthText;
     public TextMeshProUGUI m_YearText;
 
+    //TODO:: do transitions
+    [Header("Pages Related")]
+    public GameObject m_ShopPage;
+
     public void SetMonthUI(Months month, int year)
     {
         m_MonthText.text = month.ToString();

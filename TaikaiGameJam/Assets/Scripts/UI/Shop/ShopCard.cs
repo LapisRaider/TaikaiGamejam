@@ -11,42 +11,59 @@ public class ShopCard : MonoBehaviour
     public TextMeshProUGUI m_TemperatureToGrowText;
     public TextMeshProUGUI m_PlantPrice;
 
-    //TODO:: the current number planted or in inventory vs the max u can have
-    public TextMeshProUGUI m_MaxPlantNumberText;
-
+    public Button m_BuyButton;
     public Image m_SpriteImage;
-
     public GameObject m_SoldOutSymbol;
 
     [Header("Store info")]
     public Plant_Types m_PlantType;
     int m_Price = 0;
+    int m_MaxPlant = 0;
 
     public void Start()
     {
         Init();
+        UpdateUI();
+
         if (m_SoldOutSymbol != null)
             m_SoldOutSymbol.SetActive(false);
     }
 
     public void OnEnable()
     {
-        //check whether sold out TODO
-        //CALL UPDATE UI
+        UpdateUI();
     }
 
     public void Init()
     {
         PlantScriptableObj plantData = MapManager.Instance.GetPlantDataBase().GetPlantData(m_PlantType);
+        if (plantData == null)
+            return;
 
         m_Price = plantData.m_Price;
         m_PlantType = plantData.m_PlantType;
 
         m_PlantNameText.text = plantData.m_PlantName;
         m_PlantDesriptionText.text = plantData.m_PlantDescription;
-        m_TemperatureToGrowText.text = plantData.m_TemperatureToGrow.ToString();
-        m_PlantPrice.text = "$" + m_Price.ToString();
 
+        switch (plantData.m_TemperatureToGrow)
+        {
+            case TemperatureType.EXTREMELY_HOT:
+                m_TemperatureToGrowText.text = "Can survive all temperatures";
+                break;
+            case TemperatureType.VERY_HOT:
+                m_TemperatureToGrowText.text = "Can survive Scroch and below temperatures";
+                break;
+            case TemperatureType.HOT:
+                m_TemperatureToGrowText.text = "Can survive hot and below temperatures";
+                break;
+            case TemperatureType.NICE:
+                m_TemperatureToGrowText.text = "Can only survive nice temperature";
+                break;
+        }
+
+        m_PlantPrice.text = "Price: $" + m_Price.ToString() + " per seed";
+        m_MaxPlant = plantData.m_MaxNumberToPlant;
         m_SpriteImage.sprite = plantData.m_PlantSprite;
     }
 
@@ -54,6 +71,16 @@ public class ShopCard : MonoBehaviour
     {
         //TODO:: update the number iin inventory and max u can grow
         //TODO:: add a sold out
+
+        //check in inventory + number planted
+        //if more than the max plant amount, sold out, disable button
+
+
+
+
+        //if (m_BuyButton != null)
+        //    m_BuyButton.se
+
     }
 
     public void ClickBuyPlant()
@@ -71,5 +98,7 @@ public class ShopCard : MonoBehaviour
         {
             money.ReduceMoney(m_Price);
         }
+
+        UpdateUI();
     }
 }

@@ -82,6 +82,7 @@ public class RandomEventManager : SingletonBase<RandomEventManager>
 
     public void Update()
     {
+        //TODO:: remove this shit
         if (Input.GetKey("up"))
             StartEvent();
     }
@@ -101,6 +102,7 @@ public class RandomEventManager : SingletonBase<RandomEventManager>
                     weight <= randomEvent.m_Weightage.y)
                 {
                     HandleNegativeEvent(randomEvent.m_EventScritableObj);
+                    UpdateUI(randomEvent.m_EventScritableObj);
                     break;
                 }
             }
@@ -114,6 +116,7 @@ public class RandomEventManager : SingletonBase<RandomEventManager>
                     weight <= randomEvent.m_Weightage.y)
                 {
                     HandlePositiveEvents(randomEvent.m_EventScritableObj);
+                    UpdateUI(randomEvent.m_EventScritableObj);
                     break;
                 }
             }
@@ -126,6 +129,11 @@ public class RandomEventManager : SingletonBase<RandomEventManager>
             HandleNegativeEvent(eventObj);
         else
             HandlePositiveEvents(eventObj);
+
+        //TODO:: INVOLVE LAWYERS
+        //TODO:: temp pause game
+
+        UpdateUI(eventObj);
     }
 
     #region UI
@@ -149,8 +157,6 @@ public class RandomEventManager : SingletonBase<RandomEventManager>
 
 
         //TODO:: do the affected text
-        //TODO:: temp pause game
-        //TODO:: INVOLVE LAWYERS
 
         m_UIGameObject.SetActive(true);
     }
@@ -253,6 +259,7 @@ public class RandomEventManager : SingletonBase<RandomEventManager>
                         NPCManager.Instance.SpawnEvilPeople();
                     }
 
+                    //TODO::
                     //get number of trees before this event
                     //get number of trees after this event
                     //THIS EVENT CAN ONLY HAPPEN WHEN THERE ARE TREES

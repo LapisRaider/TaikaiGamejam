@@ -34,6 +34,8 @@ public class Popularity
             if (m_IncreaseTimeTracker > m_IncreaseTimeRate)
             {
                 m_CurrentPopularity += Random.Range(m_MaxMinIncreaseNumber.x, m_MaxMinIncreaseNumber.y);
+
+                //todo:: TAKE INTO ACCOUNT DROPPING POPULARITY
                 m_CurrentPopularity = Mathf.Min(m_CurrentPopularity, m_NextPopularity);
                 m_IncreaseTimeTracker = 0.0f;
 

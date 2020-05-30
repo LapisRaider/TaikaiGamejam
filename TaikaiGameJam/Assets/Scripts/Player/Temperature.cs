@@ -5,6 +5,8 @@ public class Temperature
     public int[] m_TreeToTemperature = new int[(int)TemperatureType.ALL_TYPES];
     public TemperatureType m_CurrTempType = TemperatureType.EXTREMELY_HOT;
 
+    //TODO:: fix ALGORITHM FOR THIS
+
     public void Init()
     {
         UIManager.Instance.SetTemperatureUI(m_CurrTempType);

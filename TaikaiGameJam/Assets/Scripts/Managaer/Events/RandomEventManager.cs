@@ -149,6 +149,7 @@ public class RandomEventManager : SingletonBase<RandomEventManager>
 
         //TODO:: do the affected text
         //TODO:: temp pause game
+        //TODO:: INVOLVE LAWYERS
 
         m_UIGameObject.SetActive(true);
     }

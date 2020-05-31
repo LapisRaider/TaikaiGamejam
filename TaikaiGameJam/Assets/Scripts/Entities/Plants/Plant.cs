@@ -35,7 +35,7 @@ public class Plant : MonoBehaviour
         //transform.localScale = Tran
     }
 
-    public void TemperatureIncrease()
+    public void CheckTemperatureUpdate()
     {
         //check if plant can still survive when the temperature increased
         //have a callback to handle this

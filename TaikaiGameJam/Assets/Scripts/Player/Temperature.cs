@@ -1,23 +1,28 @@
-﻿using UnityEngine;
-
-[System.Serializable]
+﻿[System.Serializable]
 public class Temperature
 {
     //temperature is affected based on the number of trees and plants u have
     public int[] m_TreeToTemperature = new int[(int)TemperatureType.ALL_TYPES];
+    public float m_TemperaturePerTree = 0.5f;
+    public float m_TemperaturePerPlant = 0.1f;
+
     public TemperatureType m_CurrTempType = TemperatureType.EXTREMELY_HOT;
 
-    //TODO:: fix ALGORITHM FOR THIS
+    float m_CurrTemperatureAmt = 0.0f;
+    float m_TemperatureOffset = 0.0f;
 
     public void Init()
     {
         UIManager.Instance.SetTemperatureUI(m_CurrTempType);
     }
 
-    public void UpdateTemperature(int treeNumber)
+    public void UpdateTemperature(int treeNumber, int plantNumber)
     {
+        m_CurrTemperatureAmt = treeNumber * m_TemperaturePerTree + plantNumber * m_TemperaturePerPlant;
+        m_CurrTemperatureAmt += m_TemperatureOffset;
+
         //based on plant and flower count
-        if (treeNumber > m_TreeToTemperature[(int)m_CurrTempType])
+        if (m_CurrTemperatureAmt > m_TreeToTemperature[(int)m_CurrTempType])
         {
             m_CurrTempType += 1; //go to next temperature type
             if (m_CurrTempType > TemperatureType.NICE)
@@ -26,8 +31,7 @@ public class Temperature
             }
             else
             {
-                //TODO:: UPDATE ALL TREES
-
+                MapManager.Instance.AllPlantsTreesUpdateTemperature();
             }
 
             UIManager.Instance.SetTemperatureUI(m_CurrTempType);
@@ -41,12 +45,16 @@ public class Temperature
             }
             else
             {
-                //TODO:: UPDATE ALL TREES
-
+                MapManager.Instance.AllPlantsTreesUpdateTemperature();
             }
 
             UIManager.Instance.SetTemperatureUI(m_CurrTempType);
         }
+    }
+
+    public void AddToTemperatureOffset(float offset)
+    {
+        m_TemperatureOffset += offset;
     }
 }
 

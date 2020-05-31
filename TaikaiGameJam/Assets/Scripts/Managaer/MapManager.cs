@@ -182,10 +182,23 @@ public class MapManager : SingletonBase<MapManager>
     }
 
 
-    //TODO:: call this when temperature is updated
-    public void PlantsUpdateTemperature()
+    public void AllPlantsTreesUpdateTemperature()
     {
+        foreach(KeyValuePair<Vector2Int, Plant> plant in m_PlantOnMap)
+        {
+            if (plant.Value == null)
+                continue;
 
+            plant.Value.CheckTemperatureUpdate();
+        }
+
+        foreach (KeyValuePair<Vector2Int, PlantTree> tree in m_TreeOnMap)
+        {
+            if (tree.Value == null)
+                continue;
+
+            tree.Value.CheckTemperatureUpdate();
+        }
     }
 
     public PlantDataBase GetPlantDataBase()

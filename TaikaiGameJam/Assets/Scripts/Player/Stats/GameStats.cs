@@ -91,7 +91,7 @@ public class GameStats : SingletonBase<GameStats>
         if (m_Temperature == null)
             return;
 
-        m_Temperature.UpdateTemperature(m_CurrentTreeNumber);
+        m_Temperature.UpdateTemperature(m_CurrentTreeNumber, m_CurrentPlantNumber);
     }
     #endregion
 

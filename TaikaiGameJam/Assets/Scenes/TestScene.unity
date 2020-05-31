@@ -4514,7 +4514,7 @@ MonoBehaviour:
   m_BuyButton: {fileID: 905036236}
   m_SpriteImage: {fileID: 751055425}
   m_SoldOutSymbol: {fileID: 699061272}
-  m_PlantType: 6
+  m_PlantType: 1
 --- !u!114 &357123705
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8643,7 +8643,7 @@ MonoBehaviour:
   m_BuyButton: {fileID: 432374110}
   m_SpriteImage: {fileID: 975289605}
   m_SoldOutSymbol: {fileID: 31092525}
-  m_PlantType: 8
+  m_PlantType: 3
 --- !u!114 &641316286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10346,7 +10346,7 @@ MonoBehaviour:
   m_BuyButton: {fileID: 750272774}
   m_SpriteImage: {fileID: 1472883112}
   m_SoldOutSymbol: {fileID: 746806254}
-  m_PlantType: 3
+  m_PlantType: 8
 --- !u!114 &792866862
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11812,7 +11812,11 @@ MonoBehaviour:
     m_AffectedMoneyText: {fileID: 506711412}
     m_CurrentLawyerNumber: 0
   m_Temperature:
-    m_TreeToTemperature: 00000000000000000000000000000000
+    m_TreeToTemperature:
+    - 6.2
+    - 13.2
+    - 26
+    - 50
     m_TemperaturePerTree: 0.5
     m_TemperaturePerPlant: 0.1
     m_CurrTempType: 0
@@ -24096,7 +24100,7 @@ MonoBehaviour:
   m_BuyButton: {fileID: 1911043486}
   m_SpriteImage: {fileID: 1705283095}
   m_SoldOutSymbol: {fileID: 346151723}
-  m_PlantType: 7
+  m_PlantType: 2
 --- !u!114 &1278858588
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24353,7 +24357,7 @@ MonoBehaviour:
   m_BuyButton: {fileID: 390339122}
   m_SpriteImage: {fileID: 1362251217}
   m_SoldOutSymbol: {fileID: 410178314}
-  m_PlantType: 1
+  m_PlantType: 6
 --- !u!114 &1283350314
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25416,7 +25420,7 @@ MonoBehaviour:
   m_BuyButton: {fileID: 712127284}
   m_SpriteImage: {fileID: 923653712}
   m_SoldOutSymbol: {fileID: 1255644220}
-  m_PlantType: 2
+  m_PlantType: 7
 --- !u!114 &1364561973
 MonoBehaviour:
   m_ObjectHideFlags: 0

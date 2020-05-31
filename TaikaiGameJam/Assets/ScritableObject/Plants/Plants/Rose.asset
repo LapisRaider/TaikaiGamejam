@@ -20,5 +20,5 @@ MonoBehaviour:
   m_PlantTime: 1
   m_TemperatureToGrow: 1
   m_PlantHealth: 5
-  m_Price: 50
+  m_Price: 75
   m_MaxNumberToPlant: 10

@@ -11780,10 +11780,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bDontDestroyOnLoad: 0
   m_Money:
-    m_BankruptcyAmt: -5000
+    m_BankruptcyAmt: -3000
     m_CurrMoney: 1000
   m_VolunteerInfo:
-    m_MaxVolunteerNo: 30
+    m_MaxVolunteerNo: 15
     m_MonthlyPayment: 100
     m_CurrVolunteerAmt: 0
   m_RecordingEquipmentStats:
@@ -11811,11 +11811,24 @@ MonoBehaviour:
     m_DescriptionText: {fileID: 294742741}
     m_AffectedMoneyText: {fileID: 506711412}
     m_CurrentLawyerNumber: 0
+  m_Popularity:
+    m_TreePopularityRate: 1
+    m_PlantPopularityRate: 1
+    m_IncreaseTimeRate: 0.1
+    m_MaxMinIncreaseNumber: {x: 2, y: 20}
+    m_CurrentPopularity: 0
+    m_NextPopularity: 0
+    m_PopularityOffset: 0
+  m_Donations:
+    m_AmtPerTree: 2
+    m_AmtPerPlant: 0.2
+    m_MinMaxDonationPercentage: {x: 0.8, y: 1.2}
+    m_NumberOfDonorPerPercentage: 200
   m_Temperature:
     m_TreeToTemperature:
-    - 6.2
-    - 13.2
-    - 26
+    - 5.8
+    - 11.6
+    - 17.4
     - 50
     m_TemperaturePerTree: 0.5
     m_TemperaturePerPlant: 0.1
@@ -11835,7 +11848,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f6bc879ced5fb74db95a5f768f8460d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_TimePerMonth: 15
+  m_TimePerMonth: 25
   m_CurrMonth: 1
   m_CurrYear: 2020
 --- !u!114 &936071452
@@ -11858,10 +11871,10 @@ MonoBehaviour:
     m_Chance: 100
     m_Weightage: {x: 0, y: 0}
     m_EventCompleted: 0
-  m_NegativeEventChance: 0.5
+  m_NegativeEventChance: 0.1
   m_EventChance: 1
-  m_TimeForEvent: 1
-  m_MaxEventPerMonth: 4
+  m_TimeForEvent: 7
+  m_MaxEventPerMonth: 3
   m_NumberOfBadEventsInAMonth: 0
   m_UIGameObject: {fileID: 1387889962}
   m_DescriptionText: {fileID: 1262082906}
@@ -33109,8 +33122,8 @@ MonoBehaviour:
     m_Size: {x: 0, y: 0, z: 0}
   m_MapGrid: {fileID: 1585338732}
   m_GridSize: {x: 0, y: 0}
-  m_PlantSpaceToCheck: 2
-  m_BoundaryOffset: 4
+  m_PlantSpaceToCheck: 1
+  m_BoundaryOffset: 3
   m_PlantManager:
     m_PlantDataBase:
       m_TreePrefab: {fileID: 5797079025205001220, guid: cb3555da9c5932a4c93abad6e0b03431,

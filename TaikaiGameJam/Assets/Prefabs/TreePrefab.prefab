@@ -155,6 +155,7 @@ MonoBehaviour:
   m_PlantGridPos: {x: 0, y: 0}
   m_PlantType: 1
   m_SpriteRenderer: {fileID: 5797079024661566703}
+  m_Animator: {fileID: 1602001211277048533}
   m_ParticleSystem: {fileID: 2235164482010874726}
   m_AudioSource: {fileID: 3134652136910073787}
 --- !u!82 &3134652136910073787

@@ -153,3 +153,4 @@ MonoBehaviour:
   m_PlantGridPos: {x: 0, y: 0}
   m_PlantType: 5
   m_SpriteRenderer: {fileID: 7320374138720751985}
+  m_Animator: {fileID: 4783815003452396168}

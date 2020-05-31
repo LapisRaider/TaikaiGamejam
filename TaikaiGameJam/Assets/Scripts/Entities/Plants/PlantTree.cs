@@ -31,7 +31,14 @@ public class PlantTree : Plant
         if (m_AudioSource != null)
         {
             if (!m_AudioSource.isPlaying)
+            {
                 SoundManager.Instance.Play("WoodCut", m_AudioSource);
+
+                if (m_Animator != null)
+                {
+                    m_Animator.SetTrigger("Shaking");
+                }
+            }
         }
     }
 }

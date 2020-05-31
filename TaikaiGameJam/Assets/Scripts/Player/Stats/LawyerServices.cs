@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using TMPro;
 
 [System.Serializable]
 public class LawyerServices
@@ -11,6 +12,19 @@ public class LawyerServices
     public float m_MonthlySueChances = 0.6f; //chance per month for suing
     public Vector2 m_MinMaxPercentagePerBadEvent = new Vector2(0.05f, 0.08f); //the min and max percentage of the player's money per bad event
 
+    [Header("UI")]
+    public GameObject m_UIParent;
+    public TextMeshProUGUI m_DescriptionText;
+    public TextMeshProUGUI m_AffectedMoneyText;
+
+    //player lose the suing, player successfully sue, player no lawyers cant sue
+    public enum LawyerServiceTypes
+    {
+        NO_LAWYERS,
+        SUE_SUCCESSFUL,
+        SUE_UNSUCCESSFUL,
+        NONE
+    }
 
     [HideInInspector] public int m_CurrentLawyerNumber = 0;
 
@@ -46,12 +60,47 @@ public class LawyerServices
     }
 
     #region services
+    public void UpdateSueServiceUI(LawyerServiceTypes serviceType, int numberOfBadMonths = 0, int amtOfMoney = 0)
+    {
+        if (m_UIParent != null)
+            m_UIParent.SetActive(true);
+
+        string text = "You have a total of " + numberOfBadMonths.ToString() + " bad events this month";
+        switch (serviceType)
+        {
+            case LawyerServiceTypes.NO_LAWYERS:
+                text += "You have no lawyers, unable to claim any money from your losses.";
+                if (m_AffectedMoneyText != null)
+                    m_AffectedMoneyText.gameObject.SetActive(false);
+                break;
+            case LawyerServiceTypes.SUE_SUCCESSFUL:
+                text += "Luckily for you, your lawyers manage to claim some damages fund.";
+                if (m_AffectedMoneyText != null)
+                    m_AffectedMoneyText.gameObject.SetActive(true);
+                break;
+            case LawyerServiceTypes.SUE_UNSUCCESSFUL:
+                text += "Your lawyers were unsuccessful in claiming damage funds this month.";
+                if (m_AffectedMoneyText != null)
+                    m_AffectedMoneyText.gameObject.SetActive(false);
+                break;
+        }
+
+        m_DescriptionText.text = text;
+        m_AffectedMoneyText.text = "You got back $" + amtOfMoney.ToString();
+    }
+
     public bool MonthlySueService()
     {
-        //get number of person first
-        //TODO:: UI to show u dont have lawyers
-        if (m_CurrentLawyerNumber <= 0)
+        //check if should do monthly sue
+        if (Random.Range(0.0f, 1.0f) > m_MonthlySueChances)
             return false;
+
+        //get number of person first
+        if (m_CurrentLawyerNumber <= 0)
+        {
+            UpdateSueServiceUI(LawyerServiceTypes.NO_LAWYERS);
+            return false;
+        }
 
         //check the number of bad events
         int badEventNumber = RandomEventManager.Instance.m_NumberOfBadEventsInAMonth;
@@ -77,8 +126,12 @@ public class LawyerServices
             money.IncreaseMoney(moneyEarn);
 
             RandomEventManager.Instance.ResetMonth();
+
+            UpdateSueServiceUI(LawyerServiceTypes.SUE_SUCCESSFUL, badEventNumber, moneyEarn);
             return true;
         }
+
+        UpdateSueServiceUI(LawyerServiceTypes.SUE_SUCCESSFUL, badEventNumber);
 
         return false;
     }

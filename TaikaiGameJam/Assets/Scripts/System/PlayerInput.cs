@@ -39,14 +39,14 @@ public class PlayerInput : MonoBehaviour
     {
         Vector2 dir = Vector2.zero;
 
-        if (Input.GetKey("left"))
+        if (Input.GetKey(KeyCode.A))
             dir.x = -1.0f;
-        else if (Input.GetKey("right"))
+        else if (Input.GetKey(KeyCode.D))
             dir.x = 1.0f;
 
-        if (Input.GetKey("up"))
+        if (Input.GetKey(KeyCode.W))
             dir.y = 1.0f;
-        else if (Input.GetKey("down"))
+        else if (Input.GetKey(KeyCode.S))
             dir.y = -1.0f;
 
         return dir;

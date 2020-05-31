@@ -30,6 +30,11 @@ public class GameStats : SingletonBase<GameStats>
             m_Temperature.Init();
     }
 
+    public void Start()
+    {
+        SoundManager.Instance.Play("BackgroundMusic");
+    }
+
     private void Update()
     {
         if (m_Popularity != null)

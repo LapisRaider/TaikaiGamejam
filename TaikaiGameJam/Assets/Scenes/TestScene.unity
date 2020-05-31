@@ -5794,6 +5794,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 9223023825027133145, guid: 4f0406eefa830804e89f08733d26d6b7,
+        type: 3}
+      propertyPath: m_MinMaxCheckCanPlantTime.y
+      value: 6.5
+      objectReference: {fileID: 0}
     - target: {fileID: 9223023825027133147, guid: 4f0406eefa830804e89f08733d26d6b7,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -33003,6 +33008,8 @@ MonoBehaviour:
     m_Size: {x: 0, y: 0, z: 0}
   m_MapGrid: {fileID: 1585338732}
   m_GridSize: {x: 0, y: 0}
+  m_PlantSpaceToCheck: 2
+  m_BoundaryOffset: 2
   m_PlantManager:
     m_PlantDataBase:
       m_TreePrefab: {fileID: 5797079025205001220, guid: cb3555da9c5932a4c93abad6e0b03431,

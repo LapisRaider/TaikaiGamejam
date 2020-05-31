@@ -16,13 +16,16 @@ public class Volunteers : MonoBehaviour
     public float m_ChangeDirTime = 2.0f;
     public float m_RotationAngle = 10.0f;
     public float m_BorderRotationOffset = 4.0f;
-    public float m_CheckCanPlantTime = 0.5f; //reduce the amount of function calls to check whether theres space available to plant
-    float m_LastPlantingTime = 3.0f; //how long it takes before the volunteer can plant again
+    public Vector2 m_MinMaxCheckCanPlantTime = new Vector2(3.0f,6.0f); //reduce the amount of function calls to check whether theres space available to plant
+    public Vector2 m_MinMaxLastPlantingTime = new Vector2(3.0f, 6.0f); //how long it takes before the volunteer can plant again
     [Tooltip("Radius, so if x is 1, it will show abv and below by 1")]
     public Vector2Int m_PlantTreeSearchRadius = new Vector2Int(1, 1);
     float m_ChangeDirTimeTracker = 0.0f;
     float m_CheckCanPlantTimeTracker = 0.0f;
     float m_LastPlantTimeTracker = 0.0f;
+
+    float m_CheckCanPlantTime = 0.0f;
+    float m_LastPlantTime = 0.0f;
 
     [Header("Move To Location State")]
     Vector2 m_Destination = Vector2.zero;
@@ -58,6 +61,9 @@ public class Volunteers : MonoBehaviour
 
     public void OnEnable()
     {
+        m_CheckCanPlantTime = Random.Range(m_MinMaxCheckCanPlantTime.x, m_MinMaxCheckCanPlantTime.y);
+        m_LastPlantTime = Random.Range(m_MinMaxLastPlantingTime.x, m_MinMaxLastPlantingTime.y);
+
         m_CurrentState = States.IDLE;
         EnterIdleState();
     }
@@ -209,8 +215,8 @@ public class Volunteers : MonoBehaviour
 
         //check last planted a tree timing to prevent NPC from planting at similar positions
         m_LastPlantTimeTracker += Time.deltaTime;
-        m_LastPlantTimeTracker = Mathf.Min(m_LastPlantTimeTracker, m_LastPlantingTime + 1.0f);
-        if (m_LastPlantTimeTracker > m_LastPlantingTime)
+        m_LastPlantTimeTracker = Mathf.Min(m_LastPlantTimeTracker, m_LastPlantTime + 1.0f);
+        if (m_LastPlantTimeTracker > m_LastPlantTime)
         {
             //check if theres anything in the inventory
             if (!GameStats.Instance.CheckIsInventoryEmpty())

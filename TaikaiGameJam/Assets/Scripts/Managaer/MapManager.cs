@@ -16,6 +16,8 @@ public class MapManager : SingletonBase<MapManager>
     [Header("Plants Info")]
     [HideInInspector] public Dictionary<Vector2Int, PlantTree> m_TreeOnMap = new Dictionary<Vector2Int, PlantTree>();
     [HideInInspector] public Dictionary<Vector2Int, Plant> m_PlantOnMap = new Dictionary<Vector2Int, Plant>();
+    public int m_PlantSpaceToCheck = 2;
+    public int m_BoundaryOffset = 2;
 
     public PlantObjectPooler m_PlantManager = new PlantObjectPooler();
 
@@ -60,9 +62,23 @@ public class MapManager : SingletonBase<MapManager>
 
         //MAKRE SURE TREE IS IN BOUNDS
         if (tilePos.x >= m_MapBoundaryGridNo.xMax || tilePos.x <= m_MapBoundaryGridNo.xMin 
-            || tilePos.y >= m_MapBoundaryGridNo.yMax || tilePos.y <= m_MapBoundaryGridNo.yMin)
+            || tilePos.y >= m_MapBoundaryGridNo.yMax - m_BoundaryOffset || tilePos.y <= m_MapBoundaryGridNo.yMin)
         {
             return false;
+        }
+
+        //check if got space
+        for (int row = -m_PlantSpaceToCheck; row <= m_PlantSpaceToCheck; ++row)
+        {
+            for (int col = -m_PlantSpaceToCheck; col <= m_PlantSpaceToCheck; ++col)
+            {
+                Vector2Int nextTile = new Vector2Int(col, row) + tilePos;
+                if (m_TreeOnMap.ContainsKey(nextTile))
+                    return false;
+
+                if (m_PlantOnMap.ContainsKey(nextTile))
+                    return false;
+            }
         }
 
         return true;

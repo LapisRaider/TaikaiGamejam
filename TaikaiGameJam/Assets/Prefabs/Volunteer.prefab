@@ -237,7 +237,8 @@ MonoBehaviour:
   m_ChangeDirTime: 7
   m_RotationAngle: 70
   m_BorderRotationOffset: 4
-  m_CheckCanPlantTime: 4
+  m_MinMaxCheckCanPlantTime: {x: 3, y: 6.5}
+  m_MinMaxLastPlantingTime: {x: 3, y: 6}
   m_PlantTreeSearchRadius: {x: 3, y: 3}
   m_StopDistance: 1.5
   m_ChaseSpeed: 2.2

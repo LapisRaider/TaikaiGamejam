@@ -58,7 +58,7 @@ public class Popularity
         float powerFromTrees = m_TreePopularityRate * GameStats.Instance.m_CurrentTreeNumber
             + m_PlantPopularityRate * GameStats.Instance.m_CurrentPlantNumber;
 
-        m_NextPopularity = (int)(Mathf.Exp(powerFromTrees) * GameStats.Instance.m_RecordingEquipmentStats.GetPopularityRate() + m_PopularityOffset);
+        m_NextPopularity = (int)(Mathf.Exp(powerFromTrees) * (GameStats.Instance.m_RecordingEquipmentStats.GetPopularityRate()) + m_PopularityOffset);
     }
 
     public void UpdatePopularityOffset(int offsetAmt)

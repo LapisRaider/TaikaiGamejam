@@ -7,7 +7,15 @@ public class RandomEventManager : SingletonBase<RandomEventManager>
     public RandomEvent[] m_PositiveEvents;
     public RandomEvent[] m_NegativeEvents;
 
+    [Header("Chances for events")]
     public float m_NegativeEventChance = 0.5f;
+    public float m_EventChance = 0.7f;
+    public float m_TimeForEvent = 10.0f;
+    public int m_MaxEventPerMonth = 4;
+
+    float m_EventTimeTracker = 0.0f;
+    int m_EventNumberInAMonth = 0;
+
     int m_TotalPositiveWeightage = 0;
     int m_TotalNegativeWeightage = 0;
 
@@ -84,9 +92,17 @@ public class RandomEventManager : SingletonBase<RandomEventManager>
 
     public void Update()
     {
-        //TODO:: remove this shit, replace with a proper timer
-        if (Input.GetKey("up"))
-            StartEvent();
+        if (m_EventNumberInAMonth >= m_MaxEventPerMonth)
+            return;
+
+        m_EventTimeTracker += Time.deltaTime;
+        if (m_EventTimeTracker > m_TimeForEvent)
+        {
+            if (Random.Range(0.0f, 1.0f) < m_EventChance)
+                StartEvent();
+
+            m_EventTimeTracker = 0.0f;
+        }
     }
 
     public void StartEvent()
@@ -119,6 +135,8 @@ public class RandomEventManager : SingletonBase<RandomEventManager>
                 }
             }
         }
+
+        ++m_EventNumberInAMonth;
     }
 
     public void StartEvent(EventScriptableObj eventObj, bool positive = true)
@@ -320,6 +338,7 @@ public class RandomEventManager : SingletonBase<RandomEventManager>
     public void ResetMonth()
     {
         m_NumberOfBadEventsInAMonth = 0;
+        m_EventNumberInAMonth = 0;
     }
 }
 

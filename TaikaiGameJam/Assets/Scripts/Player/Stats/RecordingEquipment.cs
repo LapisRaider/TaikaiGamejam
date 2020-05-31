@@ -86,7 +86,7 @@ public class RecordingEquipment
 
     public float GetPopularityRate()
     {
-        return m_PopularityRate[(int)m_CurrLevel];
+        return m_PopularityRate[(int)m_CurrLevel] + 1.0f;
     }
 
     public int GetNextUpgradePrice()

@@ -31,6 +31,7 @@ public class GameMonthSystem : MonoBehaviour
 
             //reset the fundraiser
             Fundraisers.Instance.ResetFundraiser();
+            RandomEventManager.Instance.ResetMonth();
 
             //update UI
             UIManager.Instance.SetMonthUI(m_CurrMonth, m_CurrYear);

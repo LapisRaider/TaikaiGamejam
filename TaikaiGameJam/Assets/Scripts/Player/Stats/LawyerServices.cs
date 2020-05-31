@@ -125,8 +125,6 @@ public class LawyerServices
             int moneyEarn = (int)((float)money.m_CurrMoney * percentageMoneyEarn);
             money.IncreaseMoney(moneyEarn);
 
-            RandomEventManager.Instance.ResetMonth();
-
             UpdateSueServiceUI(LawyerServiceTypes.SUE_SUCCESSFUL, badEventNumber, moneyEarn);
             return true;
         }

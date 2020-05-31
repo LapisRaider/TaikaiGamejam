@@ -11781,7 +11781,7 @@ MonoBehaviour:
   bDontDestroyOnLoad: 0
   m_Money:
     m_BankruptcyAmt: -5000
-    m_CurrMoney: 110500
+    m_CurrMoney: 1000
   m_VolunteerInfo:
     m_MaxVolunteerNo: 30
     m_MonthlyPayment: 100
@@ -11831,7 +11831,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f6bc879ced5fb74db95a5f768f8460d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_TimePerMonth: 60
+  m_TimePerMonth: 15
   m_CurrMonth: 1
   m_CurrYear: 2020
 --- !u!114 &936071452

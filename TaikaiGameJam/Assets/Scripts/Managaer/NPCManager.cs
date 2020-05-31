@@ -3,6 +3,7 @@
 public class NPCManager : SingletonBase<NPCManager>
 {
     public NPCObjectPooler m_NPCObjectPooler = new NPCObjectPooler();
+    public Volunteers m_PlayerVolunteer;
 
     // Start is called before the first frame update
     void Awake()
@@ -16,6 +17,15 @@ public class NPCManager : SingletonBase<NPCManager>
     {
         float closestDist = Mathf.Infinity;
         Volunteers nearestVolunteer = null;
+
+        if (m_PlayerVolunteer != null)
+        {
+            if (m_PlayerVolunteer.CheckCanChase())
+            {
+                float newDist = Vector2.SqrMagnitude(evilPerson.transform.position - m_PlayerVolunteer.transform.position);
+                nearestVolunteer = m_PlayerVolunteer;
+            }
+        }
 
         foreach (Volunteers volunteer in m_NPCObjectPooler.m_VolunteerList)
         {

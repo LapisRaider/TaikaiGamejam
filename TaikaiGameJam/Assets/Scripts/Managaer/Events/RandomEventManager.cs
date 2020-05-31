@@ -135,8 +135,6 @@ public class RandomEventManager : SingletonBase<RandomEventManager>
                 }
             }
         }
-
-        ++m_EventNumberInAMonth;
     }
 
     public void StartEvent(EventScriptableObj eventObj, bool positive = true)
@@ -260,6 +258,7 @@ public class RandomEventManager : SingletonBase<RandomEventManager>
                 break;
         }
 
+        ++m_EventNumberInAMonth;
         UpdateUI(eventObj, numberText);
         SoundManager.Instance.Play("successfulFund");
     }
@@ -332,6 +331,7 @@ public class RandomEventManager : SingletonBase<RandomEventManager>
                 break;
         }
 
+        ++m_EventNumberInAMonth;
         ++m_NumberOfBadEventsInAMonth;
         UpdateUI(eventObj, numberText);
         SoundManager.Instance.Play("UnsuccessfulFund");

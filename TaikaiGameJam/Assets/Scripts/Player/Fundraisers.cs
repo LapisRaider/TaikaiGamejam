@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
-public class Fundraisers : MonoBehaviour
+public class Fundraisers : SingletonBase<Fundraisers>
 {
     [Header("Gacha percentages")]
     public Vector2 m_MinMaxSuccessPercentage = new Vector2(0.05f,0.7f);
@@ -27,11 +28,13 @@ public class Fundraisers : MonoBehaviour
     public GameObject m_NoSuccessUI;
     public TextMeshProUGUI m_NoSuccessEarnings;
 
+    [Header("Once A Month")]
+    public GameObject m_OnceAMonthGameObjectUI;
 
     [HideInInspector] public int m_CurrentAmtSpent = 0;
     [HideInInspector] public float m_ChanceOfSuccess = 0.0f;
 
-    //TODO:: make it once a month only
+    bool m_ActivatedThisMonth = false;
 
     public void OnEnable()
     {
@@ -43,6 +46,8 @@ public class Fundraisers : MonoBehaviour
 
         if (m_NoSuccessUI != null)
             m_NoSuccessUI.SetActive(false);
+
+        UpdateOnceAMonthUI();
 
         foreach (TextMeshProUGUI text in m_NumbersTextUI)
         {
@@ -85,6 +90,20 @@ public class Fundraisers : MonoBehaviour
             m_SignificantNumberPlace[significantNumberPlace] = 9;
 
         UpdateNumberUI(significantNumberPlace);
+    }
+
+    public void UpdateOnceAMonthUI()
+    {
+        if (m_ActivatedThisMonth)
+        {
+            if (m_OnceAMonthGameObjectUI != null)
+                m_OnceAMonthGameObjectUI.SetActive(true);
+        }
+        else
+        {
+            if (m_OnceAMonthGameObjectUI != null)
+                m_OnceAMonthGameObjectUI.SetActive(false);
+        }
     }
 
     public void UpdateNumberUI(int significantNumberPlace)
@@ -169,7 +188,14 @@ public class Fundraisers : MonoBehaviour
             ShowSuccesspopup(false);
         }
 
-        //TODO:: check bankrupt?
+        m_ActivatedThisMonth = true;
+        UpdateOnceAMonthUI();
+    }
+
+    public void ResetFundraiser()
+    {
+        m_ActivatedThisMonth = false;
+        UpdateOnceAMonthUI();
     }
 
     #region UI popups

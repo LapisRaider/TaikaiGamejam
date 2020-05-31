@@ -29,6 +29,9 @@ public class GameMonthSystem : MonoBehaviour
             GameStats.Instance.MonthlyDonationsIncreaseMoney();
             GameStats.Instance.UpdateMonth();
 
+            //reset the fundraiser
+            Fundraisers.Instance.ResetFundraiser();
+
             //update UI
             UIManager.Instance.SetMonthUI(m_CurrMonth, m_CurrYear);
 

@@ -4,7 +4,7 @@
 public class Temperature
 {
     //temperature is affected based on the number of trees and plants u have
-    public int[] m_TreeToTemperature = new int[(int)TemperatureType.ALL_TYPES];
+    public float[] m_TreeToTemperature = new float[(int)TemperatureType.ALL_TYPES];
     public float m_TemperaturePerTree = 0.5f;
     public float m_TemperaturePerPlant = 0.1f;
 
@@ -34,6 +34,7 @@ public class Temperature
         m_CurrTemperatureAmt += m_TemperatureOffset;
 
         //based on plant and flower count
+        Debug.Log(m_CurrTemperatureAmt);
         if (m_CurrTemperatureAmt > m_TreeToTemperature[(int)m_CurrTempType])
         {
             m_CurrTempType += 1; //go to next temperature type
@@ -47,20 +48,27 @@ public class Temperature
             }
 
             UIManager.Instance.SetTemperatureUI(m_CurrTempType);
+            Debug.Log(m_CurrTempType.ToString());
         }
         else
         {
-            m_CurrTempType -= 1;
-            if (m_CurrTempType < 0)
-            {
-                m_CurrTempType = TemperatureType.EXTREMELY_HOT;
-            }
-            else
-            {
-                MapManager.Instance.AllPlantsTreesUpdateTemperature();
-            }
+            if (m_CurrTempType == 0)
+                return;
 
-            UIManager.Instance.SetTemperatureUI(m_CurrTempType);
+            if (m_CurrTemperatureAmt < m_TreeToTemperature[(int)m_CurrTempType - 1])
+            {
+                m_CurrTempType -= 1;
+                if (m_CurrTempType < 0)
+                {
+                    m_CurrTempType = TemperatureType.EXTREMELY_HOT;
+                }
+                else
+                {
+                    MapManager.Instance.AllPlantsTreesUpdateTemperature();
+                }
+
+                UIManager.Instance.SetTemperatureUI(m_CurrTempType);
+            }
         }
     }
 

@@ -141,9 +141,9 @@ public class MapManager : SingletonBase<MapManager>
     public int GetAmtOfPlantOnMap(Plant_Types plantType)
     {
         if (plantType < Plant_Types.FLOWERS)
-            return GetAmtOfPlantTypeOnMap(plantType);
+            return GetAmtOfTreeTypeOnMap(plantType);
 
-        return GetAmtOfTreeTypeOnMap(plantType);
+        return GetAmtOfPlantTypeOnMap(plantType);
     }
 
     public int GetAmtOfTreeTypeOnMap(Plant_Types plantType)

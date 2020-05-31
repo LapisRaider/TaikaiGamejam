@@ -15,6 +15,9 @@ public class Donations
 
     public int GetMonthlyDonation(int currentTreeNumber, int currentPlantNumber, int popularityCount)
     {
+        if (popularityCount < 0)
+            popularityCount = 0;
+
         //trees/plant * amt of money * a certain popularity percentage * a random percentage
         float amt = m_AmtPerTree * currentTreeNumber + currentPlantNumber * m_AmtPerPlant;
         amt = amt * (1.0f + ((int)popularityCount / m_NumberOfDonorPerPercentage));

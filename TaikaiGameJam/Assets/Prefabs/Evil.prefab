@@ -236,7 +236,7 @@ MonoBehaviour:
   m_OutOfBoundsOffset: 0.59
   m_MinNoOfGrid: 6
   m_CutTreeDist: 1
-  m_HealthDeduction: 2
+  m_HealthDeduction: 4
   m_DestructionRate: 0.5
   m_RunSpeed: 3
   m_MinSafeDist: 4.81

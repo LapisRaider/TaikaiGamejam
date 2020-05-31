@@ -13,7 +13,7 @@ public class Plant : MonoBehaviour
     public SpriteRenderer m_SpriteRenderer;
     public Animator m_Animator;
 
-    bool dead = false;
+    [HideInInspector] public bool m_Dead = false;
 
     public void Init(PlantScriptableObj plantScript, Vector2Int plantGridPos)
     {
@@ -31,11 +31,11 @@ public class Plant : MonoBehaviour
         m_SpriteRenderer.color = Color.white;
         m_SpriteRenderer.sortingOrder = (int)(transform.position.y * -100);
 
-        dead = false;
+        m_Dead = false;
         if (m_Animator != null)
         {
             m_Animator.ResetTrigger("Shaking");
-            m_Animator.ResetTrigger("Tree_Dying");
+            m_Animator.ResetTrigger("Dying");
         }
 
         Temperature temperature = GameStats.Instance.m_Temperature;
@@ -45,10 +45,16 @@ public class Plant : MonoBehaviour
 
     public void Update()
     {
-        if (dead)
+        if (m_Dead)
         {
             if (m_Animator == null)
                 return;
+
+            if (m_Animator != null)
+            {
+                m_Animator.ResetTrigger("Shaking");
+                m_Animator.SetTrigger("Dying");
+            }
 
             if (m_Animator.GetCurrentAnimatorStateInfo(0).IsName("Tree_Dying"))
             {
@@ -82,10 +88,13 @@ public class Plant : MonoBehaviour
     {
         if (m_Animator != null)
         {
+            m_Animator.ResetTrigger("Shaking");
             m_Animator.SetTrigger("Dying");
         }
 
-        dead = true;
+        MapManager.Instance.RemovePlants(m_PlantGridPos);
+
+        m_Dead = true;
         return;
     }
 }

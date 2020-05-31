@@ -146,7 +146,7 @@ public class EvilPeople : MonoBehaviour
         //check if prev tree is still avilable
         if (m_NearestTree != null)
         {
-            if (m_NearestTree.gameObject.activeSelf)
+            if (!m_NearestTree.m_Dead)
             {
                 m_Destination = MapManager.Instance.GetGridPosToWorld(m_NearestTree.m_PlantGridPos);
                 m_Dir = (m_Destination - (Vector2)transform.position);
@@ -165,6 +165,9 @@ public class EvilPeople : MonoBehaviour
             float dist = Vector2.SqrMagnitude(tree.Key - m_CurrentGridPos);
             if (dist < closestDist)
             {
+                if (tree.Value.m_Dead)
+                    continue;
+
                 closestDist = dist;
                 m_NearestTree = tree.Value;
                 treeDestination = tree.Key;
@@ -244,6 +247,7 @@ public class EvilPeople : MonoBehaviour
             if (m_NearestTree != null)
             {
                 m_NearestTree.RemoveHealth(m_HealthDeduction);
+                m_DestructionTimer = 0.0f;
             }
         }
 
@@ -255,7 +259,7 @@ public class EvilPeople : MonoBehaviour
         }
         else
         {
-            if (!m_NearestTree.gameObject.activeSelf)
+            if (m_NearestTree.m_Dead)
             {
                 ChangeState(States.MOVE_TO_TREE);
                 return;

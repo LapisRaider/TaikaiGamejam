@@ -15,7 +15,12 @@ public class PlantTree : Plant
 
     public override void Dead()
     {
-        base.Dead();
+        if (m_Animator != null)
+        {
+            m_Animator.ResetTrigger("Shaking");
+            m_Animator.SetTrigger("Dying");
+        }
+        m_Dead = true;
 
         //remove itself from the mapmanager
         MapManager.Instance.RemoveTree(m_PlantGridPos);
@@ -23,6 +28,9 @@ public class PlantTree : Plant
 
     public override void RemoveHealth(int healthDeduct)
     {
+        if (m_Dead)
+            return;
+
         base.RemoveHealth(healthDeduct);
 
         if (m_ParticleSystem != null)

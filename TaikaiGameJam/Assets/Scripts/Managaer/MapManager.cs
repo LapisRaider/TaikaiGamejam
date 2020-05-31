@@ -156,6 +156,15 @@ public class MapManager : SingletonBase<MapManager>
         m_TreeOnMap.Remove(tilePos);
         GameStats.Instance.UpdateCurrentPlantNumber(true, m_TreeOnMap.Count);
     }
+
+    public void RemovePlants(Vector2Int tilePos)
+    {
+        if (!m_PlantOnMap.ContainsKey(tilePos))
+            return;
+
+        m_PlantOnMap.Remove(tilePos);
+        GameStats.Instance.UpdateCurrentPlantNumber(true, m_PlantOnMap.Count);
+    }
     #endregion
 
     public int GetAmtOfPlantOnMap(Plant_Types plantType)

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class UIManager : SingletonBase<UIManager>
@@ -131,4 +132,10 @@ public class UIManager : SingletonBase<UIManager>
         m_ParentPages.SetActive(false);
     }
     #endregion
+
+    public void RestartGame()
+    {
+        SoundManager.Instance.Play("Click");
+        SceneManager.LoadScene("MainMenu");
+    }
 }

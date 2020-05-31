@@ -7,6 +7,8 @@ public class Money
     public int m_BankruptcyAmt = -5000;
     public int m_CurrMoney = 100;
 
+    public GameObject m_LoseUI;
+
     public void Init()
     {
         UIManager.Instance.SetCurrentMoneyUI(m_CurrMoney);
@@ -21,7 +23,8 @@ public class Money
         {
             if (m_CurrMoney <= m_BankruptcyAmt)
             {
-                //TODO:: Lose the game
+                if (m_LoseUI != null)
+                    m_LoseUI.SetActive(true);
             }
         }
     }

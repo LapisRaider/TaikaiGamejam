@@ -1,4 +1,6 @@
-﻿[System.Serializable]
+﻿using UnityEngine;
+
+[System.Serializable]
 public class Temperature
 {
     //temperature is affected based on the number of trees and plants u have
@@ -8,8 +10,10 @@ public class Temperature
 
     public TemperatureType m_CurrTempType = TemperatureType.EXTREMELY_HOT;
 
-    float m_CurrTemperatureAmt = 0.0f;
+    [HideInInspector] public float m_CurrTemperatureAmt = 0.0f;
     float m_TemperatureOffset = 0.0f;
+    int m_TreeAmt = 0;
+    int m_PlantAmt = 0;
 
     public void Init()
     {
@@ -18,7 +22,15 @@ public class Temperature
 
     public void UpdateTemperature(int treeNumber, int plantNumber)
     {
-        m_CurrTemperatureAmt = treeNumber * m_TemperaturePerTree + plantNumber * m_TemperaturePerPlant;
+        m_TreeAmt = treeNumber;
+        m_PlantAmt = plantNumber;
+
+        UpdateTemperature();
+    }
+
+    public void UpdateTemperature()
+    {
+        m_CurrTemperatureAmt = m_TreeAmt * m_TemperaturePerTree + m_PlantAmt * m_TemperaturePerPlant;
         m_CurrTemperatureAmt += m_TemperatureOffset;
 
         //based on plant and flower count
@@ -55,6 +67,7 @@ public class Temperature
     public void AddToTemperatureOffset(float offset)
     {
         m_TemperatureOffset += offset;
+        UpdateTemperature();
     }
 }
 

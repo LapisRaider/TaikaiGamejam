@@ -194,7 +194,18 @@ public class RandomEventManager : SingletonBase<RandomEventManager>
         {
             case PositiveEventTypes.DECREASE_TEMPERATURE:
                 {
-                    //TODO:: decrease temperature
+                    Temperature temperature = GameStats.Instance.m_Temperature;
+                    if (temperature == null)
+                        return;
+
+                    int decreaseAmt = 0;
+                    if (eventObj.m_AffectedByPercentage)
+                        decreaseAmt = (int)((float)temperature.m_CurrTemperatureAmt * Random.Range(eventObj.m_MinMaxAffectedPercentages.x, eventObj.m_MinMaxAffectedPercentages.y));
+                    else
+                        decreaseAmt = (int)Random.Range(eventObj.m_MinMaxAffectedAmount.x, eventObj.m_MinMaxAffectedAmount.y);
+
+                    temperature.AddToTemperatureOffset(decreaseAmt);
+                    numberText = "Temperature slightly decreased.";
                 }
                 break;
             case PositiveEventTypes.GET_MONEY:
@@ -241,8 +252,18 @@ public class RandomEventManager : SingletonBase<RandomEventManager>
         {
             case NegativeEventTypes.INCREASE_TEMPERATURE:
                 {
-                    //TODO:: increase temperature
+                    Temperature temperature = GameStats.Instance.m_Temperature;
+                    if (temperature == null)
+                        return;
 
+                    int increaseAmt = 0;
+                    if (eventObj.m_AffectedByPercentage)
+                        increaseAmt = (int)((float)temperature.m_CurrTemperatureAmt * Random.Range(eventObj.m_MinMaxAffectedPercentages.x, eventObj.m_MinMaxAffectedPercentages.y));
+                    else
+                        increaseAmt = (int)Random.Range(eventObj.m_MinMaxAffectedAmount.x, eventObj.m_MinMaxAffectedAmount.y);
+
+                    temperature.AddToTemperatureOffset(increaseAmt);
+                    numberText = "Temperature slightly increased.";
                 }
                 break;
             case NegativeEventTypes.DECREASE_POPULARITY:

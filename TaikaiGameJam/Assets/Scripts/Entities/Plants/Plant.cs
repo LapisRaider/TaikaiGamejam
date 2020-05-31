@@ -26,17 +26,18 @@ public class Plant : MonoBehaviour
         //set sprite stuff
         m_SpriteRenderer.sprite = plantScript.m_PlantSprite;
         m_SpriteRenderer.sortingOrder = (int)(transform.position.y * -100);
-
-        //transform.localScale = Vector3.zero;
     }
 
     public void Grow()
     {
         //transform.localScale = Tran
+        //TODO:: growtj cjcl
     }
 
     public void CheckTemperatureUpdate()
     {
+        //TODO:: TEMPERATURE CHECK PLANTS
+
         //check if plant can still survive when the temperature increased
         //have a callback to handle this
     }

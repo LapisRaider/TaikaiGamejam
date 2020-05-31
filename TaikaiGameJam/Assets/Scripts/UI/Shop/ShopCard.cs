@@ -49,7 +49,7 @@ public class ShopCard : MonoBehaviour
                 m_TemperatureToGrowText.text = "Can survive all temperatures";
                 break;
             case TemperatureType.VERY_HOT:
-                m_TemperatureToGrowText.text = "Survive Scroch and below";
+                m_TemperatureToGrowText.text = "Survive Scorch and below";
                 break;
             case TemperatureType.HOT:
                 m_TemperatureToGrowText.text = "Survive hot and below";

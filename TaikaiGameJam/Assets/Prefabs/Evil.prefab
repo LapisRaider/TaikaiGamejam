@@ -232,14 +232,14 @@ MonoBehaviour:
   m_SpriteRenderer: {fileID: 7975460901384395318}
   m_ItemSpriteRenderer: {fileID: 8461063411491849171}
   m_Animator: {fileID: 7276177994756464729}
-  m_MinMaxSpeed: {x: 2, y: 5}
-  m_OutOfBoundsOffset: 0.5
+  m_MinMaxSpeed: {x: 2, y: 3}
+  m_OutOfBoundsOffset: 0.59
   m_MinNoOfGrid: 6
   m_CutTreeDist: 1
   m_HealthDeduction: 2
   m_DestructionRate: 0.5
   m_RunSpeed: 3
-  m_MinSafeDist: 4
+  m_MinSafeDist: 4.81
 --- !u!58 &-8357211064297054870
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -253,9 +253,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.05190313, y: 1.5858963}
   serializedVersion: 2
-  m_Radius: 0.42
+  m_Radius: 1.547003
 --- !u!50 &-5008550989293514656
 Rigidbody2D:
   serializedVersion: 4

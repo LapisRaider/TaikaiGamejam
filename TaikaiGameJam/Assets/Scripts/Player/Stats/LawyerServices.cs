@@ -92,7 +92,7 @@ public class LawyerServices
     public bool MonthlySueService()
     {
         //check if should do monthly sue
-        if (Random.Range(0.0f, 1.0f) > m_MonthlySueChances)
+        if (Random.Range(0.0f, 1.0f) < m_MonthlySueChances)
             return false;
 
         //check the number of bad events
@@ -132,6 +132,8 @@ public class LawyerServices
         }
 
         UpdateSueServiceUI(LawyerServiceTypes.SUE_UNSUCCESSFUL, badEventNumber);
+
+        SoundManager.Instance.Play("lawyer");
 
         return false;
     }

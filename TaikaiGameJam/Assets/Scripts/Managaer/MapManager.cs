@@ -204,12 +204,16 @@ public class MapManager : SingletonBase<MapManager>
 
     public void AllPlantsTreesUpdateTemperature()
     {
+        Temperature temperature = GameStats.Instance.m_Temperature;
+        if (temperature == null)
+            return;
+
         foreach(KeyValuePair<Vector2Int, Plant> plant in m_PlantOnMap)
         {
             if (plant.Value == null)
                 continue;
 
-            plant.Value.CheckTemperatureUpdate();
+            plant.Value.CheckTemperatureUpdate(temperature.m_CurrTempType);
         }
 
         foreach (KeyValuePair<Vector2Int, PlantTree> tree in m_TreeOnMap)
@@ -217,7 +221,7 @@ public class MapManager : SingletonBase<MapManager>
             if (tree.Value == null)
                 continue;
 
-            tree.Value.CheckTemperatureUpdate();
+            tree.Value.CheckTemperatureUpdate(temperature.m_CurrTempType);
         }
     }
 

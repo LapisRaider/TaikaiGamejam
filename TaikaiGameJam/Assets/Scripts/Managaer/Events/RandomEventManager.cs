@@ -261,6 +261,7 @@ public class RandomEventManager : SingletonBase<RandomEventManager>
         }
 
         UpdateUI(eventObj, numberText);
+        SoundManager.Instance.Play("successfulFund");
     }
 
     public void HandleNegativeEvent(EventScriptableObj eventObj)
@@ -333,6 +334,7 @@ public class RandomEventManager : SingletonBase<RandomEventManager>
 
         ++m_NumberOfBadEventsInAMonth;
         UpdateUI(eventObj, numberText);
+        SoundManager.Instance.Play("UnsuccessfulFund");
     }
 
     public void ResetMonth()

@@ -329,6 +329,12 @@ public class Volunteers : MonoBehaviour
         {
             ChangeState(States.IDLE);
         }
+
+        if (m_AudioSource != null)
+        {
+            if (!m_AudioSource.isPlaying)
+                SoundManager.Instance.Play("dig", m_AudioSource);
+        }
     }
 
     public void ExitPlantTreeState()

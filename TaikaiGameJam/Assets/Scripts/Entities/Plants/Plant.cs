@@ -34,7 +34,7 @@ public class Plant : MonoBehaviour
         //TODO:: growtj cjcl
     }
 
-    public void CheckTemperatureUpdate()
+    public void CheckTemperatureUpdate(TemperatureType currTemperature)
     {
         //TODO:: TEMPERATURE CHECK PLANTS
 

@@ -48,7 +48,6 @@ public class Temperature
             }
 
             UIManager.Instance.SetTemperatureUI(m_CurrTempType);
-            Debug.Log(m_CurrTempType.ToString());
         }
         else
         {

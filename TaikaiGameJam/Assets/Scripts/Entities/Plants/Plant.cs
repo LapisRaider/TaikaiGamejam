@@ -11,6 +11,9 @@ public class Plant : MonoBehaviour
     [HideInInspector] public Plant_Types m_PlantType = Plant_Types.FLOWERS;
 
     public SpriteRenderer m_SpriteRenderer;
+    public Animator m_Animator;
+
+    bool dead = false;
 
     public void Init(PlantScriptableObj plantScript, Vector2Int plantGridPos)
     {
@@ -25,21 +28,45 @@ public class Plant : MonoBehaviour
 
         //set sprite stuff
         m_SpriteRenderer.sprite = plantScript.m_PlantSprite;
+        m_SpriteRenderer.color = Color.white;
         m_SpriteRenderer.sortingOrder = (int)(transform.position.y * -100);
+
+        dead = false;
+        if (m_Animator != null)
+        {
+            m_Animator.ResetTrigger("Shaking");
+            m_Animator.ResetTrigger("Tree_Dying");
+        }
+
+        Temperature temperature = GameStats.Instance.m_Temperature;
+        if (temperature != null)
+            CheckTemperatureUpdate(temperature.m_CurrTempType);
     }
 
-    public void Grow()
+    public void Update()
     {
-        //transform.localScale = Tran
-        //TODO:: growtj cjcl
+        if (dead)
+        {
+            if (m_Animator == null)
+                return;
+
+            if (m_Animator.GetCurrentAnimatorStateInfo(0).IsName("Tree_Dying"))
+            {
+                if (m_Animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1)
+                {
+                    gameObject.SetActive(false);
+                }
+            }
+        }
     }
 
     public void CheckTemperatureUpdate(TemperatureType currTemperature)
     {
-        //TODO:: TEMPERATURE CHECK PLANTS
-
         //check if plant can still survive when the temperature increased
-        //have a callback to handle this
+        if (currTemperature < m_TemperatureToGrow)
+        {
+            Dead();
+        }
     }
 
     public virtual void RemoveHealth(int healthDeduct)
@@ -53,7 +80,12 @@ public class Plant : MonoBehaviour
 
     public virtual void Dead()
     {
-        gameObject.SetActive(false);
+        if (m_Animator != null)
+        {
+            m_Animator.SetTrigger("Dying");
+        }
+
+        dead = true;
         return;
     }
 }

@@ -65,7 +65,7 @@ public class LawyerServices
         if (m_UIParent != null)
             m_UIParent.SetActive(true);
 
-        string text = "You have a total of " + numberOfBadMonths.ToString() + " bad events this month";
+        string text = "You have a total of " + numberOfBadMonths.ToString() + " bad events this month. ";
         switch (serviceType)
         {
             case LawyerServiceTypes.NO_LAWYERS:
@@ -131,7 +131,7 @@ public class LawyerServices
             return true;
         }
 
-        UpdateSueServiceUI(LawyerServiceTypes.SUE_SUCCESSFUL, badEventNumber);
+        UpdateSueServiceUI(LawyerServiceTypes.SUE_UNSUCCESSFUL, badEventNumber);
 
         return false;
     }

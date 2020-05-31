@@ -58,8 +58,12 @@ public class MapManager : SingletonBase<MapManager>
         if (m_PlantOnMap.ContainsKey(tilePos))
             return false;
 
-        //TODO:: MAKRE SURE TREE IS IN BOUNDS
-        //TODO:: TAKE NOTE OF TREE SURROUNDING SPACE
+        //MAKRE SURE TREE IS IN BOUNDS
+        if (tilePos.x >= m_MapBoundaryGridNo.xMax || tilePos.x <= m_MapBoundaryGridNo.xMin 
+            || tilePos.y >= m_MapBoundaryGridNo.yMax || tilePos.y <= m_MapBoundaryGridNo.yMin)
+        {
+            return false;
+        }
 
         return true;
     }

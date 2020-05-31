@@ -13,12 +13,23 @@ MonoBehaviour:
   m_Name: Test1
   m_EditorClassIdentifier: 
   m_OneTimeOnly: 0
-  m_PositiveEventType: 0
+  m_PositiveEventType: 2
   m_NegativeEventType: 0
   m_AffectedByPercentage: 1
   m_MinMaxAffectedPercentages: {x: 0, y: 1}
   m_MinMaxAffectedAmount: {x: 0, y: 500}
-  m_EventPicture: []
-  m_Description: []
-  m_NameOfPersonInvolve: []
-  m_Title: []
+  m_EventPicture:
+  - {fileID: 21300000, guid: 1ef5c7c4a549f724193eb4f0b1748e25, type: 3}
+  m_Description:
+  - A recent post on their social media account gave shoutouts to a local environmental
+    activist.
+  m_NameOfPersonInvolve:
+  - Prez O. Dent
+  - Prezie O. Dent
+  - Caleb Britney
+  - Absidee F Ghij
+  - 
+  m_Title:
+  - A-list Celebrity Endoreses Local Activist
+  - B-list Celebrity Endoreses Local Activist
+  - Politician Praises Local Activist

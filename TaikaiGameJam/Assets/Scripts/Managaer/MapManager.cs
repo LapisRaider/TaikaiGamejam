@@ -71,6 +71,9 @@ public class MapManager : SingletonBase<MapManager>
         Plant_Types type = GameStats.Instance.GetAvilablePlantType();
         bool isTree = type < Plant_Types.FLOWERS;
 
+        if (!inventory.HaveInInventory(type))
+            return 0.0f;
+
         if (isTree)
         {
             if (m_TreeOnMap.ContainsKey(tilePos))
@@ -90,21 +93,39 @@ public class MapManager : SingletonBase<MapManager>
                 m_PlantManager.InitType(type, tilePos, plantTree);
                 m_TreeOnMap.Add(tilePos, plantTree);
 
-                GameStats.Instance.UpdateCurrentPlantNumber(isTree, m_TreeOnMap.Count);
-
                 inventory.RemoveOneFromInventory(type); //remove one from inventory
+                GameStats.Instance.UpdateCurrentPlantNumber(isTree, m_TreeOnMap.Count);
 
                 return plantTree.m_PlantTime;
             }
         }
         else
         {
-            //TODO:: plant other stuff
-            GameStats.Instance.UpdateCurrentPlantNumber(isTree, m_PlantOnMap.Count);
+            if (m_PlantOnMap.ContainsKey(tilePos))
+                return 0.0f;
+
+            //plant plants
+            GameObject plantObj = m_PlantManager.GetAndSpawnPlant();
+            if (plantObj == null)
+                return 0.0f;
+
+            plantObj.transform.position = m_MapGrid.GetCellCenterWorld((Vector3Int)tilePos);
+            plantObj.SetActive(true);
+
+            Plant plantedPlant = plantObj.GetComponent<Plant>();
+            if (plantedPlant)
+            {
+                m_PlantManager.InitType(type, tilePos, plantedPlant);
+                m_PlantOnMap.Add(tilePos, plantedPlant);
+
+                inventory.RemoveOneFromInventory(type); //remove one from inventory
+                GameStats.Instance.UpdateCurrentPlantNumber(isTree, m_PlantOnMap.Count);
+
+                return plantedPlant.m_PlantTime;
+            }
         }
 
-
-        return 1.0f;
+        return 0.0f;
     }
 
     public void RemoveTree(Vector2Int tilePos)
@@ -120,9 +141,9 @@ public class MapManager : SingletonBase<MapManager>
     public int GetAmtOfPlantOnMap(Plant_Types plantType)
     {
         if (plantType < Plant_Types.FLOWERS)
-            return GetAmtOfPlantTypeOnMap(plantType);
+            return GetAmtOfTreeTypeOnMap(plantType);
 
-        return GetAmtOfTreeTypeOnMap(plantType);
+        return GetAmtOfPlantTypeOnMap(plantType);
     }
 
     public int GetAmtOfTreeTypeOnMap(Plant_Types plantType)
@@ -155,11 +176,29 @@ public class MapManager : SingletonBase<MapManager>
         return amt;
     }
 
-
-    //TODO:: call this when temperature is updated
-    public void PlantsUpdateTemperature()
+    public int GetTotalAmtOfTreeOnMap()
     {
+        return m_TreeOnMap.Count;
+    }
 
+
+    public void AllPlantsTreesUpdateTemperature()
+    {
+        foreach(KeyValuePair<Vector2Int, Plant> plant in m_PlantOnMap)
+        {
+            if (plant.Value == null)
+                continue;
+
+            plant.Value.CheckTemperatureUpdate();
+        }
+
+        foreach (KeyValuePair<Vector2Int, PlantTree> tree in m_TreeOnMap)
+        {
+            if (tree.Value == null)
+                continue;
+
+            tree.Value.CheckTemperatureUpdate();
+        }
     }
 
     public PlantDataBase GetPlantDataBase()

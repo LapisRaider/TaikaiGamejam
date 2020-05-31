@@ -11,6 +11,8 @@ public class RandomEventManager : SingletonBase<RandomEventManager>
     int m_TotalPositiveWeightage = 0;
     int m_TotalNegativeWeightage = 0;
 
+    [HideInInspector] public int m_NumberOfBadEventsInAMonth = 0;
+
     [Header("UI")]
     public GameObject m_UIGameObject;
     public TextMeshProUGUI m_DescriptionText;
@@ -82,7 +84,7 @@ public class RandomEventManager : SingletonBase<RandomEventManager>
 
     public void Update()
     {
-        //TODO:: remove this shit
+        //TODO:: remove this shit, replace with a proper timer
         if (Input.GetKey("up"))
             StartEvent();
     }
@@ -90,8 +92,6 @@ public class RandomEventManager : SingletonBase<RandomEventManager>
     public void StartEvent()
     {
         //randomize the weightage, loop through the array to see if theres any within the correct values
-
-        //TODO:: check one time only events
         float negativeChance = Random.Range(0.0f, 1.0f);
         if (negativeChance <= m_NegativeEventChance) //negative event
         {
@@ -127,9 +127,6 @@ public class RandomEventManager : SingletonBase<RandomEventManager>
             HandleNegativeEvent(eventObj);
         else
             HandlePositiveEvents(eventObj);
-
-        //TODO:: INVOLVE LAWYERS
-        //TODO:: temp pause game
     }
 
     #region UI
@@ -197,7 +194,18 @@ public class RandomEventManager : SingletonBase<RandomEventManager>
         {
             case PositiveEventTypes.DECREASE_TEMPERATURE:
                 {
-                    //TODO:: decrease temperature
+                    Temperature temperature = GameStats.Instance.m_Temperature;
+                    if (temperature == null)
+                        return;
+
+                    int decreaseAmt = 0;
+                    if (eventObj.m_AffectedByPercentage)
+                        decreaseAmt = (int)((float)temperature.m_CurrTemperatureAmt * Random.Range(eventObj.m_MinMaxAffectedPercentages.x, eventObj.m_MinMaxAffectedPercentages.y));
+                    else
+                        decreaseAmt = (int)Random.Range(eventObj.m_MinMaxAffectedAmount.x, eventObj.m_MinMaxAffectedAmount.y);
+
+                    temperature.AddToTemperatureOffset(decreaseAmt);
+                    numberText = "Temperature slightly decreased.";
                 }
                 break;
             case PositiveEventTypes.GET_MONEY:
@@ -244,8 +252,18 @@ public class RandomEventManager : SingletonBase<RandomEventManager>
         {
             case NegativeEventTypes.INCREASE_TEMPERATURE:
                 {
-                    //TODO:: increase temperature
+                    Temperature temperature = GameStats.Instance.m_Temperature;
+                    if (temperature == null)
+                        return;
 
+                    int increaseAmt = 0;
+                    if (eventObj.m_AffectedByPercentage)
+                        increaseAmt = (int)((float)temperature.m_CurrTemperatureAmt * Random.Range(eventObj.m_MinMaxAffectedPercentages.x, eventObj.m_MinMaxAffectedPercentages.y));
+                    else
+                        increaseAmt = (int)Random.Range(eventObj.m_MinMaxAffectedAmount.x, eventObj.m_MinMaxAffectedAmount.y);
+
+                    temperature.AddToTemperatureOffset(increaseAmt);
+                    numberText = "Temperature slightly increased.";
                 }
                 break;
             case NegativeEventTypes.DECREASE_POPULARITY:
@@ -282,25 +300,26 @@ public class RandomEventManager : SingletonBase<RandomEventManager>
                 break;
             case NegativeEventTypes.EVIL_COOPERATE:
                 {
-                    int numberToSpawn = (int)Random.Range(eventObj.m_MinMaxAffectedAmount.x, eventObj.m_MinMaxAffectedAmount.y);
+                    //THIS EVENT CAN ONLY HAPPEN WHEN THERE ARE TREES
+                    if (MapManager.Instance.GetTotalAmtOfTreeOnMap() == 0)
+                        return;
 
+                    int numberToSpawn = (int)Random.Range(eventObj.m_MinMaxAffectedAmount.x, eventObj.m_MinMaxAffectedAmount.y);
                     for(int i = 0; i < numberToSpawn; ++i)
                     {
                         NPCManager.Instance.SpawnEvilPeople();
                     }
-
-                    //TODO::
-                    //get number of trees before this event
-                    //get number of trees after this event
-                    //THIS EVENT CAN ONLY HAPPEN WHEN THERE ARE TREES
-                    //TODO:: check evil people count, if 0 event cleared
-                    //put a notification on whether player manage to earn back some money from it
-                    //based on lawyer
                 }
                 break;
         }
 
+        ++m_NumberOfBadEventsInAMonth;
         UpdateUI(eventObj, numberText);
+    }
+
+    public void ResetMonth()
+    {
+        m_NumberOfBadEventsInAMonth = 0;
     }
 }
 

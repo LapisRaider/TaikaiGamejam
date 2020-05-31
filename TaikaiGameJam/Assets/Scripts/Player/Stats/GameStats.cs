@@ -18,8 +18,6 @@ public class GameStats : SingletonBase<GameStats>
     public int m_CurrentTreeNumber = 0;
     public int m_CurrentPlantNumber = 0;
 
-    //TODO:: track the number of trees there are for the shop to be sold out
-
     public void Awake()
     {
         if (m_Money != null)
@@ -93,9 +91,15 @@ public class GameStats : SingletonBase<GameStats>
         if (m_Temperature == null)
             return;
 
-        m_Temperature.UpdateTemperature(m_CurrentTreeNumber);
+        m_Temperature.UpdateTemperature(m_CurrentTreeNumber, m_CurrentPlantNumber);
     }
     #endregion
+
+    public void UpdateMonth()
+    {
+        if (m_LawyerServices != null)
+            m_LawyerServices.MonthlySueService();
+    }
 
     public void DeductTotalMonthFees()
     {
@@ -104,7 +108,7 @@ public class GameStats : SingletonBase<GameStats>
 
     public int GetTotalMonthFees()
     {
-        return m_VolunteerInfo.GetTotalMonthlyPayment() + m_RecordingEquipmentStats.GetMonthlyMaintenceFees() + m_LawyerServices.GetCurrentServiceFee();
+        return m_VolunteerInfo.GetTotalMonthlyPayment() + m_RecordingEquipmentStats.GetMonthlyMaintenceFees() + m_LawyerServices.GetCurrentTotalServiceFee();
     }
 
     public void MonthlyDonationsIncreaseMoney()

@@ -1,4 +1,6 @@
-﻿[System.Serializable]
+﻿using UnityEngine;
+
+[System.Serializable]
 public class Temperature
 {
     //temperature is affected based on the number of trees and plants u have
@@ -15,13 +17,33 @@ public class Temperature
     public void UpdateTemperature(int treeNumber)
     {
         //based on plant and flower count
-        if (m_CurrTempType == TemperatureType.NICE)
-            return;
-
-        if (treeNumber > m_TreeToTemperature[(int)m_CurrTempType + 1])
+        if (treeNumber > m_TreeToTemperature[(int)m_CurrTempType])
         {
             m_CurrTempType += 1; //go to next temperature type
-                                 //TODO:: UPDATE ALL TREES
+            if (m_CurrTempType > TemperatureType.NICE)
+            {
+                m_CurrTempType = TemperatureType.NICE;
+            }
+            else
+            {
+                //TODO:: UPDATE ALL TREES
+
+            }
+
+            UIManager.Instance.SetTemperatureUI(m_CurrTempType);
+        }
+        else
+        {
+            m_CurrTempType -= 1;
+            if (m_CurrTempType < 0)
+            {
+                m_CurrTempType = TemperatureType.EXTREMELY_HOT;
+            }
+            else
+            {
+                //TODO:: UPDATE ALL TREES
+
+            }
 
             UIManager.Instance.SetTemperatureUI(m_CurrTempType);
         }

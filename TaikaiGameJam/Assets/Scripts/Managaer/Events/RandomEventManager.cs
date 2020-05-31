@@ -167,7 +167,7 @@ public class RandomEventManager : SingletonBase<RandomEventManager>
         switch(eventObj.m_PositiveEventType)
         {
             case PositiveEventTypes.DECREASE_TEMPERATURE:
-                m_AffectedText.text = "Temperature decrease by " + number;
+                m_AffectedText.text = number;
                 break;
             case PositiveEventTypes.INCREASE_POPULARITY:
                 m_AffectedText.text = "Popularity increase by " + number;
@@ -180,7 +180,7 @@ public class RandomEventManager : SingletonBase<RandomEventManager>
         switch (eventObj.m_NegativeEventType)
         {
             case NegativeEventTypes.INCREASE_TEMPERATURE:
-                m_AffectedText.text = "Temperature increase by " + number;
+                m_AffectedText.text = number;
                 break;
             case NegativeEventTypes.DECREASE_POPULARITY:
                 m_AffectedText.text = "Popularity decrease by " + number;
@@ -214,11 +214,11 @@ public class RandomEventManager : SingletonBase<RandomEventManager>
                     if (temperature == null)
                         return;
 
-                    int decreaseAmt = 0;
+                    float decreaseAmt = 0;
                     if (eventObj.m_AffectedByPercentage)
-                        decreaseAmt = (int)((float)temperature.m_CurrTemperatureAmt * Random.Range(eventObj.m_MinMaxAffectedPercentages.x, eventObj.m_MinMaxAffectedPercentages.y));
+                        decreaseAmt = ((float)temperature.m_CurrTemperatureAmt * Random.Range(eventObj.m_MinMaxAffectedPercentages.x, eventObj.m_MinMaxAffectedPercentages.y));
                     else
-                        decreaseAmt = (int)Random.Range(eventObj.m_MinMaxAffectedAmount.x, eventObj.m_MinMaxAffectedAmount.y);
+                        decreaseAmt = Random.Range(eventObj.m_MinMaxAffectedAmount.x, eventObj.m_MinMaxAffectedAmount.y);
 
                     temperature.AddToTemperatureOffset(decreaseAmt);
                     numberText = "Temperature slightly decreased.";
@@ -274,13 +274,13 @@ public class RandomEventManager : SingletonBase<RandomEventManager>
                     if (temperature == null)
                         return;
 
-                    int increaseAmt = 0;
+                    float increaseAmt = 0;
                     if (eventObj.m_AffectedByPercentage)
-                        increaseAmt = (int)((float)temperature.m_CurrTemperatureAmt * Random.Range(eventObj.m_MinMaxAffectedPercentages.x, eventObj.m_MinMaxAffectedPercentages.y));
+                        increaseAmt = ((float)temperature.m_CurrTemperatureAmt * Random.Range(eventObj.m_MinMaxAffectedPercentages.x, eventObj.m_MinMaxAffectedPercentages.y));
                     else
-                        increaseAmt = (int)Random.Range(eventObj.m_MinMaxAffectedAmount.x, eventObj.m_MinMaxAffectedAmount.y);
+                        increaseAmt = Random.Range(eventObj.m_MinMaxAffectedAmount.x, eventObj.m_MinMaxAffectedAmount.y);
 
-                    temperature.AddToTemperatureOffset(increaseAmt);
+                    temperature.AddToTemperatureOffset(-increaseAmt);
                     numberText = "Temperature slightly increased.";
                 }
                 break;
@@ -296,7 +296,7 @@ public class RandomEventManager : SingletonBase<RandomEventManager>
                     else
                         decreaseAmt = (int)Random.Range(eventObj.m_MinMaxAffectedAmount.x, eventObj.m_MinMaxAffectedAmount.y);
 
-                    numberText = "$" + decreaseAmt.ToString();
+                    numberText = decreaseAmt.ToString();
                     popularity.UpdatePopularityOffset(-decreaseAmt);
                 }
                 break;

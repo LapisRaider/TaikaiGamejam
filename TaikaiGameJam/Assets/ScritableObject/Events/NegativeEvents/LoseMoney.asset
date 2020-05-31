@@ -10,24 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 371166306aa55e643817208883f05866, type: 3}
-  m_Name: Test3
+  m_Name: LoseMoney
   m_EditorClassIdentifier: 
   m_OneTimeOnly: 0
-  m_PositiveEventType: 3
-  m_NegativeEventType: 0
-  m_AffectedByPercentage: 1
+  m_PositiveEventType: 0
+  m_NegativeEventType: 3
+  m_AffectedByPercentage: 0
   m_MinMaxAffectedPercentages: {x: 0, y: 1}
-  m_MinMaxAffectedAmount: {x: 0, y: 500}
+  m_MinMaxAffectedAmount: {x: 200, y: 500}
   m_EventPicture:
-  - {fileID: 21300000, guid: b4c336359565c044b854d49950c2aed0, type: 3}
+  - {fileID: 21300000, guid: e9604d2c38548534d87e0d55bd7e76e2, type: 3}
   m_Description:
-  - To acknowledge their efforts, the government has decided to give out monetary
-    aid to green activists across the country.
+  - A natural disaster stroke near your field. You have to pay a hefty amount to
+    repair the damages.
+  - 'Large damages incurred after a disaster. '
   m_NameOfPersonInvolve:
-  - Perez O. Dente
-  - Prez O. Dent
-  - Perezie O. Den
-  - Prezii O. Dent
-  - Perezii O. Dent
+  - Hurrican Harvey
+  - 8.1 Earthquake
+  - Wild fire
   m_Title:
-  - Government Gives Monetary Aid to Green Activists
+  - Disaster Strikes!
+  - Large damages incurred
+  - Natural disaster spells doom

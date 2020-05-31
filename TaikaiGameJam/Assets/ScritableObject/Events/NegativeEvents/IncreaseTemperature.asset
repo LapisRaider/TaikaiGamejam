@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 371166306aa55e643817208883f05866, type: 3}
+  m_Name: IncreaseTemperature
+  m_EditorClassIdentifier: 
+  m_OneTimeOnly: 0
+  m_PositiveEventType: 0
+  m_NegativeEventType: 1
+  m_AffectedByPercentage: 0
+  m_MinMaxAffectedPercentages: {x: 0, y: 1}
+  m_MinMaxAffectedAmount: {x: 0.2, y: 0.8}
+  m_EventPicture:
+  - {fileID: 21300000, guid: c6592eb6ad2119e468e982370315056f, type: 3}
+  m_Description:
+  - Company burn forest to make space for their new factories.
+  - Large cooporation destroyed thousands of acres of forest for their new plantation.
+  - Companies refuse to go green and burn even more fossil fuel.
+  m_NameOfPersonInvolve:
+  - Super Corp
+  - Diva Inc
+  - Blue Riot
+  - Bear Org
+  m_Title:
+  - Temperature soars
+  - Getting hotter??
+  - Global warming??

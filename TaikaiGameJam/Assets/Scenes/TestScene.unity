@@ -11802,11 +11802,11 @@ MonoBehaviour:
     - {fileID: 21300000, guid: f6bd6bd168a630e49a226872a63ae66c, type: 3}
     - {fileID: 21300000, guid: 914a06d830745a34e9ed6ae8df3dbe56, type: 3}
   m_LawyerServices:
-    m_MonthlyServiceFees: 200
+    m_MonthlyServiceFees: 300
     m_ChanceIncreasePerLawyer: 0.1
     m_MaxLawyerNumber: 5
-    m_MonthlySueChances: 0.6
-    m_MinMaxPercentagePerBadEvent: {x: 0.05, y: 0.08}
+    m_MonthlySueChances: 0.75
+    m_MinMaxPercentagePerBadEvent: {x: 0.04, y: 0.09}
     m_UIParent: {fileID: 2015676920}
     m_DescriptionText: {fileID: 294742741}
     m_AffectedMoneyText: {fileID: 506711412}
@@ -11822,6 +11822,7 @@ MonoBehaviour:
   m_Donations:
     m_AmtPerTree: 2
     m_AmtPerPlant: 0.2
+    m_MonthlyDefaultFunding: 100
     m_MinMaxDonationPercentage: {x: 0.8, y: 1.2}
     m_NumberOfDonorPerPercentage: 200
   m_Temperature:
@@ -11864,15 +11865,45 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bDontDestroyOnLoad: 0
-  m_PositiveEvents: []
+  m_PositiveEvents:
+  - m_EventScritableObj: {fileID: 11400000, guid: 54d56f73031c34045932a6299dc66d4c,
+      type: 2}
+    m_Chance: 30
+    m_Weightage: {x: 0, y: 0}
+    m_EventCompleted: 0
+  - m_EventScritableObj: {fileID: 11400000, guid: 78ce33975fc8c424aa58f0361d043a76,
+      type: 2}
+    m_Chance: 30
+    m_Weightage: {x: 0, y: 0}
+    m_EventCompleted: 0
+  - m_EventScritableObj: {fileID: 11400000, guid: 9ffd1f504145f444b8eb34e546c64dbb,
+      type: 2}
+    m_Chance: 10
+    m_Weightage: {x: 0, y: 0}
+    m_EventCompleted: 0
   m_NegativeEvents:
   - m_EventScritableObj: {fileID: 11400000, guid: b5ab0346ef5a1bc4780f20c95ee79262,
       type: 2}
-    m_Chance: 100
+    m_Chance: 80
     m_Weightage: {x: 0, y: 0}
     m_EventCompleted: 0
-  m_NegativeEventChance: 0.1
-  m_EventChance: 1
+  - m_EventScritableObj: {fileID: 11400000, guid: 54c5003020ef78947aed64838b4d7155,
+      type: 2}
+    m_Chance: 40
+    m_Weightage: {x: 0, y: 0}
+    m_EventCompleted: 0
+  - m_EventScritableObj: {fileID: 11400000, guid: 004f01064144e4c4aa45932d356bd1a7,
+      type: 2}
+    m_Chance: 10
+    m_Weightage: {x: 0, y: 0}
+    m_EventCompleted: 0
+  - m_EventScritableObj: {fileID: 11400000, guid: 0f332cad60512fe4386d321a154fe585,
+      type: 2}
+    m_Chance: 50
+    m_Weightage: {x: 0, y: 0}
+    m_EventCompleted: 0
+  m_NegativeEventChance: 0.5
+  m_EventChance: 0.8
   m_TimeForEvent: 7
   m_MaxEventPerMonth: 3
   m_NumberOfBadEventsInAMonth: 0

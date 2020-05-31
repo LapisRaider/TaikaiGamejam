@@ -15,16 +15,16 @@ MonoBehaviour:
   m_OneTimeOnly: 0
   m_PositiveEventType: 2
   m_NegativeEventType: 0
-  m_AffectedByPercentage: 1
+  m_AffectedByPercentage: 0
   m_MinMaxAffectedPercentages: {x: 0, y: 1}
-  m_MinMaxAffectedAmount: {x: 0, y: 500}
+  m_MinMaxAffectedAmount: {x: 200, y: 700}
   m_EventPicture:
   - {fileID: 21300000, guid: 1ef5c7c4a549f724193eb4f0b1748e25, type: 3}
   m_Description:
   - A recent post on their social media account gave shoutouts to a local environmental
     activist.
-  - Just now, at an interview, they expressed their admiration for the local activist.
-    Shortly after, your social media followers surges.
+  - 'Just now, at an interview, they expressed their admiration for the local activist. '
+  - Gave a shoutout to your cause and efforts on live television.
   m_NameOfPersonInvolve:
   - Kory Dent
   - Namy Waller
@@ -40,9 +40,9 @@ MonoBehaviour:
   - Pearl Irwin
   - Fia Millers
   m_Title:
-  - A-list Celebrity Endoreses Local Activist
-  - B-list Celebrity Endoreses Local Activist
+  - A-list Celebrity
+  - 'B-list Celebrity '
   - Politician Praises Local Activist
   - Popstar Praises Local Activist
-  - News Reporter Praises Local Activist
+  - News Praises Local Activist
   - CEO Praises Local Activist

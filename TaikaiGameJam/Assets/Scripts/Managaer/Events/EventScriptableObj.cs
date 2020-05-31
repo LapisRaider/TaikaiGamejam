@@ -15,6 +15,7 @@ public class EventScriptableObj : ScriptableObject
 
     [Header("UI info")]
     public Sprite[] m_EventPicture;
+    [TextArea(3, 5)]
     public string[] m_Description;
     public string[] m_NameOfPersonInvolve;
     public string[] m_Title;

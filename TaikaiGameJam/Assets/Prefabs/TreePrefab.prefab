@@ -70,8 +70,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -4686060970847296921, guid: 89e94d822ee39c543b0216e49eb87700,
-    type: 3}
+  m_Sprite: {fileID: 21300000, guid: 264d58d6dc5d4154ba7cef141c24bb16, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -127,6 +126,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_GrowthTime: 1
+  m_PlantTime: 1
   m_TemperatureToGrow: 0
   m_Grown: 0
+  m_CurrentHealth: 0
+  m_PlantGridPos: {x: 0, y: 0}
+  m_PlantType: 1
   m_SpriteRenderer: {fileID: 5797079024661566703}

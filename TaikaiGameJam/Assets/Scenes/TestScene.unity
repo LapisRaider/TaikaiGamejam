@@ -11784,7 +11784,7 @@ MonoBehaviour:
     m_CurrMoney: 1000
   m_VolunteerInfo:
     m_MaxVolunteerNo: 15
-    m_MonthlyPayment: 100
+    m_MonthlyPayment: 200
     m_CurrVolunteerAmt: 0
   m_RecordingEquipmentStats:
     m_MonthlyMaintenceFees: 3200000064000000f4010000e8030000

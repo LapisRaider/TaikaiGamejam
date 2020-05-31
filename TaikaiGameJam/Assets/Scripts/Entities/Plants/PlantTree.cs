@@ -5,6 +5,14 @@ public class PlantTree : Plant
     public ParticleSystem m_ParticleSystem;
     public AudioSource m_AudioSource;
 
+    private void OnDisable()
+    {
+        if (m_AudioSource != null)
+        {
+            m_AudioSource.Stop();
+        }
+    }
+
     public override void Dead()
     {
         base.Dead();

@@ -103,7 +103,7 @@ public class LawyerServices
         //get number of person first
         if (m_CurrentLawyerNumber <= 0)
         {
-            UpdateSueServiceUI(LawyerServiceTypes.NO_LAWYERS);
+            UpdateSueServiceUI(LawyerServiceTypes.NO_LAWYERS, badEventNumber);
             return false;
         }
 

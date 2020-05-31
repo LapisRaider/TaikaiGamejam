@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+[System.Serializable]
 public class Popularity
 {
     [Header("Plants popularity rate")]

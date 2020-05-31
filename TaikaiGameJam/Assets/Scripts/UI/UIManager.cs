@@ -20,7 +20,6 @@ public class UIManager : SingletonBase<UIManager>
     public TextMeshProUGUI m_MonthText;
     public TextMeshProUGUI m_YearText;
 
-    //TODO:: do transitions
     [Header("Pages Related")]
     public GameObject m_ParentPages;
     public GameObject[] m_Pages;
@@ -110,6 +109,8 @@ public class UIManager : SingletonBase<UIManager>
     #region SetUI
     public void SetPagesActive(int currentPage)
     {
+        SoundManager.Instance.Play("Click");
+
         for (int i = 0; i < m_Pages.Length; ++i)
         {
             m_Pages[i].SetActive(currentPage == i);
@@ -120,6 +121,8 @@ public class UIManager : SingletonBase<UIManager>
 
     public void ClosePage()
     {
+        SoundManager.Instance.Play("Click");
+
         for (int i = 0; i < m_Pages.Length; ++i)
         {
             m_Pages[i].SetActive(false);

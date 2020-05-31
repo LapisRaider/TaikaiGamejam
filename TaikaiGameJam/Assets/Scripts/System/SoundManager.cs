@@ -28,4 +28,18 @@ public class SoundManager : SingletonBase<SoundManager>
 
         playingSound.m_Source.Play();
     }
+
+    public void Play(string name, AudioSource source)
+    {
+        Sound playingSound = Array.Find(m_SoundClipList, sound => sound.m_Name == name);
+
+        if (playingSound == null)
+            return;
+
+        if (source != null)
+        {
+            source.clip = playingSound.m_Clip;
+            source.Play();
+        }
+    }
 }

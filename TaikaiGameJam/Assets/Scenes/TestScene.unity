@@ -5759,6 +5759,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1784023103}
     m_Modifications:
+    - target: {fileID: 4070841426833475297, guid: 4f0406eefa830804e89f08733d26d6b7,
+        type: 3}
+      propertyPath: MaxDistance
+      value: 13.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4070841426833475297, guid: 4f0406eefa830804e89f08733d26d6b7,
+        type: 3}
+      propertyPath: MinDistance
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7430876558895221779, guid: 4f0406eefa830804e89f08733d26d6b7,
         type: 3}
       propertyPath: m_Color.r
@@ -32112,6 +32122,34 @@ MonoBehaviour:
     m_Pitch: 1
     m_HearingBaseOnDist: 0
     m_Loop: 1
+    m_Source: {fileID: 0}
+  - m_Name: Click
+    m_Clip: {fileID: 8300000, guid: ec09d3301eeb6ef489d47fcbc752ed23, type: 3}
+    m_Volume: 1
+    m_Pitch: 1
+    m_HearingBaseOnDist: 0
+    m_Loop: 0
+    m_Source: {fileID: 0}
+  - m_Name: MoneySpent
+    m_Clip: {fileID: 8300000, guid: 27d3ca723b821a449b0d95e6962d0826, type: 3}
+    m_Volume: 1
+    m_Pitch: 1
+    m_HearingBaseOnDist: 0
+    m_Loop: 0
+    m_Source: {fileID: 0}
+  - m_Name: Shout
+    m_Clip: {fileID: 8300000, guid: b5f97fce56d1e014dacb18d6d8b63282, type: 3}
+    m_Volume: 1
+    m_Pitch: 1
+    m_HearingBaseOnDist: 1
+    m_Loop: 0
+    m_Source: {fileID: 0}
+  - m_Name: WoodCut
+    m_Clip: {fileID: 8300000, guid: 91bfe7e453195414fb87e2be35cebe71, type: 3}
+    m_Volume: 1
+    m_Pitch: 1
+    m_HearingBaseOnDist: 1
+    m_Loop: 0
     m_Source: {fileID: 0}
 --- !u!1 &1981694699
 GameObject:

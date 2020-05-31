@@ -42,7 +42,7 @@ public class Plant : MonoBehaviour
         //have a callback to handle this
     }
 
-    public void RemoveHealth(int healthDeduct)
+    public virtual void RemoveHealth(int healthDeduct)
     {
         m_CurrentHealth -= healthDeduct;
         if (m_CurrentHealth <= 0)

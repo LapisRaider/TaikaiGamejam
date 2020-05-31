@@ -112,5 +112,6 @@ public class ShopCard : MonoBehaviour
         }
 
         UpdateUI();
+        SoundManager.Instance.Play("MoneySpent");
     }
 }

@@ -59,6 +59,7 @@ public class ShopManager : MonoBehaviour
         m_CurrentPage += 1;
 
         UpdateUIShown();
+        SoundManager.Instance.Play("Click");
     }
 
     public void GoLeft()
@@ -69,6 +70,7 @@ public class ShopManager : MonoBehaviour
         m_CurrentPage -= 1;
 
         UpdateUIShown();
+        SoundManager.Instance.Play("Click");
     }
 
     #region Video Equipment UI
@@ -128,6 +130,7 @@ public class ShopManager : MonoBehaviour
         recordingEquipment.Upgrade();
 
         UpdateVideoEquipmentDetailsUI();
+        SoundManager.Instance.Play("Click");
     }
 
     public void DowngradeEquipment()
@@ -136,6 +139,7 @@ public class ShopManager : MonoBehaviour
         recordingEquipment.DownGrade();
 
         UpdateVideoEquipmentDetailsUI();
+        SoundManager.Instance.Play("Click");
     }
     #endregion
 }

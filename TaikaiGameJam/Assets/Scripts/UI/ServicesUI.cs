@@ -46,6 +46,7 @@ public class ServicesUI : MonoBehaviour
         volunteerStats.FireVolunteer();
 
         UpdateVolunteerDetailsUI();
+        SoundManager.Instance.Play("Click");
     }
 
     public void HireVolunteer()
@@ -54,6 +55,7 @@ public class ServicesUI : MonoBehaviour
         volunteerStats.GetMoreVolunteer();
 
         UpdateVolunteerDetailsUI();
+        SoundManager.Instance.Play("Click");
     }
     #endregion
 
@@ -77,6 +79,7 @@ public class ServicesUI : MonoBehaviour
         lawyer.DownGradeLawyerService();
 
         UpdateLawyerDetailsUI();
+        SoundManager.Instance.Play("Click");
     }
 
     public void HireLawyer()
@@ -85,6 +88,7 @@ public class ServicesUI : MonoBehaviour
         lawyer.UpgradeLawyerService();
 
         UpdateLawyerDetailsUI();
+        SoundManager.Instance.Play("Click");
     }
     #endregion
 }

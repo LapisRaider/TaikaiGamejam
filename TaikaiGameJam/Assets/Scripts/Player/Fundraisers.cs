@@ -83,6 +83,7 @@ public class Fundraisers : SingletonBase<Fundraisers>
             m_SignificantNumberPlace[significantNumberPlace] = 0;
 
         UpdateNumberUI(significantNumberPlace);
+        SoundManager.Instance.Play("Click");
     }
 
     public void DecreaseNumber(int significantNumberPlace)
@@ -96,6 +97,7 @@ public class Fundraisers : SingletonBase<Fundraisers>
             m_SignificantNumberPlace[significantNumberPlace] = 9;
 
         UpdateNumberUI(significantNumberPlace);
+        SoundManager.Instance.Play("Click");
     }
 
     public void UpdateOnceAMonthUI()
@@ -139,6 +141,8 @@ public class Fundraisers : SingletonBase<Fundraisers>
         {
             CheckSuccess();
         }
+
+        SoundManager.Instance.Play("Click");
     }
 
     public void SetCurrentAmtSpent()
@@ -196,6 +200,7 @@ public class Fundraisers : SingletonBase<Fundraisers>
 
         m_ActivatedThisMonth = true;
         UpdateOnceAMonthUI();
+        SoundManager.Instance.Play("MoneySpent");
     }
 
     public void ResetFundraiser()

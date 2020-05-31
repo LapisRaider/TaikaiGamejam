@@ -6,6 +6,7 @@ public class Volunteers : MonoBehaviour
     public SpriteRenderer m_SpriteRenderer;
     public SpriteRenderer m_ItemSpriteRenderer;
     public Animator m_Animator;
+    AudioSource m_AudioSource;
 
     [Header("Movement")]
     public Vector2 m_MinMaxSpeed = new Vector2(0.1f, 1.0f);
@@ -55,6 +56,8 @@ public class Volunteers : MonoBehaviour
 
     public void Awake()
     {
+        m_AudioSource = GetComponent<AudioSource>();
+
         m_Speed = Random.Range(m_MinMaxSpeed.x, m_MinMaxSpeed.y);
         m_BorderRotationOffset = m_BorderRotationOffset * Mathf.Deg2Rad;
     }
@@ -341,8 +344,9 @@ public class Volunteers : MonoBehaviour
         {
             m_Animator.ResetTrigger("Idle");
             m_Animator.SetTrigger("Chasing");
-
         }
+
+        SoundManager.Instance.Play("Shout", m_AudioSource);
     }
 
     public void UpdateChaseState()

@@ -163,7 +163,7 @@ public class MapManager : SingletonBase<MapManager>
             return;
 
         m_PlantOnMap.Remove(tilePos);
-        GameStats.Instance.UpdateCurrentPlantNumber(true, m_PlantOnMap.Count);
+        GameStats.Instance.UpdateCurrentPlantNumber(false, m_PlantOnMap.Count);
     }
     #endregion
 

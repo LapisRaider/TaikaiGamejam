@@ -34,7 +34,6 @@ public class Temperature
         m_CurrTemperatureAmt += m_TemperatureOffset;
 
         //based on plant and flower count
-        Debug.Log(m_CurrTemperatureAmt);
         if (m_CurrTemperatureAmt > m_TreeToTemperature[(int)m_CurrTempType])
         {
             m_CurrTempType += 1; //go to next temperature type

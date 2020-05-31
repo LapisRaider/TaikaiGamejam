@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -4492,7 +4492,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.064796165}
   m_AnchorMax: {x: 1, y: 0.42460194}
-  m_AnchoredPosition: {x: 0, y: -3.0000153}
+  m_AnchoredPosition: {x: 0, y: -3}
   m_SizeDelta: {x: 0, y: -6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &357123704
@@ -5874,7 +5874,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.064796165}
   m_AnchorMax: {x: 1, y: 0.42460194}
-  m_AnchoredPosition: {x: 0, y: -3.0000153}
+  m_AnchoredPosition: {x: 0, y: -3}
   m_SizeDelta: {x: 0, y: -6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &420052978
@@ -9006,7 +9006,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.064796165}
   m_AnchorMax: {x: 1, y: 0.42460194}
-  m_AnchoredPosition: {x: 0, y: -3.0000153}
+  m_AnchoredPosition: {x: 0, y: -3}
   m_SizeDelta: {x: 0, y: -6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &641316285
@@ -12453,7 +12453,7 @@ MonoBehaviour:
   bDontDestroyOnLoad: 0
   m_Money:
     m_BankruptcyAmt: -10000
-    m_CurrMoney: 1000
+    m_CurrMoney: 3500
     m_LoseUI: {fileID: 1447092728}
   m_VolunteerInfo:
     m_MaxVolunteerNo: 15
@@ -12493,11 +12493,11 @@ MonoBehaviour:
     m_NextPopularity: 0
     m_PopularityOffset: 0
   m_Donations:
-    m_AmtPerTree: 2
-    m_AmtPerPlant: 0.2
-    m_MonthlyDefaultFunding: 100
+    m_AmtPerTree: 3
+    m_AmtPerPlant: 1
+    m_MonthlyDefaultFunding: 300
     m_MinMaxDonationPercentage: {x: 0.8, y: 1.2}
-    m_NumberOfDonorPerPercentage: 200
+    m_NumberOfDonorPerPercentage: 1000
   m_Temperature:
     m_TreeToTemperature:
     - 5.8
@@ -25029,7 +25029,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.064796165}
   m_AnchorMax: {x: 1, y: 0.42460194}
-  m_AnchoredPosition: {x: 0, y: -3.0000153}
+  m_AnchoredPosition: {x: 0, y: -3}
   m_SizeDelta: {x: 0, y: -6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1278858587
@@ -26485,7 +26485,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.064796165}
   m_AnchorMax: {x: 1, y: 0.42460194}
-  m_AnchoredPosition: {x: 0, y: -3.0000153}
+  m_AnchoredPosition: {x: 0, y: -3}
   m_SizeDelta: {x: 0, y: -6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1380281401

@@ -12457,7 +12457,7 @@ MonoBehaviour:
     m_LoseUI: {fileID: 1447092728}
   m_VolunteerInfo:
     m_MaxVolunteerNo: 15
-    m_MonthlyPayment: 200
+    m_MonthlyPayment: 120
     m_CurrVolunteerAmt: 0
   m_RecordingEquipmentStats:
     m_MonthlyMaintenceFees: 3200000064000000f4010000e8030000
@@ -12575,9 +12575,9 @@ MonoBehaviour:
     m_Chance: 50
     m_Weightage: {x: 0, y: 0}
     m_EventCompleted: 0
-  m_NegativeEventChance: 0.5
-  m_EventChance: 0.8
-  m_TimeForEvent: 7
+  m_NegativeEventChance: 0.4
+  m_EventChance: 0.5
+  m_TimeForEvent: 10
   m_MaxEventPerMonth: 3
   m_NumberOfBadEventsInAMonth: 0
   m_UIGameObject: {fileID: 1387889962}

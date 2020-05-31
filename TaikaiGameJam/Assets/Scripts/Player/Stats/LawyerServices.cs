@@ -95,17 +95,17 @@ public class LawyerServices
         if (Random.Range(0.0f, 1.0f) > m_MonthlySueChances)
             return false;
 
+        //check the number of bad events
+        int badEventNumber = RandomEventManager.Instance.m_NumberOfBadEventsInAMonth;
+        if (badEventNumber <= 0)
+            return false;
+
         //get number of person first
         if (m_CurrentLawyerNumber <= 0)
         {
             UpdateSueServiceUI(LawyerServiceTypes.NO_LAWYERS);
             return false;
         }
-
-        //check the number of bad events
-        int badEventNumber = RandomEventManager.Instance.m_NumberOfBadEventsInAMonth;
-        if (badEventNumber <= 0)
-            return false;
 
         //check the amount chance from the total amt of lawyers we got
         float currSuccessChance = m_CurrentLawyerNumber * m_ChanceIncreasePerLawyer;

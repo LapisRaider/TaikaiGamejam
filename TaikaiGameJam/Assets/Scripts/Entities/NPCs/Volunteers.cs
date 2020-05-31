@@ -33,7 +33,7 @@ public class Volunteers : MonoBehaviour
     EvilPeople m_EvilPersonChasing; 
 
     [Header("Plant Tree State")]
-    public Vector2Int m_PlantTreeGridPos = Vector2Int.zero;
+    [HideInInspector] public Vector2Int m_PlantTreeGridPos = Vector2Int.zero;
     float m_PlantingTime = 0.0f;
     float m_PlantingTimeTracker = 0.0f;
 
@@ -326,7 +326,11 @@ public class Volunteers : MonoBehaviour
     public void EnterChaseState()
     {
         if (m_Animator != null)
+        {
+            m_Animator.ResetTrigger("Idle");
             m_Animator.SetTrigger("Chasing");
+
+        }
     }
 
     public void UpdateChaseState()

@@ -44,9 +44,6 @@ public class EvilPeople : MonoBehaviour
 
     public void Awake()
     {
-        m_Animator = GetComponent<Animator>();
-        m_SpriteRenderer = GetComponent<SpriteRenderer>();
-
         m_Speed = Random.Range(m_MinMaxSpeed.x, m_MinMaxSpeed.y);
         m_CurrentState = States.MOVE_TO_TREE;
     }
@@ -85,12 +82,13 @@ public class EvilPeople : MonoBehaviour
         }
 
         if (m_Animator != null)
-            m_Animator.SetFloat("X-Offset", m_Dir.x);
+            m_Animator.SetFloat("HorizontalSpeed", m_Dir.x);
 
         if (m_ItemSpriteRenderer != null)
             m_ItemSpriteRenderer.sortingOrder = (int)(transform.position.y * -100);
 
-        m_SpriteRenderer.sortingOrder = (int)(transform.position.y * -100);
+        if (m_SpriteRenderer != null)
+            m_SpriteRenderer.sortingOrder = (int)(transform.position.y * -100);
     }
 
     public void ChangeState(States newState)
@@ -121,6 +119,7 @@ public class EvilPeople : MonoBehaviour
                 EnterCutTreeState();
                 break;
             case States.RUN:
+                EnterRunAwayState();
                 break;
             case States.GET_OUT_OF_MAP:
                 EnterGetOutOfMap();
@@ -136,6 +135,12 @@ public class EvilPeople : MonoBehaviour
         {
             ChangeState(States.GET_OUT_OF_MAP);
             return;
+        }
+
+        if (m_Animator != null)
+        {
+            m_Animator.SetTrigger("Walking");
+            m_Animator.ResetTrigger("Chased");
         }
 
         //check if prev tree is still avilable
@@ -221,6 +226,13 @@ public class EvilPeople : MonoBehaviour
     {
         m_DestructionTimer = 0.0f;
 
+        if (m_Animator != null)
+        {
+            m_Animator.ResetTrigger("Walking");
+            m_Animator.ResetTrigger("Chased");
+            m_Animator.SetTrigger("Cutting");
+        }
+
         NPCManager.Instance.WarnNearestVolunteer(this);
     }
 
@@ -257,6 +269,16 @@ public class EvilPeople : MonoBehaviour
     #endregion
 
     #region RunAway
+    public void EnterRunAwayState()
+    {
+        if (m_Animator != null)
+        {
+            m_Animator.ResetTrigger("Walking");
+            m_Animator.SetTrigger("Chased");
+            m_Animator.ResetTrigger("Cutting");
+        }
+    }
+
     public void UpdateRunAwayState()
     {
         m_Dir = transform.position - m_NearestVolunteerChasing.position;
@@ -292,6 +314,13 @@ public class EvilPeople : MonoBehaviour
         m_Destination = MapManager.Instance.GetGridPosToWorld(gridLocationOutside);
         m_Dir = m_Destination - (Vector2)transform.position;
         m_Dir.Normalize();
+
+        if (m_Animator != null)
+        {
+            m_Animator.ResetTrigger("Walking");
+            m_Animator.SetTrigger("Chased");
+            m_Animator.ResetTrigger("Cutting");
+        }
     }
 
     public void UpdateGetOutOfMap()

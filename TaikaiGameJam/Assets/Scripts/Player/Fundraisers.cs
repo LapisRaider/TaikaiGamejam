@@ -49,14 +49,20 @@ public class Fundraisers : SingletonBase<Fundraisers>
 
         UpdateOnceAMonthUI();
 
-        foreach (TextMeshProUGUI text in m_NumbersTextUI)
+        if (m_NumbersTextUI != null)
         {
-            text.text = (0).ToString();
+            foreach (TextMeshProUGUI text in m_NumbersTextUI)
+            {
+                text.text = (0).ToString();
+            }
         }
 
-        for (int i =0; i < m_SignificantNumberPlace.Length; ++i)
+        if (m_SignificantNumberPlace != null)
         {
-            m_SignificantNumberPlace[i] = 0;
+            for (int i = 0; i < m_SignificantNumberPlace.Length; ++i)
+            {
+                m_SignificantNumberPlace[i] = 0;
+            }
         }
 
         GetCurrentSuccessRate();

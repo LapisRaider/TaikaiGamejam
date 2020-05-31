@@ -231,16 +231,16 @@ MonoBehaviour:
   m_SpriteRenderer: {fileID: 8931818477895712028}
   m_ItemSpriteRenderer: {fileID: 7430876558895221779}
   m_Animator: {fileID: 3487039444044506089}
-  m_MinMaxSpeed: {x: 2, y: 2}
-  m_BoundaryRadius: 0.52
+  m_MinMaxSpeed: {x: 1, y: 1.5}
+  m_BoundaryRadius: 0.82
   m_RotationSpeed: 2.5
   m_ChangeDirTime: 4
   m_RotationAngle: 70
   m_BorderRotationOffset: 4
-  m_CheckCanPlantTime: 0.5
-  m_PlantTreeSearchRadius: {x: 1, y: 1}
-  m_StopDistance: 1
-  m_ChaseSpeed: 3
+  m_CheckCanPlantTime: 3.5
+  m_PlantTreeSearchRadius: {x: 3, y: 3}
+  m_StopDistance: 1.5
+  m_ChaseSpeed: 2.2
   m_PlantTreeGridPos: {x: 0, y: 0}
 --- !u!58 &7428760114805852272
 CircleCollider2D:
@@ -255,6 +255,6 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 1}
   serializedVersion: 2
-  m_Radius: 0.1
+  m_Radius: 4.16

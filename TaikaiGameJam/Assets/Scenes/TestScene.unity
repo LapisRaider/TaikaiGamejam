@@ -11812,8 +11812,8 @@ MonoBehaviour:
     m_AffectedMoneyText: {fileID: 506711412}
     m_CurrentLawyerNumber: 0
   m_Popularity:
-    m_TreePopularityRate: 1
-    m_PlantPopularityRate: 1
+    m_TreePopularityRate: 0.25
+    m_PlantPopularityRate: 0.1
     m_IncreaseTimeRate: 0.1
     m_MaxMinIncreaseNumber: {x: 2, y: 20}
     m_CurrentPopularity: 0

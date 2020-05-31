@@ -165,7 +165,13 @@ public class Volunteers : MonoBehaviour
         m_CheckCanPlantTimeTracker = Mathf.Min(m_CheckCanPlantTimeTracker, m_CheckCanPlantTime + 1.0f);
 
         Vector3 checkPos = transform.position + (Vector3)(m_Speed * m_NextDir);
-        if (CheckOutsideBoundary(checkPos))
+        if (CheckOutSideBoundaryALot(checkPos))
+        {
+            //go back to middle
+            m_NextDir = Vector3.zero - transform.position;
+            m_NextDir.Normalize();
+        }
+        else if (CheckOutsideBoundary(checkPos))
         {
             //rotate away from the wall
             Bounds bound = MapManager.Instance.m_MapBoundary;
@@ -361,6 +367,16 @@ public class Volunteers : MonoBehaviour
             || newPos.y + m_BoundaryRadius >= bound.max.y
             || newPos.x - m_BoundaryRadius <= bound.min.x
             || newPos.y - m_BoundaryRadius <= bound.min.y);
+    }
+
+    public bool CheckOutSideBoundaryALot(Vector2 newPos)
+    {
+        //make it go back into the map
+        Bounds bound = MapManager.Instance.m_MapBoundary;
+        return (newPos.x + m_BoundaryRadius + m_BoundaryRadius >= bound.max.x
+            || newPos.y + m_BoundaryRadius + m_BoundaryRadius >= bound.max.y
+            || newPos.x - m_BoundaryRadius - m_BoundaryRadius <= bound.min.x
+            || newPos.y - m_BoundaryRadius - m_BoundaryRadius <= bound.min.y);
     }
 
 #if UNITY_EDITOR

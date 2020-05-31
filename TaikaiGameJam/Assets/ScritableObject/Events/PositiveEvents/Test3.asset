@@ -13,12 +13,21 @@ MonoBehaviour:
   m_Name: Test3
   m_EditorClassIdentifier: 
   m_OneTimeOnly: 0
-  m_PositiveEventType: 0
+  m_PositiveEventType: 3
   m_NegativeEventType: 0
   m_AffectedByPercentage: 1
   m_MinMaxAffectedPercentages: {x: 0, y: 1}
   m_MinMaxAffectedAmount: {x: 0, y: 500}
-  m_EventPicture: []
-  m_Description: []
-  m_NameOfPersonInvolve: []
-  m_Title: []
+  m_EventPicture:
+  - {fileID: 21300000, guid: b4c336359565c044b854d49950c2aed0, type: 3}
+  m_Description:
+  - To acknowledge their efforts, the government has decided to give out monetary
+    aid to green activists across the country.
+  m_NameOfPersonInvolve:
+  - Perez O. Dente
+  - Prez O. Dent
+  - Perezie O. Den
+  - Prezii O. Dent
+  - Perezii O. Dent
+  m_Title:
+  - Government Gives Monetary Aid to Green Activists

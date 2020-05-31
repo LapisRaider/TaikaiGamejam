@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d90a770f4948a294182d2aa597e1e575, type: 3}
+  m_Name: Spruce_Tree
+  m_EditorClassIdentifier: 
+  m_PlantName: Spruce Tree
+  m_PlantDescription: Can grow up to 300 feet with needle like leaves.
+  m_PlantSprite: {fileID: 21300000, guid: 64e383a86dad12e4483dcdfe02c641ae, type: 3}
+  m_PlantType: 2
+  m_GrowthTime: 1
+  m_PlantTime: 3
+  m_TemperatureToGrow: 2
+  m_PlantHealth: 20
+  m_Price: 50
+  m_MaxNumberToPlant: 10

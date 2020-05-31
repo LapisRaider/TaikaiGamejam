@@ -234,10 +234,10 @@ MonoBehaviour:
   m_MinMaxSpeed: {x: 1, y: 1.5}
   m_BoundaryRadius: 0.82
   m_RotationSpeed: 2.5
-  m_ChangeDirTime: 4
+  m_ChangeDirTime: 7
   m_RotationAngle: 70
   m_BorderRotationOffset: 4
-  m_CheckCanPlantTime: 3.5
+  m_CheckCanPlantTime: 4
   m_PlantTreeSearchRadius: {x: 3, y: 3}
   m_StopDistance: 1.5
   m_ChaseSpeed: 2.2

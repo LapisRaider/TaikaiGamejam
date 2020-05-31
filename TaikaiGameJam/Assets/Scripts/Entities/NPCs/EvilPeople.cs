@@ -4,7 +4,9 @@ using UnityEngine;
 public class EvilPeople : MonoBehaviour
 {
     [Header("Info")]
-    SpriteRenderer m_SpriteRenderer;
+    public SpriteRenderer m_SpriteRenderer;
+    public SpriteRenderer m_ItemSpriteRenderer;
+    public Animator m_Animator;
 
     [Header("Movement")]
     public Vector2 m_MinMaxSpeed = new Vector2(0.1f, 1.0f);
@@ -34,9 +36,6 @@ public class EvilPeople : MonoBehaviour
         RUN,
         GET_OUT_OF_MAP,
     }
-
-    CharacterController m_CharacterController;
-    Animator m_Animator;
 
     Vector2 m_Dir;
     float m_Speed = 1.0f;
@@ -84,6 +83,12 @@ public class EvilPeople : MonoBehaviour
                 UpdateGetOutOfMap();
                 break;
         }
+
+        if (m_Animator != null)
+            m_Animator.SetFloat("X-Offset", m_Dir.x);
+
+        if (m_ItemSpriteRenderer != null)
+            m_ItemSpriteRenderer.sortingOrder = (int)(transform.position.y * -100);
 
         m_SpriteRenderer.sortingOrder = (int)(transform.position.y * -100);
     }

@@ -3,7 +3,9 @@
 public class Volunteers : MonoBehaviour
 {
     [Header("Info")]
-    SpriteRenderer m_SpriteRenderer;
+    public SpriteRenderer m_SpriteRenderer;
+    public SpriteRenderer m_ItemSpriteRenderer;
+    public Animator m_Animator;
 
     [Header("Movement")]
     public Vector2 m_MinMaxSpeed = new Vector2(0.1f, 1.0f);
@@ -43,8 +45,6 @@ public class Volunteers : MonoBehaviour
         CHASE //for chasing away evil business people
     }
 
-    Animator m_Animator;
-
     States m_CurrentState = States.IDLE;
     Vector2 m_MoveDir = Vector2.zero;
     Vector2 m_NextDir = Vector2.zero;
@@ -52,9 +52,6 @@ public class Volunteers : MonoBehaviour
 
     public void Awake()
     {
-        m_Animator = GetComponent<Animator>();
-        m_SpriteRenderer = GetComponent<SpriteRenderer>();
-
         m_Speed = Random.Range(m_MinMaxSpeed.x, m_MinMaxSpeed.y);
         m_BorderRotationOffset = m_BorderRotationOffset * Mathf.Deg2Rad;
     }
@@ -84,6 +81,11 @@ public class Volunteers : MonoBehaviour
         }
 
         m_SpriteRenderer.sortingOrder = (int)(transform.position.y * -100);
+        if (m_ItemSpriteRenderer != null)
+            m_ItemSpriteRenderer.sortingOrder = (int)(transform.position.y * -100);
+
+        if (m_Animator != null)
+            m_Animator.SetFloat("HorizontalVelocity", m_MoveDir.x);
     }
 
     public void ChangeState(States newState)
@@ -140,7 +142,8 @@ public class Volunteers : MonoBehaviour
     #region IdleState
     public void EnterIdleState()
     {
-        //TODO:: change animation accordingly
+        if (m_Animator != null)
+            m_Animator.SetTrigger("Idle");
 
         m_MoveDir = new Vector2(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f));
         m_NextDir = m_MoveDir;
@@ -260,6 +263,9 @@ public class Volunteers : MonoBehaviour
     {
         m_MoveDir = m_Destination - (Vector2)transform.position;
         m_MoveDir.Normalize();
+
+        if (m_Animator != null)
+            m_Animator.SetTrigger("Idle");
     }
 
     public void UpdateMoveToFreeSpaceState()
@@ -283,6 +289,9 @@ public class Volunteers : MonoBehaviour
     {
         //call the plant functiom, this functiom will handle choosing of the plant
         //check if inventory is available first
+        m_PlantingTimeTracker = 0.0f;
+        m_LastPlantTimeTracker = 0.0f;
+
         if (!GameStats.Instance.CheckIsInventoryEmpty())
         {
             //get the time needed to plant this plant
@@ -291,10 +300,11 @@ public class Volunteers : MonoBehaviour
         else
         {
             ChangeState(States.IDLE);
+            return;
         }
 
-        m_PlantingTimeTracker = 0.0f;
-        m_LastPlantTimeTracker = 0.0f;
+        if (m_Animator != null)
+            m_Animator.SetTrigger("Planting");
     }
 
     public void UpdatePlantTreeState()
@@ -315,7 +325,8 @@ public class Volunteers : MonoBehaviour
     #region ChaseState
     public void EnterChaseState()
     {
-
+        if (m_Animator != null)
+            m_Animator.SetTrigger("Chasing");
     }
 
     public void UpdateChaseState()
